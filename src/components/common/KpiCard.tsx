@@ -27,63 +27,94 @@ export const KpiCard: React.FC<KpiCardProps> = ({
   onClick,
   isSelected = false
 }) => {
+  // Calculate variance against target if applicable
+  const delta = (percentageNumber !== undefined && percentageNumber !== null && target !== undefined && target !== null)
+    ? Math.round((percentageNumber - target) * 10) / 10
+    : null;
+
   return (
     <div
       onClick={onClick}
-      className={`card-subtle rounded-xl p-5 flex flex-col justify-between transition-all ${
-        onClick ? 'cursor-pointer' : ''
+      className={`card-subtle rounded-2xl p-5 flex flex-col justify-between transition-all relative overflow-hidden group ${
+        onClick ? 'cursor-pointer hover:border-mda-500 hover:shadow-card-hover' : ''
       } ${
         isSelected
-          ? 'ring-2 ring-mda-700 bg-mda-50/20'
+          ? 'ring-2 ring-mda-700 border-mda-500 bg-gradient-to-b from-mda-50/40 to-white shadow-card-hover'
           : 'bg-white'
       }`}
     >
+      {/* Top Header Row */}
       <div>
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2.5">
             {icon && (
-              <div className="p-2 rounded-lg bg-surface-subtle text-mda-700">
+              <div className={`p-2 rounded-xl transition-colors ${
+                isSelected
+                  ? 'bg-mda-700 text-white shadow-xs'
+                  : 'bg-surface-subtle text-mda-700 group-hover:bg-mda-100/80'
+              }`}>
                 {icon}
               </div>
             )}
-            <div>
-              {category && (
-                <span className="text-[11px] font-semibold tracking-wider uppercase text-surface-muted">
-                  {category}
-                </span>
-              )}
-              <h3 className="text-sm font-medium text-slate-800 line-clamp-1" title={title}>
-                {title}
-              </h3>
-            </div>
-          </div>
-          {status && <StatusBadge status={status} size="sm" />}
-        </div>
-
-        <div className="mt-2 mb-3">
-          <div className="text-2xl font-bold tracking-tight text-slate-900 metric-number flex items-baseline gap-2">
-            <span>{value}</span>
-            {target !== null && target !== undefined && (
-              <span className="text-xs font-normal text-slate-500">
-                Target: {target}%
+            {category && (
+              <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">
+                {category}
               </span>
             )}
           </div>
+
+          {status && <StatusBadge status={status} size="sm" />}
+        </div>
+
+        {/* Title */}
+        <h3 className="text-sm font-bold text-slate-800 leading-snug mb-2" title={title}>
+          {title}
+        </h3>
+
+        {/* Metric Value & Target Comparison */}
+        <div className="mt-1 mb-3">
+          <div className="flex items-baseline justify-between gap-2">
+            <span className="text-3xl font-extrabold tracking-tight text-slate-900 metric-number">
+              {value}
+            </span>
+
+            {target !== null && target !== undefined && (
+              <div className="text-right">
+                <span className="text-[11px] font-medium text-slate-500 block">
+                  Target: <strong>{target}%</strong>
+                </span>
+                {delta !== null && (
+                  <span className={`text-[10px] font-bold ${
+                    delta >= 0 ? 'text-emerald-700' : 'text-rose-600'
+                  }`}>
+                    {delta >= 0 ? `+${delta}%` : `${delta}%`}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+
           {subtitle && (
-            <p className="text-xs text-slate-500 mt-0.5 truncate" title={subtitle}>
+            <p className="text-xs text-slate-500 mt-1 font-medium truncate" title={subtitle}>
               {subtitle}
             </p>
           )}
         </div>
       </div>
 
+      {/* Progress Bar Footer */}
       {percentageNumber !== undefined && percentageNumber !== null && (
-        <div className="pt-2 border-t border-slate-100">
+        <div className="pt-3 border-t border-slate-100 mt-1">
+          <div className="flex items-center justify-between text-[10px] text-slate-400 mb-1.5 font-medium">
+            <span>0%</span>
+            <span>Target {target}%</span>
+            <span>100%</span>
+          </div>
           <ProgressBar
             value={percentageNumber}
             target={target}
             status={status}
-            height="sm"
+            height="md"
           />
         </div>
       )}

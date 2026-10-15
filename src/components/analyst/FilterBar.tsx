@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter, Download, Search, RotateCcw } from 'lucide-react';
+import { Download, Search, RotateCcw, Filter, MapPin } from 'lucide-react';
 import { FilterState } from '../../types/filter';
 import { CATEGORIES, INDICATOR_DICTIONARY } from '../../data/indicatorDictionary';
 
@@ -27,13 +27,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     : INDICATOR_DICTIONARY.filter(i => i.category === filterState.category);
 
   return (
-    <div className="card-subtle rounded-xl p-4 bg-white space-y-4">
+    <div className="card-subtle rounded-2xl p-5 bg-white shadow-card space-y-4">
       {/* Top Filter Controls */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
         {/* District Selector */}
         <div>
-          <label className="block text-[11px] font-semibold uppercase text-slate-500 mb-1">
-            District
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">
+            District Filter
           </label>
           <select
             value={filterState.district}
@@ -43,9 +43,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 planningUnit: 'all' // Reset PU on district change
               });
             }}
-            className="w-full text-xs bg-surface-subtle border border-surface-border text-slate-800 rounded-lg px-3 py-2 focus:ring-2 focus:ring-mda-700 focus:outline-none"
+            className="w-full text-xs bg-surface-subtle border border-surface-border text-slate-900 font-semibold rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-mda-700 focus:outline-none shadow-xs transition-colors"
           >
-            <option value="all">All Districts ({availableDistricts.length})</option>
+            <option value="all">Entire State ({availableDistricts.length} Districts)</option>
             {availableDistricts.map(d => (
               <option key={d} value={d}>
                 {d}
@@ -56,13 +56,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Planning Unit Selector */}
         <div>
-          <label className="block text-[11px] font-semibold uppercase text-slate-500 mb-1">
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">
             Planning Unit
           </label>
           <select
             value={filterState.planningUnit}
             onChange={e => onFilterChange({ planningUnit: e.target.value })}
-            className="w-full text-xs bg-surface-subtle border border-surface-border text-slate-800 rounded-lg px-3 py-2 focus:ring-2 focus:ring-mda-700 focus:outline-none"
+            className="w-full text-xs bg-surface-subtle border border-surface-border text-slate-900 font-semibold rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-mda-700 focus:outline-none shadow-xs transition-colors"
           >
             <option value="all">
               {filterState.district === 'all'
@@ -79,8 +79,8 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Category Selector */}
         <div>
-          <label className="block text-[11px] font-semibold uppercase text-slate-500 mb-1">
-            Category
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">
+            Thematic Category
           </label>
           <select
             value={filterState.category}
@@ -94,7 +94,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 selectedIndicatorId: matchingInds[0]?.id || filterState.selectedIndicatorId
               });
             }}
-            className="w-full text-xs bg-surface-subtle border border-surface-border text-slate-800 rounded-lg px-3 py-2 focus:ring-2 focus:ring-mda-700 focus:outline-none"
+            className="w-full text-xs bg-surface-subtle border border-surface-border text-slate-900 font-semibold rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-mda-700 focus:outline-none shadow-xs transition-colors"
           >
             <option value="All">All Categories ({CATEGORIES.length})</option>
             {CATEGORIES.map(c => (
@@ -107,13 +107,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Indicator Selector */}
         <div className="lg:col-span-2">
-          <label className="block text-[11px] font-semibold uppercase text-slate-500 mb-1">
-            Indicator
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">
+            Selected Indicator
           </label>
           <select
             value={filterState.selectedIndicatorId}
             onChange={e => onFilterChange({ selectedIndicatorId: e.target.value })}
-            className="w-full text-xs bg-surface-subtle border border-surface-border text-slate-800 rounded-lg px-3 py-2 focus:ring-2 focus:ring-mda-700 focus:outline-none"
+            className="w-full text-xs bg-surface-subtle border border-surface-border text-slate-900 font-semibold rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-mda-700 focus:outline-none shadow-xs transition-colors"
           >
             {indicatorsInCurrentCategory.map(ind => (
               <option key={ind.id} value={ind.id}>
@@ -125,38 +125,38 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       </div>
 
       {/* Search & Actions Bar */}
-      <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+      <div className="pt-3.5 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div className="relative flex-1 max-w-sm">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
           <input
             type="text"
-            placeholder="Search planning unit or district..."
+            placeholder="Search planning unit or district name..."
             value={filterState.searchQuery}
             onChange={e => onFilterChange({ searchQuery: e.target.value })}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-surface-subtle border border-surface-border rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-mda-700"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-surface-subtle border border-surface-border rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-mda-700 font-medium"
           />
         </div>
 
         <div className="flex items-center gap-2 self-end sm:self-auto">
-          <span className="text-xs text-slate-500 mr-2">
-            Showing <strong className="text-slate-800">{totalFilteredCount}</strong> rows
+          <span className="text-xs font-medium text-slate-500 mr-2">
+            Showing <strong className="text-slate-900 font-bold">{totalFilteredCount}</strong> planning units
           </span>
 
           <button
             onClick={onResetFilters}
-            className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1.5 text-slate-600 hover:text-slate-900 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs px-3 py-2 text-slate-700 hover:text-slate-900 border border-surface-border rounded-xl hover:bg-slate-50 font-medium transition-colors shadow-xs"
             title="Reset filters"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
             <span>Reset</span>
           </button>
 
           <button
             onClick={onExportCsv}
-            className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 bg-mda-50 text-mda-800 border border-mda-200 hover:bg-mda-100 rounded-lg transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 text-xs font-bold px-3.5 py-2 bg-mda-700 text-white hover:bg-mda-800 rounded-xl transition-all shadow-sm active:scale-98"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>Download CSV</span>
+            <span>Export CSV</span>
           </button>
         </div>
       </div>

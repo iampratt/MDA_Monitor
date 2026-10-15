@@ -93,46 +93,52 @@ export const AnalystView: React.FC<AnalystViewProps> = ({
       {/* Aggregate KPI Summary Strip for the Active Filter */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Selected Area */}
-        <div className="card-subtle rounded-xl p-4 bg-white flex items-center gap-3">
-          <div className="p-2.5 rounded-lg bg-surface-subtle text-mda-700">
+        <div className="card-subtle rounded-2xl p-4.5 bg-white shadow-card flex items-center gap-3.5">
+          <div className="p-3 rounded-xl bg-surface-subtle text-mda-700 shrink-0">
             <MapPin className="w-5 h-5" />
           </div>
-          <div>
-            <span className="text-[10px] uppercase font-semibold text-slate-400">Selected Scope</span>
-            <p className="text-sm font-bold text-slate-900 truncate">
+          <div className="min-w-0">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">
+              Active Scope
+            </span>
+            <p className="text-sm font-extrabold text-slate-900 truncate" title={filterState.district === 'all' ? 'Entire State (All Districts)' : filterState.district}>
               {filterState.district === 'all' ? 'Entire State (All Districts)' : filterState.district}
             </p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 font-medium">
               {filteredRows.length} Planning Units
             </p>
           </div>
         </div>
 
         {/* Teams Monitored */}
-        <div className="card-subtle rounded-xl p-4 bg-white flex items-center gap-3">
-          <div className="p-2.5 rounded-lg bg-surface-subtle text-mda-700">
+        <div className="card-subtle rounded-2xl p-4.5 bg-white shadow-card flex items-center gap-3.5">
+          <div className="p-3 rounded-xl bg-surface-subtle text-mda-700 shrink-0">
             <Users className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-[10px] uppercase font-semibold text-slate-400">Teams Monitored</span>
-            <p className="text-lg font-bold text-slate-900 metric-number">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">
+              Teams Monitored
+            </span>
+            <p className="text-xl font-extrabold text-slate-900 metric-number">
               {filteredRows.reduce((sum, r) => sum + (Number(r.rawMetrics['D']) || 0), 0).toLocaleString()}
             </p>
-            <p className="text-xs text-slate-500">
-              {filteredRows.reduce((sum, r) => sum + (Number(r.rawMetrics['K']) || 0), 0).toLocaleString()} Met DA
+            <p className="text-xs text-slate-500 font-medium">
+              {filteredRows.reduce((sum, r) => sum + (Number(r.rawMetrics['K']) || 0), 0).toLocaleString()} Met DA Teams
             </p>
           </div>
         </div>
 
         {/* Selected Indicator Percentage */}
-        <div className="card-subtle rounded-xl p-4 bg-white flex items-center gap-3">
-          <div className="p-2.5 rounded-lg bg-mda-50 text-mda-700">
+        <div className="card-subtle rounded-2xl p-4.5 bg-white shadow-card flex items-center gap-3.5">
+          <div className="p-3 rounded-xl bg-mda-50 text-mda-700 shrink-0">
             <Activity className="w-5 h-5" />
           </div>
-          <div>
-            <span className="text-[10px] uppercase font-semibold text-slate-400">Filtered Indicator Result</span>
+          <div className="min-w-0">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">
+              Indicator Result
+            </span>
             <div className="flex items-baseline gap-2">
-              <span className="text-lg font-bold text-mda-800 metric-number">
+              <span className="text-xl font-extrabold text-mda-800 metric-number">
                 {currentIndicatorFilteredVal?.formattedPercentage ?? 'N/A'}
               </span>
               {currentIndicatorFilteredVal?.status && (
@@ -146,16 +152,18 @@ export const AnalystView: React.FC<AnalystViewProps> = ({
         </div>
 
         {/* Target Benchmark */}
-        <div className="card-subtle rounded-xl p-4 bg-white flex items-center gap-3">
-          <div className="p-2.5 rounded-lg bg-surface-subtle text-mda-700">
+        <div className="card-subtle rounded-2xl p-4.5 bg-white shadow-card flex items-center gap-3.5">
+          <div className="p-3 rounded-xl bg-surface-subtle text-mda-700 shrink-0">
             <Target className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-[10px] uppercase font-semibold text-slate-400">Target Benchmark</span>
-            <p className="text-lg font-bold text-slate-900 metric-number">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">
+              Benchmark Target
+            </span>
+            <p className="text-xl font-extrabold text-slate-900 metric-number">
               {currentIndicator.target ? `${currentIndicator.target}%` : 'Standard'}
             </p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 font-medium">
               {currentIndicator.direction === 'high_is_good' ? 'Higher is better' : 'Lower is better'}
             </p>
           </div>

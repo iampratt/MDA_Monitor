@@ -27,8 +27,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 
   const heightClasses = {
     sm: 'h-1.5',
-    md: 'h-2',
-    lg: 'h-3'
+    md: 'h-2.5',
+    lg: 'h-3.5'
   }[height];
 
   let barColor = 'bg-mda-600';
@@ -38,16 +38,16 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   else if (status === 'neutral') barColor = 'bg-slate-500';
 
   return (
-    <div className={`relative w-full bg-slate-100 rounded-full ${heightClasses} overflow-hidden`}>
+    <div className={`relative w-full bg-slate-100 rounded-full ${heightClasses} overflow-hidden shadow-inner`}>
       <div
         className={`${barColor} ${heightClasses} rounded-full transition-all duration-500 ease-out`}
         style={{ width: `${clampedVal}%` }}
       />
       {showTargetLine && target !== null && target !== undefined && target > 0 && target <= 100 && (
         <div
-          className="absolute top-0 bottom-0 w-0.5 bg-slate-900/60 z-10"
-          style={{ left: `${target}%` }}
-          title={`Target: ${target}%`}
+          className="absolute top-0 bottom-0 w-1 bg-slate-900 rounded-full z-10 shadow-xs"
+          style={{ left: `calc(${target}% - 2px)` }}
+          title={`Target benchmark: ${target}%`}
         />
       )}
     </div>
