@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "node scripts/generateStaticPdf.js && tsc && vite build",
+    "generate-pdf": "node scripts/generateStaticPdf.js",
     "preview": "vite preview",
     "update-data": "node scripts/importExcel.js"
   },

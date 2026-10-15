@@ -44,7 +44,7 @@ export const ExecutiveReportView: React.FC<ExecutiveReportViewProps> = ({
 
   // Copy static shareable link to this PDF
   const handleCopyLink = async () => {
-    const reportUrl = `${window.location.origin}${window.location.pathname}#/pdf`;
+    const reportUrl = `${window.location.origin}${window.location.pathname.replace(/\/$/, '')}/MDA_Percentage_Indicators_Summary.pdf`;
     try {
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(reportUrl);

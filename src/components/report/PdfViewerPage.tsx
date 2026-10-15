@@ -10,15 +10,13 @@ interface PdfViewerPageProps {
   grandAggregate: GrandAggregate;
   districtAggregates: DistrictAggregate[];
   rows: MonitoringRow[];
-  onBackToDashboard: () => void;
 }
 
 export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
   dataset,
   grandAggregate,
   districtAggregates,
-  rows,
-  onBackToDashboard
+  rows
 }) => {
   const hiddenReportRef = useRef<HTMLDivElement>(null);
   const [pdfBlobUrl, setPdfBlobUrl] = useState<string | null>(null);
@@ -79,7 +77,7 @@ export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
   };
 
   const handleCopyLink = async () => {
-    const staticPdfUrl = `${window.location.origin}${window.location.pathname}#/pdf`;
+    const staticPdfUrl = `${window.location.origin}${window.location.pathname.replace(/\/$/, '')}/MDA_Percentage_Indicators_Summary.pdf`;
     try {
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(staticPdfUrl);
@@ -100,27 +98,13 @@ export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-900 flex flex-col h-screen w-screen overflow-hidden">
-      {/* Minimalist Top Utility Header */}
-      <header className="h-12 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between text-white shrink-0 select-none">
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={onBackToDashboard}
-            className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 transition-colors"
-            title="Return to interactive dashboard"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Interactive Dashboard</span>
-          </button>
-
-          <div className="h-4 w-px bg-slate-700 hidden sm:block"></div>
-
-          <div className="flex items-center gap-2">
-            <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span className="text-xs font-semibold text-slate-200 truncate">
-              MDA Concurrent Monitoring Summary PDF
-            </span>
-          </div>
+      {/* Minimalist Top Utility Header - Strictly PDF controls only */}
+      <header className="h-11 bg-slate-950 border-b border-slate-800 px-4 flex items-center justify-between text-white shrink-0 select-none">
+        <div className="flex items-center gap-2">
+          <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span className="text-xs font-semibold text-slate-200 truncate">
+            Mass Drug Administration (MDA) Concurrent Monitoring Summary PDF
+          </span>
         </div>
 
         <div className="flex items-center gap-2">

@@ -118,7 +118,6 @@ export const App: React.FC = () => {
         grandAggregate={grandAggregate}
         districtAggregates={districtAggregates}
         rows={activeDataset.records}
-        onBackToDashboard={() => handleTabChange('overview')}
       />
     );
   }
