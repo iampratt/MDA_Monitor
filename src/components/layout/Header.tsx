@@ -83,7 +83,7 @@ export const Header: React.FC<HeaderProps> = ({
                 title="View compiled percentage summary report and download PDF"
               >
                 <FileText className="w-3.5 h-3.5 text-slate-500" />
-                <span className="hidden sm:inline">Executive Report</span>
+                <span className="hidden sm:inline">Summary PDF</span>
               </button>
             )}
 

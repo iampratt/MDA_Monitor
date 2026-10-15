@@ -15,8 +15,8 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
       icon: <LayoutDashboard className="w-3.5 h-3.5" />
     },
     {
-      id: 'report',
-      label: 'Executive Report',
+      id: 'pdf',
+      label: 'Summary PDF',
       icon: <FileText className="w-3.5 h-3.5" />
     },
     {

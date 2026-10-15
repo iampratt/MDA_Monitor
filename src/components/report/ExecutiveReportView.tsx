@@ -42,9 +42,9 @@ export const ExecutiveReportView: React.FC<ExecutiveReportViewProps> = ({
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
 
-  // Copy static shareable link to this report
+  // Copy static shareable link to this PDF
   const handleCopyLink = async () => {
-    const reportUrl = `${window.location.origin}${window.location.pathname}#/report`;
+    const reportUrl = `${window.location.origin}${window.location.pathname}#/pdf`;
     try {
       if (navigator.clipboard) {
         await navigator.clipboard.writeText(reportUrl);

@@ -7,15 +7,12 @@ export interface GeneratePdfOptions {
 }
 
 /**
- * Captures an HTML element and renders it into a multi-page high-resolution PDF.
+ * Captures an HTML element and renders it into a multi-page high-resolution PDF Blob.
  */
-export async function generatePdfFromElement(
+export async function createPdfBlobFromElement(
   element: HTMLElement,
   options: GeneratePdfOptions = {}
-): Promise<void> {
-  const filename = options.filename || `MDA_Monitoring_Summary_${new Date().toISOString().split('T')[0]}.pdf`;
-
-  // Provide initial progress feedback
+): Promise<Blob> {
   options.onProgress?.(10);
 
   // Capture canvas with scale 2 for crisp 300dpi-equivalent print resolution
@@ -66,7 +63,28 @@ export async function generatePdfFromElement(
 
   options.onProgress?.(90);
 
-  pdf.save(filename);
-
+  const blob = pdf.output('blob');
   options.onProgress?.(100);
+
+  return blob;
+}
+
+/**
+ * Captures an HTML element, renders it to a PDF, and triggers a file download.
+ */
+export async function generatePdfFromElement(
+  element: HTMLElement,
+  options: GeneratePdfOptions = {}
+): Promise<void> {
+  const filename = options.filename || `MDA_Monitoring_Summary_${new Date().toISOString().split('T')[0]}.pdf`;
+  const blob = await createPdfBlobFromElement(element, options);
+  
+  const blobUrl = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
 }

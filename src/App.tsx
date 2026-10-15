@@ -7,6 +7,7 @@ import { AnalystView } from './components/analyst/AnalystView';
 import { IndicatorExplorer } from './components/indicators/IndicatorExplorer';
 import { AdminPortal } from './components/admin/AdminPortal';
 import { ExecutiveReportView } from './components/report/ExecutiveReportView';
+import { PdfViewerPage } from './components/report/PdfViewerPage';
 import { getActiveDataset, resetToBundledDataset } from './services/storageService';
 import { computeGrandAggregate, computeDistrictAggregates } from './services/indicatorCalculator';
 import { ActiveTab, FilterState } from './types/filter';
@@ -15,7 +16,7 @@ import defaultDataset from './data/activeDataset.json';
 
 const getInitialTab = (): ActiveTab => {
   const hash = window.location.hash.toLowerCase();
-  if (hash === '#/report' || hash === '#report') return 'report';
+  if (hash === '#/pdf' || hash === '#pdf' || hash === '#/report' || hash === '#report') return 'pdf';
   if (hash === '#/analyst' || hash === '#analyst') return 'analyst';
   if (hash === '#/indicators' || hash === '#indicators') return 'indicators';
   if (hash === '#/admin' || hash === '#admin') return 'admin';
@@ -31,7 +32,7 @@ export const App: React.FC = () => {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.toLowerCase();
-      if (hash === '#/report' || hash === '#report') setActiveTab('report');
+      if (hash === '#/pdf' || hash === '#pdf' || hash === '#/report' || hash === '#report') setActiveTab('pdf');
       else if (hash === '#/analyst' || hash === '#analyst') setActiveTab('analyst');
       else if (hash === '#/indicators' || hash === '#indicators') setActiveTab('indicators');
       else if (hash === '#/admin' || hash === '#admin') setActiveTab('admin');
@@ -110,13 +111,25 @@ export const App: React.FC = () => {
     setIsCustomDataset(true);
   };
 
+  if (activeTab === 'pdf') {
+    return (
+      <PdfViewerPage
+        dataset={activeDataset}
+        grandAggregate={grandAggregate}
+        districtAggregates={districtAggregates}
+        rows={activeDataset.records}
+        onBackToDashboard={() => handleTabChange('overview')}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-surface-bg flex flex-col font-sans antialiased text-surface-dark selection:bg-mda-100 selection:text-mda-900">
       {/* Top Header */}
       <Header
         dataset={activeDataset}
         onOpenAdmin={() => handleTabChange('admin')}
-        onOpenReport={() => handleTabChange('report')}
+        onOpenReport={() => handleTabChange('pdf')}
         onRefresh={handleRefresh}
         isCustomDataset={isCustomDataset}
         onResetBaseline={handleResetBaseline}
