@@ -8,7 +8,7 @@
   }
 
   body {
-    background-color: #F8FAF9;
+    background-color: #F8FAFC;
     color: #0F172A;
     font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -16,36 +16,36 @@
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Quiet & minimal */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F1F5F2;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #E2E8F0;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #CBD5E1;
 }
 
-/* Modern Card Utilities */
+/* Minimalist Card Utilities */
 .card-subtle {
   background-color: #FFFFFF;
-  border: 1px solid #E2E8E4;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.03);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
 .card-subtle:hover {
-  border-color: #CBD7CE;
-  box-shadow: 0 10px 25px -5px rgba(20, 108, 80, 0.08), 0 8px 10px -6px rgba(20, 108, 80, 0.04);
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 12px 0 rgba(15, 23, 42, 0.05);
 }
 
 .card-interactive {
@@ -54,7 +54,7 @@
 }
 
 .card-interactive:active {
-  transform: scale(0.99);
+  transform: scale(0.995);
 }
 
 /* Numeric Typography */
@@ -66,12 +66,15 @@
 /* Focus styles */
 button:focus-visible, select:focus-visible, input:focus-visible {
   outline: 2px solid #146C50;
-  outline-offset: 2px;
+  outline-offset: 1px;
 }
 
-/* Tooltip custom transition */
+/* Recharts Tooltip - High-end Minimalist Styling */
 .recharts-default-tooltip {
-  border-radius: 12px !important;
-  border: 1px solid #1E293B !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 8px !important;
+  border: 1px solid #E2E8F0 !important;
+  background-color: #FFFFFF !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1) !important;
+  padding: 8px 12px !important;
 }
+

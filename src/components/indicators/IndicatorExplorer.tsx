@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Search, BookOpen, Target, CheckCircle2, Info, ArrowRight } from 'lucide-react';
 import { CATEGORIES, INDICATOR_DICTIONARY } from '../../data/indicatorDictionary';
-import { IndicatorCategory } from '../../types/indicator';
 
 interface IndicatorExplorerProps {
   onSelectIndicator: (indicatorId: string) => void;
@@ -26,47 +25,42 @@ export const IndicatorExplorer: React.FC<IndicatorExplorerProps> = ({ onSelectIn
   });
 
   return (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="space-y-5 animate-fadeIn">
       {/* Header Banner */}
-      <div className="card-subtle rounded-2xl p-6 bg-white shadow-card">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="card-subtle rounded-xl p-5 bg-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-mda-50 text-mda-700">
-                <BookOpen className="w-5 h-5" />
-              </div>
-              <h2 className="text-lg font-bold text-slate-900 tracking-tight">
-                Concurrent Monitoring Indicator Dictionary
-              </h2>
-            </div>
-            <p className="text-xs text-slate-500 mt-1">
-              Complete catalog of canonical indicators, validated mathematical formulas, targets, and column mapping aliases.
+            <h2 className="text-base font-bold text-slate-900 tracking-tight">
+              Indicator Dictionary & Reference
+            </h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Canonical metrics, validated formulas, benchmark targets, and spreadsheet column mappings.
             </p>
           </div>
 
-          <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+          <div className="relative w-full sm:w-72">
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" />
             <input
               type="text"
-              placeholder="Search by indicator name, code or alias..."
+              placeholder="Search indicator, code, formula..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs bg-surface-subtle border border-surface-border rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-mda-700 font-medium"
+              className="w-full pl-8 pr-2.5 py-1 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-mda-700 font-medium"
             />
           </div>
         </div>
 
-        {/* Category Pills */}
-        <div className="flex flex-wrap gap-2 mt-5 pt-4 border-t border-slate-100">
+        {/* Category Filter Pills */}
+        <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-100">
           <button
             onClick={() => setSelectedCategory('All')}
-            className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all ${
+            className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition-colors ${
               selectedCategory === 'All'
-                ? 'bg-mda-700 text-white shadow-xs'
-                : 'bg-surface-subtle text-slate-600 hover:bg-slate-100'
+                ? 'bg-slate-900 text-white'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            All Categories ({INDICATOR_DICTIONARY.length})
+            All ({INDICATOR_DICTIONARY.length})
           </button>
           {CATEGORIES.map(cat => {
             const count = INDICATOR_DICTIONARY.filter(i => i.category === cat).length;
@@ -75,10 +69,10 @@ export const IndicatorExplorer: React.FC<IndicatorExplorerProps> = ({ onSelectIn
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`text-xs px-3 py-1.5 rounded-xl font-bold transition-all ${
+                className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition-colors ${
                   isSelected
-                    ? 'bg-mda-700 text-white shadow-xs'
-                    : 'bg-surface-subtle text-slate-600 hover:bg-slate-100'
+                    ? 'bg-slate-900 text-white'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
                 {cat} ({count})
@@ -89,57 +83,57 @@ export const IndicatorExplorer: React.FC<IndicatorExplorerProps> = ({ onSelectIn
       </div>
 
       {/* Grid of Indicator Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
         {filtered.map(ind => (
           <div
             key={ind.id}
-            className="card-subtle rounded-2xl p-6 bg-white flex flex-col justify-between hover:border-mda-400 hover:shadow-card-hover transition-all group"
+            className="card-subtle rounded-xl p-4 bg-white flex flex-col justify-between hover:border-slate-300 transition-all"
           >
             <div>
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="font-mono text-xs font-bold text-mda-800 bg-mda-100/80 border border-mda-200 px-2.5 py-1 rounded-md">
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <span className="font-mono text-xs font-bold text-mda-800 bg-mda-50 border border-mda-200/60 px-2 py-0.5 rounded">
                   {ind.code}
                 </span>
-                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded">
                   {ind.category}
                 </span>
               </div>
 
-              <h3 className="text-sm font-bold text-slate-900 mb-1.5 leading-snug">
+              <h3 className="text-sm font-bold text-slate-900 mb-1 leading-snug">
                 {ind.name}
               </h3>
-              <p className="text-xs text-slate-500 mb-4 line-clamp-2 leading-relaxed">
+              <p className="text-xs text-slate-500 mb-3 line-clamp-2">
                 {ind.description}
               </p>
 
               {/* Formula Box */}
-              <div className="p-3.5 rounded-xl bg-surface-subtle border border-surface-border text-xs space-y-1.5 mb-4">
-                <div className="flex items-start gap-1.5 text-slate-700">
-                  <span className="text-slate-400 font-semibold text-[11px] uppercase w-8">Num:</span>
-                  <span className="font-semibold text-slate-900 flex-1">{ind.numeratorLabel}</span>
+              <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100 text-xs space-y-1 mb-3">
+                <div className="flex items-start gap-1 text-slate-600 text-[11px]">
+                  <span className="text-slate-400 font-bold uppercase w-8">Num:</span>
+                  <span className="font-semibold text-slate-800 flex-1">{ind.numeratorLabel}</span>
                   <span className="font-mono text-[10px] text-slate-400 font-bold">[{ind.numeratorField}]</span>
                 </div>
-                <div className="flex items-start gap-1.5 text-slate-700">
-                  <span className="text-slate-400 font-semibold text-[11px] uppercase w-8">Den:</span>
-                  <span className="font-semibold text-slate-900 flex-1">{ind.denominatorLabel}</span>
+                <div className="flex items-start gap-1 text-slate-600 text-[11px]">
+                  <span className="text-slate-400 font-bold uppercase w-8">Den:</span>
+                  <span className="font-semibold text-slate-800 flex-1">{ind.denominatorLabel}</span>
                   <span className="font-mono text-[10px] text-slate-400 font-bold">[{ind.denominatorField}]</span>
                 </div>
               </div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between text-xs py-2.5 border-t border-slate-100 font-medium">
+              <div className="flex items-center justify-between text-xs py-2 border-t border-slate-100 font-medium">
                 <span className="text-slate-500">Benchmark Target:</span>
-                <span className="font-extrabold text-slate-900">
+                <span className="font-bold text-slate-900">
                   {ind.target ? `${ind.target}%` : 'Standard'}
                 </span>
               </div>
 
               <button
                 onClick={() => onSelectIndicator(ind.id)}
-                className="w-full mt-2.5 py-2 px-3 text-xs font-bold text-center text-mda-800 bg-mda-50 hover:bg-mda-100 rounded-xl transition-all border border-mda-200/60 flex items-center justify-center gap-1.5 group-hover:bg-mda-700 group-hover:text-white group-hover:border-mda-700 shadow-xs"
+                className="w-full mt-2 py-1.5 px-3 text-xs font-semibold text-center text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors border border-slate-200 flex items-center justify-center gap-1.5"
               >
-                <span>Inspect in Analyst Workbench</span>
+                <span>Inspect in Workbench</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>

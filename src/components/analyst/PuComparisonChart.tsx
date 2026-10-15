@@ -27,7 +27,7 @@ export const PuComparisonChart: React.FC<PuComparisonChartProps> = ({
 }) => {
   if (rows.length === 0) return null;
 
-  // If filtered by all districts, show top 24 or filtered subset to prevent crowding
+  // Display subset to avoid cramped X-axis
   const displayRows = rows.slice(0, 30);
 
   const chartData = displayRows.map(row => {
@@ -43,80 +43,76 @@ export const PuComparisonChart: React.FC<PuComparisonChartProps> = ({
   });
 
   const getBarColor = (status: string) => {
-    if (status === 'good') return '#10B981';
-    if (status === 'warning') return '#F59E0B';
-    if (status === 'danger') return '#EF4444';
+    if (status === 'good') return '#059669';
+    if (status === 'warning') return '#D97706';
+    if (status === 'danger') return '#E11D48';
     return '#64748B';
   };
 
   const target = indicator.target ?? 90;
 
   return (
-    <div className="card-subtle rounded-2xl p-6 bg-white shadow-card">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-surface-border mb-4 gap-2">
-        <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-lg bg-surface-subtle text-mda-700">
-            <BarChart2 className="w-4 h-4" />
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-slate-900 tracking-tight">
-              Planning Unit Performance Breakdown • {indicator.shortName}
-            </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              {districtFilter === 'all'
-                ? `Displaying first ${displayRows.length} planning units (select a specific district above to inspect all in that district)`
-                : `All ${rows.length} planning units in ${districtFilter}`}
-            </p>
-          </div>
+    <div className="card-subtle rounded-xl p-5 bg-white">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 mb-4 gap-2">
+        <div>
+          <h3 className="text-sm font-bold text-slate-900 tracking-tight">
+            Planning Unit Comparison • {indicator.shortName}
+          </h3>
+          <p className="text-xs text-slate-500 mt-0.5">
+            {districtFilter === 'all'
+              ? `Displaying first ${displayRows.length} planning units (select a district above to filter)`
+              : `All ${rows.length} planning units in ${districtFilter}`}
+          </p>
         </div>
 
         {indicator.target && (
-          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 self-start sm:self-auto">
+          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 self-start sm:self-auto">
             Target: {indicator.target}%
           </span>
         )}
       </div>
 
-      <div className="h-[360px] w-full">
+      <div className="h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
-            margin={{ top: 15, right: 25, left: 10, bottom: 80 }}
+            margin={{ top: 10, right: 20, left: 0, bottom: 65 }}
           >
             <XAxis
               dataKey="puName"
               interval={0}
-              angle={-40}
+              angle={-35}
               textAnchor="end"
               tick={{ fontSize: 10, fill: '#334155', fontWeight: 500 }}
-              height={80} // Generous height for rotated text
-              tickLine={{ stroke: '#E2E8F0' }}
+              height={65}
+              tickLine={false}
+              axisLine={{ stroke: '#E2E8F0' }}
             />
             <YAxis
               domain={[0, 100]}
               tickFormatter={v => `${v}%`}
-              tick={{ fontSize: 10, fill: '#64748B', fontWeight: 500 }}
-              width={45} // Clean margin on left
+              tick={{ fontSize: 10, fill: '#64748B' }}
+              width={40}
               axisLine={{ stroke: '#E2E8F0' }}
-              tickLine={{ stroke: '#E2E8F0' }}
+              tickLine={false}
             />
             <Tooltip
-              cursor={{ fill: 'rgba(20, 108, 80, 0.05)' }}
+              cursor={{ fill: 'rgba(20, 108, 80, 0.04)' }}
               content={({ active, payload }) => {
                 if (!active || !payload || !payload.length) return null;
                 const d = payload[0].payload;
                 return (
-                  <div className="bg-slate-900 text-white rounded-xl p-3 text-xs shadow-xl border border-slate-800 min-w-[190px]">
-                    <p className="font-bold text-emerald-400 text-sm">{d.puName}</p>
-                    <p className="text-slate-400 text-[11px] mb-2">{d.district}</p>
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-300">{indicator.shortName}:</span>
-                        <span className="font-bold text-white">{d.val.toFixed(1)}%</span>
+                  <div className="bg-white border border-slate-200 rounded-lg p-2.5 text-xs shadow-md">
+                    <p className="font-bold text-slate-900">{d.puName}</p>
+                    <p className="text-slate-400 text-[10px] mb-1">{d.district}</p>
+                    <div className="space-y-0.5">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="text-slate-500">{indicator.shortName}:</span>
+                        <span className="font-bold text-slate-900">{d.val.toFixed(1)}%</span>
                       </div>
                       <div className="flex items-center justify-between text-[11px] text-slate-400">
                         <span>Counts:</span>
-                        <span className="font-mono text-slate-300">{d.numerator} / {d.denominator}</span>
+                        <span className="font-mono text-slate-600">{d.numerator} / {d.denominator}</span>
                       </div>
                     </div>
                   </div>
@@ -126,22 +122,15 @@ export const PuComparisonChart: React.FC<PuComparisonChartProps> = ({
             {target > 0 && (
               <ReferenceLine
                 y={target}
-                stroke="#0F766E"
+                stroke="#059669"
                 strokeWidth={1.5}
-                strokeDasharray="4 4"
-                label={{
-                  value: `Target: ${target}%`,
-                  position: 'top',
-                  fill: '#0F766E',
-                  fontSize: 10,
-                  fontWeight: 700
-                }}
+                strokeDasharray="3 3"
               />
             )}
             <Bar
               dataKey="val"
-              barSize={Math.max(12, Math.min(24, Math.floor(600 / chartData.length)))}
-              radius={[4, 4, 0, 0]}
+              barSize={Math.max(10, Math.min(22, Math.floor(600 / chartData.length)))}
+              radius={[3, 3, 0, 0]}
             >
               {chartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={getBarColor(entry.status)} />

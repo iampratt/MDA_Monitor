@@ -5,10 +5,7 @@ import {
   ArrowDown,
   Info,
   ChevronLeft,
-  ChevronRight,
-  TrendingUp,
-  TrendingDown,
-  Layers
+  ChevronRight
 } from 'lucide-react';
 import { MonitoringRow } from '../../types/dataset';
 import { IndicatorDefinition } from '../../types/indicator';
@@ -86,40 +83,34 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
   const paginatedData = tableData.slice((page - 1) * actualPageSize, page * actualPageSize);
 
   const renderSortIcon = (col: SortCol) => {
-    if (sortCol !== col) return <ArrowUpDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600" />;
+    if (sortCol !== col) return <ArrowUpDown className="w-3 h-3 text-slate-300" />;
     return sortDir === 'asc'
-      ? <ArrowUp className="w-3.5 h-3.5 text-mda-700" />
-      : <ArrowDown className="w-3.5 h-3.5 text-mda-700" />;
+      ? <ArrowUp className="w-3 h-3 text-mda-700" />
+      : <ArrowDown className="w-3 h-3 text-mda-700" />;
   };
 
   return (
-    <div className="card-subtle rounded-2xl bg-white shadow-card overflow-hidden">
+    <div className="card-subtle rounded-xl bg-white overflow-hidden">
       {/* Table Header Banner with Formula Details */}
-      <div className="p-5 border-b border-surface-border bg-gradient-to-r from-surface-sidebar to-white flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-4 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2.5">
-            <span className="font-mono text-xs font-bold text-mda-800 bg-mda-100/90 px-2.5 py-1 rounded-md border border-mda-200">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-xs font-bold text-mda-800 bg-mda-50 px-2 py-0.5 rounded border border-mda-200/60">
               {indicator.code}
             </span>
-            <h3 className="text-base font-bold text-slate-900 tracking-tight">
+            <h3 className="text-sm font-bold text-slate-900 tracking-tight">
               {indicator.name}
             </h3>
           </div>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 mt-1.5 font-medium">
-            <span className="flex items-center gap-1.5">
-              <Info className="w-3.5 h-3.5 text-mda-700" />
-              <span><strong>Formula:</strong> 100 × ({indicator.numeratorLabel}) / ({indicator.denominatorLabel})</span>
-            </span>
-            <span className="text-slate-300">•</span>
-            <span>Direction: <strong>{indicator.direction === 'high_is_good' ? 'Higher is better' : 'Lower is better'}</strong></span>
-          </div>
+          <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
+            <Info className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <span>Formula: <strong>100 × ({indicator.numeratorLabel}) / ({indicator.denominatorLabel})</strong></span>
+          </p>
         </div>
 
         {indicator.target && (
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="px-3.5 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold shadow-xs">
-              Benchmark Target: {indicator.target}%
-            </div>
+          <div className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200/60 shrink-0">
+            Target: {indicator.target}%
           </div>
         )}
       </div>
@@ -128,72 +119,72 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="bg-slate-50/90 border-b border-surface-border text-slate-600 font-bold uppercase text-[10px] tracking-wider">
-              <th className="py-3.5 px-4 w-12 text-center">#</th>
+            <tr className="bg-slate-50/70 border-b border-slate-100 text-slate-500 font-bold uppercase text-[10px] tracking-wider select-none">
+              <th className="py-2.5 px-4 w-10 text-center">#</th>
               <th
                 onClick={() => handleSort('district')}
-                className="py-3.5 px-4 cursor-pointer hover:bg-slate-100/80 transition-colors group select-none whitespace-nowrap"
+                className="py-2.5 px-4 cursor-pointer hover:text-slate-900 whitespace-nowrap"
               >
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1">
                   <span>District</span>
                   {renderSortIcon('district')}
                 </div>
               </th>
               <th
                 onClick={() => handleSort('planningUnit')}
-                className="py-3.5 px-4 cursor-pointer hover:bg-slate-100/80 transition-colors group select-none whitespace-nowrap"
+                className="py-2.5 px-4 cursor-pointer hover:text-slate-900 whitespace-nowrap"
               >
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1">
                   <span>Planning Unit</span>
                   {renderSortIcon('planningUnit')}
                 </div>
               </th>
-              <th className="py-3.5 px-3 text-center whitespace-nowrap">Regime</th>
+              <th className="py-2.5 px-3 text-center whitespace-nowrap">Regime</th>
               <th
                 onClick={() => handleSort('teamsMonitored')}
-                className="py-3.5 px-4 text-right cursor-pointer hover:bg-slate-100/80 transition-colors group select-none whitespace-nowrap"
+                className="py-2.5 px-4 text-right cursor-pointer hover:text-slate-900 whitespace-nowrap"
               >
-                <div className="flex items-center justify-end gap-1.5">
+                <div className="flex items-center justify-end gap-1">
                   <span>Monitored</span>
                   {renderSortIcon('teamsMonitored')}
                 </div>
               </th>
               <th
                 onClick={() => handleSort('numerator')}
-                className="py-3.5 px-4 text-right cursor-pointer hover:bg-slate-100/80 transition-colors group select-none whitespace-nowrap"
+                className="py-2.5 px-4 text-right cursor-pointer hover:text-slate-900 whitespace-nowrap"
                 title={indicator.numeratorLabel}
               >
-                <div className="flex items-center justify-end gap-1.5">
+                <div className="flex items-center justify-end gap-1">
                   <span>Numerator</span>
                   {renderSortIcon('numerator')}
                 </div>
               </th>
               <th
                 onClick={() => handleSort('denominator')}
-                className="py-3.5 px-4 text-right cursor-pointer hover:bg-slate-100/80 transition-colors group select-none whitespace-nowrap"
+                className="py-2.5 px-4 text-right cursor-pointer hover:text-slate-900 whitespace-nowrap"
                 title={indicator.denominatorLabel}
               >
-                <div className="flex items-center justify-end gap-1.5">
+                <div className="flex items-center justify-end gap-1">
                   <span>Denominator</span>
                   {renderSortIcon('denominator')}
                 </div>
               </th>
               <th
                 onClick={() => handleSort('percentage')}
-                className="py-3.5 px-4 text-right cursor-pointer hover:bg-slate-100/80 transition-colors group select-none whitespace-nowrap min-w-[120px]"
+                className="py-2.5 px-4 text-right cursor-pointer hover:text-slate-900 whitespace-nowrap min-w-[110px]"
               >
-                <div className="flex items-center justify-end gap-1.5">
+                <div className="flex items-center justify-end gap-1">
                   <span>Calculated %</span>
                   {renderSortIcon('percentage')}
                 </div>
               </th>
-              <th className="py-3.5 px-4 text-center whitespace-nowrap min-w-[130px]">Status</th>
+              <th className="py-2.5 px-4 text-center whitespace-nowrap">Status</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-surface-border text-slate-700 font-medium">
+          <tbody className="divide-y divide-slate-100 text-slate-700">
             {paginatedData.length === 0 ? (
               <tr>
-                <td colSpan={9} className="py-12 text-center text-slate-400">
+                <td colSpan={9} className="py-8 text-center text-slate-400">
                   No planning units found matching your search filter.
                 </td>
               </tr>
@@ -207,44 +198,44 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
                 return (
                   <tr
                     key={`${item.district}-${item.planningUnit}`}
-                    className="hover:bg-emerald-50/30 transition-colors"
+                    className="hover:bg-slate-50/70 transition-colors"
                   >
-                    <td className="py-3 px-4 text-center text-slate-400 font-mono text-[11px]">
+                    <td className="py-2.5 px-4 text-center text-slate-400 font-mono text-[11px]">
                       {globalIndex}
                     </td>
-                    <td className="py-3 px-4 font-bold text-slate-900 whitespace-nowrap">
+                    <td className="py-2.5 px-4 font-bold text-slate-900 whitespace-nowrap">
                       {item.district}
                     </td>
-                    <td className="py-3 px-4 font-semibold text-slate-800 whitespace-nowrap">
+                    <td className="py-2.5 px-4 font-semibold text-slate-800 whitespace-nowrap">
                       {item.planningUnit}
                     </td>
-                    <td className="py-3 px-3 text-center whitespace-nowrap">
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200">
+                    <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600">
                         {item.regime}
                       </span>
                     </td>
-                    <td className="py-3 px-4 text-right font-mono text-slate-600 font-semibold whitespace-nowrap">
+                    <td className="py-2.5 px-4 text-right font-mono text-slate-600 whitespace-nowrap">
                       {item.teamsMonitored.toLocaleString()}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono text-slate-800 font-semibold whitespace-nowrap">
+                    <td className="py-2.5 px-4 text-right font-mono text-slate-800 font-medium whitespace-nowrap">
                       {item.numerator.toLocaleString()}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono text-slate-600 font-semibold whitespace-nowrap">
+                    <td className="py-2.5 px-4 text-right font-mono text-slate-600 whitespace-nowrap">
                       {item.denominator.toLocaleString()}
                     </td>
-                    <td className="py-3 px-4 text-right whitespace-nowrap font-mono">
+                    <td className="py-2.5 px-4 text-right whitespace-nowrap font-mono">
                       {isZeroDen ? (
-                        <span className="text-slate-400 font-normal italic">N/A (0 den)</span>
+                        <span className="text-slate-400 font-normal italic">N/A</span>
                       ) : (
-                        <div className="flex items-center justify-end gap-2">
-                          <span className="font-extrabold text-slate-900 text-sm">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <span className="font-bold text-slate-900 text-sm">
                             {item.formattedPercentage}
                           </span>
                           {item.delta !== null && (
                             <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
                               item.delta >= 0
-                                ? 'bg-emerald-100 text-emerald-800'
-                                : 'bg-rose-100 text-rose-800'
+                                ? 'bg-emerald-50 text-emerald-700'
+                                : 'bg-rose-50 text-rose-700'
                             }`}>
                               {item.delta >= 0 ? `+${item.delta}%` : `${item.delta}%`}
                             </span>
@@ -252,7 +243,7 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
                         </div>
                       )}
                     </td>
-                    <td className="py-3 px-4 text-center whitespace-nowrap">
+                    <td className="py-2.5 px-4 text-center whitespace-nowrap">
                       <StatusBadge status={item.status} size="sm" />
                     </td>
                   </tr>
@@ -264,7 +255,7 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
       </div>
 
       {/* Pagination & Display Controls */}
-      <div className="p-4 border-t border-surface-border bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-medium">
+      <div className="p-3 border-t border-slate-100 bg-slate-50/40 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-medium">
         <div className="flex items-center gap-3">
           <span>
             Showing <strong className="text-slate-800 font-bold">{Math.min(paginatedData.length, tableData.length)}</strong> of <strong className="text-slate-800 font-bold">{tableData.length}</strong> planning units
@@ -278,7 +269,7 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
                 setPageSize(Number(e.target.value));
                 setPage(1);
               }}
-              className="bg-white border border-surface-border rounded-md px-2 py-1 text-slate-700 font-semibold focus:outline-none focus:ring-1 focus:ring-mda-700"
+              className="bg-white border border-slate-200 rounded px-2 py-0.5 text-slate-700 font-semibold focus:outline-none focus:ring-1 focus:ring-mda-700"
             >
               <option value={15}>15</option>
               <option value={25}>25</option>
@@ -293,18 +284,18 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-surface-border bg-white text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-xs"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
               <span>Previous</span>
             </button>
-            <span className="px-3 py-1 font-bold text-slate-800">
+            <span className="px-2 py-1 font-bold text-slate-800">
               {page} / {totalPages}
             </span>
             <button
               onClick={() => setPage(p => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-surface-border bg-white text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-xs"
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
               <span>Next</span>
               <ChevronRight className="w-3.5 h-3.5" />

@@ -103,6 +103,7 @@ export const App: React.FC = () => {
           <ManagementOverview
             districtAggregates={districtAggregates}
             grandAggregate={grandAggregate}
+            rows={activeDataset.records}
             onNavigateToAnalyst={handleNavigateToAnalyst}
           />
         )}
