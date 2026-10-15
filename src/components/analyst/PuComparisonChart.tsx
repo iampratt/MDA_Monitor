@@ -111,8 +111,8 @@ export const PuComparisonChart: React.FC<PuComparisonChartProps> = ({
               barSize={Math.max(10, Math.min(22, Math.floor(600 / chartData.length)))}
               radius={[3, 3, 0, 0]}
             >
-              {chartData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={getBarColor(entry.status)} />
+              {chartData.map((_entry, index) => (
+                <Cell key={`cell-${index}`} fill="#2563eb" />
               ))}
             </Bar>
           </BarChart>
