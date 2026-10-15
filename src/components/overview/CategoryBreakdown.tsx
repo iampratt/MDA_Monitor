@@ -2,6 +2,7 @@ import React from 'react';
 import { CATEGORIES, INDICATOR_DICTIONARY } from '../../data/indicatorDictionary';
 import { GrandAggregate } from '../../types/indicator';
 import { ProgressBar } from '../common/ProgressBar';
+import { PillarComparativeChart } from './PillarComparativeChart';
 import { Layers, ArrowRight } from 'lucide-react';
 
 interface CategoryBreakdownProps {
@@ -16,17 +17,24 @@ export const CategoryBreakdown: React.FC<CategoryBreakdownProps> = ({
   onSelectIndicator
 }) => {
   return (
-    <div className="card-subtle rounded-xl p-5 bg-white border border-slate-200">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-        <div>
-          <h3 className="text-sm font-bold text-slate-900 tracking-tight">
-            10 Thematic Pillar Readiness
-          </h3>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Core performance summary across all concurrent monitoring thematic pillars.
-          </p>
+    <div className="space-y-6">
+      {/* Visual Comparative Pillar Chart */}
+      <PillarComparativeChart
+        grandAggregate={grandAggregate}
+        onSelectIndicator={onSelectIndicator}
+      />
+
+      <div className="card-subtle rounded-xl p-5 bg-white border border-slate-200">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <div>
+            <h3 className="text-sm font-bold text-slate-900 tracking-tight">
+              Detailed Thematic Pillar Breakdown
+            </h3>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Core performance summary across all concurrent monitoring thematic pillars. Click any pillar to view its district rankings.
+            </p>
+          </div>
         </div>
-      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {CATEGORIES.map(category => {

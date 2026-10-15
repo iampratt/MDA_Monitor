@@ -17,6 +17,7 @@ import { MonitoringRow } from '../../types/dataset';
 import { INDICATOR_DICTIONARY, getIndicatorById } from '../../data/indicatorDictionary';
 import { calculateRowIndicator } from '../../services/indicatorCalculator';
 import { PlanningUnitModal } from './PlanningUnitModal';
+import { DistrictProfileBenchmarkChart } from './DistrictProfileBenchmarkChart';
 
 interface DistrictDetailViewProps {
   districtName: string;
@@ -227,6 +228,14 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* District vs State Profile Multi-Metric Chart */}
+      <DistrictProfileBenchmarkChart
+        districtName={districtName}
+        districtAggregate={districtAggregate}
+        grandAggregate={grandAggregate}
+        onSelectIndicator={onSelectIndicator}
+      />
 
       {/* Planning Unit Breakdown Chart */}
       <div className="card-subtle rounded-xl p-5 bg-white">

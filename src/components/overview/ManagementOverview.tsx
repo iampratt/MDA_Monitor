@@ -9,6 +9,7 @@ import {
   BarChart3,
   Table as TableIcon,
   Layers,
+  Activity,
   ArrowRight,
   TrendingUp,
   AlertTriangle
@@ -21,6 +22,7 @@ import { DistrictTableView } from './DistrictTableView';
 import { DistrictDetailView } from './DistrictDetailView';
 import { CategoryBreakdown } from './CategoryBreakdown';
 import { TopBottomDistricts } from './TopBottomDistricts';
+import { MultiIndicatorComparisonChart } from './MultiIndicatorComparisonChart';
 
 interface ManagementOverviewProps {
   districtAggregates: DistrictAggregate[];
@@ -37,7 +39,7 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
 }) => {
   // Drill-down state
   const [drilldownDistrict, setDrilldownDistrict] = useState<string | null>(null);
-  const [activeView, setActiveView] = useState<'ranking' | 'table' | 'thematic'>('ranking');
+  const [activeView, setActiveView] = useState<'ranking' | 'multi' | 'table' | 'thematic'>('ranking');
   const [selectedIndicatorId, setSelectedIndicatorId] = useState('teams_visited_area');
 
   const totalTeamsMonitored = grandAggregate.rawSums['D'] || 0;
@@ -173,6 +175,21 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
             <button
               type="button"
               role="tab"
+              aria-selected={activeView === 'multi'}
+              aria-controls="overview-multi-panel"
+              onClick={() => setActiveView('multi')}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+                activeView === 'multi'
+                  ? 'bg-white text-slate-900 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Activity className="w-3.5 h-3.5" />
+              <span>Multi-Metric</span>
+            </button>
+            <button
+              type="button"
+              role="tab"
               aria-selected={activeView === 'table'}
               aria-controls="overview-table-panel"
               onClick={() => setActiveView('table')}
@@ -288,6 +305,16 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
             districtAggregates={districtAggregates}
             grandAggregate={grandAggregate}
             selectedIndicatorId={selectedIndicatorId}
+            onSelectDistrict={handleSelectDistrict}
+          />
+        </div>
+      )}
+
+      {activeView === 'multi' && (
+        <div id="overview-multi-panel" role="tabpanel" className="space-y-6">
+          <MultiIndicatorComparisonChart
+            districtAggregates={districtAggregates}
+            grandAggregate={grandAggregate}
             onSelectDistrict={handleSelectDistrict}
           />
         </div>
