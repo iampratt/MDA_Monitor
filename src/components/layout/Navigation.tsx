@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, TableProperties, BookOpen, UploadCloud } from 'lucide-react';
+import { LayoutDashboard, TableProperties, BookOpen, UploadCloud, FileText } from 'lucide-react';
 import { ActiveTab } from '../../types/filter';
 
 interface NavigationProps {
@@ -13,6 +13,11 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onTabChange }
       id: 'overview',
       label: 'Executive Dashboard',
       icon: <LayoutDashboard className="w-3.5 h-3.5" />
+    },
+    {
+      id: 'report',
+      label: 'Executive Report',
+      icon: <FileText className="w-3.5 h-3.5" />
     },
     {
       id: 'analyst',

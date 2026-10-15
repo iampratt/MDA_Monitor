@@ -1,10 +1,11 @@
 import React from 'react';
-import { Activity, ShieldCheck, RefreshCw, Upload, Database, RotateCcw } from 'lucide-react';
+import { Activity, ShieldCheck, RefreshCw, Upload, Database, RotateCcw, FileText } from 'lucide-react';
 import { DatasetVersion } from '../../types/dataset';
 
 interface HeaderProps {
   dataset: DatasetVersion;
   onOpenAdmin: () => void;
+  onOpenReport?: () => void;
   onRefresh: () => void;
   isCustomDataset: boolean;
   onResetBaseline: () => void;
@@ -13,6 +14,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   dataset,
   onOpenAdmin,
+  onOpenReport,
   onRefresh,
   isCustomDataset,
   onResetBaseline
@@ -73,6 +75,17 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <RefreshCw className="w-3.5 h-3.5" />
             </button>
+
+            {onOpenReport && (
+              <button
+                onClick={onOpenReport}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition-colors shadow-xs"
+                title="View compiled percentage summary report and download PDF"
+              >
+                <FileText className="w-3.5 h-3.5 text-slate-500" />
+                <span className="hidden sm:inline">Executive Report</span>
+              </button>
+            )}
 
             <button
               onClick={onOpenAdmin}

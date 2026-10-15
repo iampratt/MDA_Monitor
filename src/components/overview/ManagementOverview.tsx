@@ -23,6 +23,7 @@ import { DistrictDetailView } from './DistrictDetailView';
 import { CategoryBreakdown } from './CategoryBreakdown';
 import { TopBottomDistricts } from './TopBottomDistricts';
 import { MultiIndicatorComparisonChart } from './MultiIndicatorComparisonChart';
+import { IndicatorDispersionChart } from './IndicatorDispersionChart';
 
 interface ManagementOverviewProps {
   districtAggregates: DistrictAggregate[];
@@ -313,6 +314,12 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
       {activeView === 'multi' && (
         <div id="overview-multi-panel" role="tabpanel" className="space-y-6">
           <MultiIndicatorComparisonChart
+            districtAggregates={districtAggregates}
+            grandAggregate={grandAggregate}
+            onSelectDistrict={handleSelectDistrict}
+          />
+
+          <IndicatorDispersionChart
             districtAggregates={districtAggregates}
             grandAggregate={grandAggregate}
             onSelectDistrict={handleSelectDistrict}

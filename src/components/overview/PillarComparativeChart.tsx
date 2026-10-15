@@ -14,7 +14,7 @@ import { BarChart3 } from 'lucide-react';
 
 interface PillarComparativeChartProps {
   grandAggregate: GrandAggregate;
-  onSelectIndicator: (indicatorId: string) => void;
+  onSelectIndicator?: (indicatorId: string) => void;
 }
 
 export const PillarComparativeChart: React.FC<PillarComparativeChartProps> = ({
@@ -141,7 +141,7 @@ export const PillarComparativeChart: React.FC<PillarComparativeChartProps> = ({
               barSize={18}
               radius={[0, 4, 4, 0]}
               onClick={(entry: any) => {
-                if (entry && entry.id) onSelectIndicator(entry.id);
+                if (entry && entry.id && onSelectIndicator) onSelectIndicator(entry.id);
               }}
               cursor="pointer"
             >

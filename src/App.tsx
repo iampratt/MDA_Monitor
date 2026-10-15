@@ -6,16 +6,46 @@ import { ManagementOverview } from './components/overview/ManagementOverview';
 import { AnalystView } from './components/analyst/AnalystView';
 import { IndicatorExplorer } from './components/indicators/IndicatorExplorer';
 import { AdminPortal } from './components/admin/AdminPortal';
+import { ExecutiveReportView } from './components/report/ExecutiveReportView';
 import { getActiveDataset, resetToBundledDataset } from './services/storageService';
 import { computeGrandAggregate, computeDistrictAggregates } from './services/indicatorCalculator';
 import { ActiveTab, FilterState } from './types/filter';
 import { DatasetVersion } from './types/dataset';
 import defaultDataset from './data/activeDataset.json';
 
+const getInitialTab = (): ActiveTab => {
+  const hash = window.location.hash.toLowerCase();
+  if (hash === '#/report' || hash === '#report') return 'report';
+  if (hash === '#/analyst' || hash === '#analyst') return 'analyst';
+  if (hash === '#/indicators' || hash === '#indicators') return 'indicators';
+  if (hash === '#/admin' || hash === '#admin') return 'admin';
+  return 'overview';
+};
+
 export const App: React.FC = () => {
   const [activeDataset, setActiveDataset] = useState<DatasetVersion>(() => getActiveDataset());
-  const [activeTab, setActiveTab] = useState<ActiveTab>('overview');
+  const [activeTab, setActiveTab] = useState<ActiveTab>(getInitialTab);
   const [isCustomDataset, setIsCustomDataset] = useState<boolean>(false);
+
+  // Synchronize hash routing with activeTab
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === '#/report' || hash === '#report') setActiveTab('report');
+      else if (hash === '#/analyst' || hash === '#analyst') setActiveTab('analyst');
+      else if (hash === '#/indicators' || hash === '#indicators') setActiveTab('indicators');
+      else if (hash === '#/admin' || hash === '#admin') setActiveTab('admin');
+      else if (hash === '#/' || hash === '' || hash === '#overview') setActiveTab('overview');
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleTabChange = (tab: ActiveTab) => {
+    setActiveTab(tab);
+    window.location.hash = tab === 'overview' ? '' : `#/${tab}`;
+  };
 
   // Synchronize custom dataset check
   useEffect(() => {
@@ -85,7 +115,8 @@ export const App: React.FC = () => {
       {/* Top Header */}
       <Header
         dataset={activeDataset}
-        onOpenAdmin={() => setActiveTab('admin')}
+        onOpenAdmin={() => handleTabChange('admin')}
+        onOpenReport={() => handleTabChange('report')}
         onRefresh={handleRefresh}
         isCustomDataset={isCustomDataset}
         onResetBaseline={handleResetBaseline}
@@ -94,7 +125,7 @@ export const App: React.FC = () => {
       {/* Navigation Tabs */}
       <Navigation
         activeTab={activeTab}
-        onTabChange={setActiveTab}
+        onTabChange={handleTabChange}
       />
 
       {/* Main Content Area */}
@@ -105,6 +136,17 @@ export const App: React.FC = () => {
             grandAggregate={grandAggregate}
             rows={activeDataset.records}
             onNavigateToAnalyst={handleNavigateToAnalyst}
+          />
+        )}
+
+        {activeTab === 'report' && (
+          <ExecutiveReportView
+            dataset={activeDataset}
+            grandAggregate={grandAggregate}
+            districtAggregates={districtAggregates}
+            rows={activeDataset.records}
+            onNavigateToIndicator={indicatorId => handleNavigateToAnalyst({ indicatorId })}
+            onNavigateToDistrict={district => handleNavigateToAnalyst({ district })}
           />
         )}
 

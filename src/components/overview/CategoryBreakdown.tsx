@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CATEGORIES, INDICATOR_DICTIONARY } from '../../data/indicatorDictionary';
 import { GrandAggregate } from '../../types/indicator';
 import { ProgressBar } from '../common/ProgressBar';
 import { PillarComparativeChart } from './PillarComparativeChart';
-import { Layers, ArrowRight } from 'lucide-react';
+import { PillarRadarChart } from './PillarRadarChart';
+import { Layers, ArrowRight, BarChart3, Activity } from 'lucide-react';
 
 interface CategoryBreakdownProps {
   grandAggregate: GrandAggregate;
@@ -16,13 +17,54 @@ export const CategoryBreakdown: React.FC<CategoryBreakdownProps> = ({
   onSelectCategory,
   onSelectIndicator
 }) => {
+  const [pillarChartType, setPillarChartType] = useState<'bars' | 'radar'>('bars');
+
   return (
     <div className="space-y-6">
-      {/* Visual Comparative Pillar Chart */}
-      <PillarComparativeChart
-        grandAggregate={grandAggregate}
-        onSelectIndicator={onSelectIndicator}
-      />
+      {/* Visual Chart Header with Switcher */}
+      <div className="flex items-center justify-between pb-1">
+        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+          Pillar Visual Analysis Mode
+        </span>
+        <div className="inline-flex bg-slate-100 p-0.5 rounded-lg text-xs font-semibold">
+          <button
+            type="button"
+            onClick={() => setPillarChartType('bars')}
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md transition-colors ${
+              pillarChartType === 'bars'
+                ? 'bg-white text-slate-900 shadow-xs'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <BarChart3 className="w-3.5 h-3.5" />
+            <span>Ranked Bars</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setPillarChartType('radar')}
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md transition-colors ${
+              pillarChartType === 'radar'
+                ? 'bg-white text-slate-900 shadow-xs'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Activity className="w-3.5 h-3.5" />
+            <span>Spider Radar</span>
+          </button>
+        </div>
+      </div>
+
+      {pillarChartType === 'bars' ? (
+        <PillarComparativeChart
+          grandAggregate={grandAggregate}
+          onSelectIndicator={onSelectIndicator}
+        />
+      ) : (
+        <PillarRadarChart
+          grandAggregate={grandAggregate}
+          onSelectIndicator={onSelectIndicator}
+        />
+      )}
 
       <div className="card-subtle rounded-xl p-5 bg-white border border-slate-200">
         <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">

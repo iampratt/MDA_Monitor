@@ -24,4 +24,4 @@ export interface TableSortState {
   direction: SortDirection;
 }
 
-export type ActiveTab = 'overview' | 'analyst' | 'indicators' | 'admin';
+export type ActiveTab = 'overview' | 'analyst' | 'indicators' | 'admin' | 'report';
