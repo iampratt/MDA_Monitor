@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { DistrictAggregate, GrandAggregate } from '../../types/indicator';
 import { getIndicatorById } from '../../data/indicatorDictionary';
-import { ArrowUpDown, ArrowUp, ArrowDown, ChevronRight, Search } from 'lucide-react';
+import { ArrowUpDown, ArrowUp, ArrowDown, ChevronRight, Search, X } from 'lucide-react';
 import { StatusBadge } from '../common/StatusBadge';
 
 interface DistrictTableViewProps {
@@ -95,7 +95,7 @@ export const DistrictTableView: React.FC<DistrictTableViewProps> = ({
   };
 
   return (
-    <div className="card-subtle rounded-xl bg-white overflow-hidden">
+    <div className="card-subtle rounded-xl bg-white border border-slate-200 overflow-hidden shadow-xs">
       {/* Table Header Controls */}
       <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
@@ -108,14 +108,25 @@ export const DistrictTableView: React.FC<DistrictTableViewProps> = ({
         </div>
 
         <div className="relative w-full sm:w-64">
-          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
+          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" />
           <input
             type="text"
             placeholder="Search district..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-mda-700 font-medium"
+            aria-label="Search district in summary table"
+            className="w-full pl-8 pr-7 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-mda-700 font-medium"
           />
+          {search && (
+            <button
+              type="button"
+              onClick={() => setSearch('')}
+              aria-label="Clear table search"
+              className="absolute right-2 top-2 p-0.5 text-slate-400 hover:text-slate-600 rounded"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
       </div>
 
@@ -168,44 +179,69 @@ export const DistrictTableView: React.FC<DistrictTableViewProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 text-slate-700">
-            {sortedData.map((item, idx) => (
-              <tr
-                key={item.district}
-                onClick={() => onSelectDistrict(item.district)}
-                className="hover:bg-slate-50/70 cursor-pointer transition-colors group"
-              >
-                <td className="py-3 px-4 text-center text-slate-400 font-mono text-[11px]">
-                  {idx + 1}
-                </td>
-                <td className="py-3 px-4 font-bold text-slate-900 whitespace-nowrap group-hover:text-mda-800 transition-colors">
-                  {item.district}
-                </td>
-                <td className="py-3 px-3 text-center font-medium text-slate-600 whitespace-nowrap">
-                  {item.planningUnits}
-                </td>
-                <td className="py-3 px-3 text-right font-mono text-slate-600 whitespace-nowrap">
-                  {item.teamsMonitored.toLocaleString()}
-                </td>
-                <td className="py-3 px-3 text-right font-mono text-slate-700 font-medium whitespace-nowrap">
-                  {item.visited}
-                </td>
-                <td className="py-3 px-3 text-right font-mono text-slate-700 font-medium whitespace-nowrap">
-                  {item.consumption}
-                </td>
-                <td className="py-3 px-4 text-right whitespace-nowrap font-mono font-bold text-slate-900 text-sm">
-                  {item.formattedPercentage}
-                </td>
-                <td className="py-3 px-4 text-center whitespace-nowrap">
-                  <StatusBadge status={item.status} size="sm" />
-                </td>
-                <td className="py-3 px-4 text-right whitespace-nowrap">
-                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-mda-700 group-hover:text-mda-900">
-                    <span>Drill down</span>
-                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                  </span>
+            {sortedData.length === 0 ? (
+              <tr>
+                <td colSpan={9} className="py-12 text-center text-slate-500">
+                  <p className="text-sm font-semibold text-slate-700">No districts match "{search}"</p>
+                  <p className="text-xs text-slate-400 mt-1">Try another search or reset the filter.</p>
+                  <button
+                    type="button"
+                    onClick={() => setSearch('')}
+                    className="mt-3 inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors"
+                  >
+                    Clear search
+                  </button>
                 </td>
               </tr>
-            ))}
+            ) : (
+              sortedData.map((item, idx) => (
+                <tr
+                  key={item.district}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => onSelectDistrict(item.district)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onSelectDistrict(item.district);
+                    }
+                  }}
+                  aria-label={`Drill down into ${item.district}`}
+                  className="hover:bg-slate-50/70 cursor-pointer transition-colors group focus:outline-none focus-visible:bg-slate-100/80"
+                >
+                  <td className="py-3 px-4 text-center text-slate-400 font-mono text-[11px]">
+                    {idx + 1}
+                  </td>
+                  <td className="py-3 px-4 font-bold text-slate-900 whitespace-nowrap group-hover:text-mda-800 transition-colors">
+                    {item.district}
+                  </td>
+                  <td className="py-3 px-3 text-center font-medium text-slate-600 whitespace-nowrap">
+                    {item.planningUnits}
+                  </td>
+                  <td className="py-3 px-3 text-right font-mono text-slate-600 whitespace-nowrap">
+                    {item.teamsMonitored.toLocaleString()}
+                  </td>
+                  <td className="py-3 px-3 text-right font-mono text-slate-700 font-medium whitespace-nowrap">
+                    {item.visited}
+                  </td>
+                  <td className="py-3 px-3 text-right font-mono text-slate-700 font-medium whitespace-nowrap">
+                    {item.consumption}
+                  </td>
+                  <td className="py-3 px-4 text-right whitespace-nowrap font-mono font-bold text-slate-900 text-sm">
+                    {item.formattedPercentage}
+                  </td>
+                  <td className="py-3 px-4 text-center whitespace-nowrap">
+                    <StatusBadge status={item.status} size="sm" />
+                  </td>
+                  <td className="py-3 px-4 text-right whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-mda-700 group-hover:text-mda-900">
+                      <span>Drill down</span>
+                      <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                    </span>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

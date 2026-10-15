@@ -20,6 +20,7 @@ import { DistrictRankingChart } from './DistrictRankingChart';
 import { DistrictTableView } from './DistrictTableView';
 import { DistrictDetailView } from './DistrictDetailView';
 import { CategoryBreakdown } from './CategoryBreakdown';
+import { TopBottomDistricts } from './TopBottomDistricts';
 
 interface ManagementOverviewProps {
   districtAggregates: DistrictAggregate[];
@@ -159,10 +160,18 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
 
         <div className="flex items-center gap-2 self-start sm:self-auto">
           <span className="text-xs text-slate-500 font-medium">View:</span>
-          <div className="inline-flex bg-slate-100 p-0.5 rounded-lg text-xs font-semibold">
+          <div
+            role="tablist"
+            aria-label="Overview perspective views"
+            className="inline-flex bg-slate-100 p-0.5 rounded-lg text-xs font-semibold"
+          >
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeView === 'ranking'}
+              aria-controls="overview-ranking-panel"
               onClick={() => setActiveView('ranking')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
                 activeView === 'ranking'
                   ? 'bg-white text-slate-900 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
@@ -172,8 +181,12 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
               <span>Rankings</span>
             </button>
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeView === 'table'}
+              aria-controls="overview-table-panel"
               onClick={() => setActiveView('table')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
                 activeView === 'table'
                   ? 'bg-white text-slate-900 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
@@ -183,8 +196,12 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
               <span>Districts Table</span>
             </button>
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeView === 'thematic'}
+              aria-controls="overview-thematic-panel"
               onClick={() => setActiveView('thematic')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
                 activeView === 'thematic'
                   ? 'bg-white text-slate-900 shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
@@ -215,18 +232,28 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
             return (
               <div
                 key={metric.id}
+                role={metric.isInteractiveIndicator ? 'button' : undefined}
+                tabIndex={metric.isInteractiveIndicator ? 0 : undefined}
+                aria-pressed={metric.isInteractiveIndicator ? isSelected : undefined}
+                aria-label={metric.isInteractiveIndicator ? `Filter rankings by ${metric.title}` : undefined}
                 onClick={() => {
                   if (metric.isInteractiveIndicator) {
                     setSelectedIndicatorId(metric.id);
                   }
                 }}
-                className={`p-3.5 rounded-xl border transition-all ${
+                onKeyDown={e => {
+                  if (metric.isInteractiveIndicator && (e.key === 'Enter' || e.key === ' ')) {
+                    e.preventDefault();
+                    setSelectedIndicatorId(metric.id);
+                  }
+                }}
+                className={`p-3.5 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
                   metric.isInteractiveIndicator
                     ? 'cursor-pointer hover:border-slate-300'
                     : 'bg-white border-slate-200'
                 } ${
                   isSelected
-                    ? 'bg-white border-mda-600 ring-2 ring-mda-600/20 shadow-xs'
+                    ? 'bg-mda-50/15 border-mda-600 ring-2 ring-mda-600/30 shadow-xs'
                     : 'bg-white border-slate-200 shadow-xs'
                 }`}
               >
@@ -274,33 +301,46 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
 
       {/* Main Interactive Surface (Progressive Disclosure) */}
       {activeView === 'ranking' && (
-        <DistrictRankingChart
-          districtAggregates={districtAggregates}
-          grandAggregate={grandAggregate}
-          selectedIndicatorId={selectedIndicatorId}
-          onSelectIndicator={setSelectedIndicatorId}
-          onSelectDistrict={handleSelectDistrict}
-        />
+        <div id="overview-ranking-panel" role="tabpanel" className="space-y-6">
+          <DistrictRankingChart
+            districtAggregates={districtAggregates}
+            grandAggregate={grandAggregate}
+            selectedIndicatorId={selectedIndicatorId}
+            onSelectIndicator={setSelectedIndicatorId}
+            onSelectDistrict={handleSelectDistrict}
+          />
+
+          <TopBottomDistricts
+            districtAggregates={districtAggregates}
+            grandAggregate={grandAggregate}
+            selectedIndicatorId={selectedIndicatorId}
+            onSelectDistrict={handleSelectDistrict}
+          />
+        </div>
       )}
 
       {activeView === 'table' && (
-        <DistrictTableView
-          districtAggregates={districtAggregates}
-          grandAggregate={grandAggregate}
-          selectedIndicatorId={selectedIndicatorId}
-          onSelectDistrict={handleSelectDistrict}
-        />
+        <div id="overview-table-panel" role="tabpanel">
+          <DistrictTableView
+            districtAggregates={districtAggregates}
+            grandAggregate={grandAggregate}
+            selectedIndicatorId={selectedIndicatorId}
+            onSelectDistrict={handleSelectDistrict}
+          />
+        </div>
       )}
 
       {activeView === 'thematic' && (
-        <CategoryBreakdown
-          grandAggregate={grandAggregate}
-          onSelectCategory={category => onNavigateToAnalyst({ category })}
-          onSelectIndicator={indicatorId => {
-            setSelectedIndicatorId(indicatorId);
-            setActiveView('ranking');
-          }}
-        />
+        <div id="overview-thematic-panel" role="tabpanel">
+          <CategoryBreakdown
+            grandAggregate={grandAggregate}
+            onSelectCategory={category => onNavigateToAnalyst({ category })}
+            onSelectIndicator={indicatorId => {
+              setSelectedIndicatorId(indicatorId);
+              setActiveView('ranking');
+            }}
+          />
+        </div>
       )}
     </div>
   );

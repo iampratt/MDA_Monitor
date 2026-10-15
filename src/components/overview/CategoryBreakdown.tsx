@@ -16,7 +16,7 @@ export const CategoryBreakdown: React.FC<CategoryBreakdownProps> = ({
   onSelectIndicator
 }) => {
   return (
-    <div className="card-subtle rounded-xl p-5 bg-white">
+    <div className="card-subtle rounded-xl p-5 bg-white border border-slate-200">
       <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
         <div>
           <h3 className="text-sm font-bold text-slate-900 tracking-tight">
@@ -40,8 +40,17 @@ export const CategoryBreakdown: React.FC<CategoryBreakdownProps> = ({
           return (
             <div
               key={category}
+              role="button"
+              tabIndex={0}
               onClick={() => onSelectIndicator(primaryInd.id)}
-              className="p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-xs bg-slate-50/30 hover:bg-white transition-all cursor-pointer group flex flex-col justify-between"
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onSelectIndicator(primaryInd.id);
+                }
+              }}
+              aria-label={`View rankings for ${category} pillar, indicator ${primaryInd.shortName}`}
+              className="p-3.5 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-xs bg-slate-50/30 hover:bg-white transition-all cursor-pointer group flex flex-col justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600"
             >
               <div>
                 <div className="flex items-center justify-between mb-1.5">
