@@ -42,14 +42,7 @@ export const PuComparisonChart: React.FC<PuComparisonChartProps> = ({
     };
   });
 
-  const getBarColor = (status: string) => {
-    if (status === 'good') return '#059669';
-    if (status === 'warning') return '#D97706';
-    if (status === 'danger') return '#E11D48';
-    return '#64748B';
-  };
-
-  const target = indicator.target ?? 90;
+  const getBarColor = () => '#2563eb';
 
   return (
     <div className="card-subtle rounded-xl p-5 bg-white">
@@ -64,12 +57,6 @@ export const PuComparisonChart: React.FC<PuComparisonChartProps> = ({
               : `All ${rows.length} planning units in ${districtFilter}`}
           </p>
         </div>
-
-        {indicator.target && (
-          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 self-start sm:self-auto">
-            Target: {indicator.target}%
-          </span>
-        )}
       </div>
 
       <div className="h-72 w-full">
@@ -119,14 +106,6 @@ export const PuComparisonChart: React.FC<PuComparisonChartProps> = ({
                 );
               }}
             />
-            {target > 0 && (
-              <ReferenceLine
-                y={target}
-                stroke="#059669"
-                strokeWidth={1.5}
-                strokeDasharray="3 3"
-              />
-            )}
             <Bar
               dataKey="val"
               barSize={Math.max(10, Math.min(22, Math.floor(600 / chartData.length)))}

@@ -30,11 +30,10 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
 }) => {
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
   const [searchDistrict, setSearchDistrict] = useState('');
-  const [quickFilter, setQuickFilter] = useState<'all' | 'watchlist' | 'top'>('all');
+  const [quickFilter, setQuickFilter] = useState<'all' | 'above' | 'below'>('all');
 
   const currentIndicator = getIndicatorById(selectedIndicatorId) || INDICATOR_DICTIONARY[0];
   const stateVal = grandAggregate.indicatorValues[selectedIndicatorId]?.percentage ?? 0;
-  const targetVal = currentIndicator.target ?? 90;
 
   // Prepare chart data
   const rawChartData = useMemo(() => {
@@ -62,11 +61,11 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
       filtered = filtered.filter(d => d.district.toLowerCase().includes(q));
     }
 
-    // Quick filter
-    if (quickFilter === 'watchlist') {
-      filtered = filtered.filter(d => d.status === 'danger' || d.status === 'warning');
-    } else if (quickFilter === 'top') {
-      filtered = filtered.filter(d => d.status === 'good');
+    // Quick filter against real State Average
+    if (quickFilter === 'above') {
+      filtered = filtered.filter(d => d.percentage >= stateVal);
+    } else if (quickFilter === 'below') {
+      filtered = filtered.filter(d => d.percentage < stateVal);
     }
 
     const copy = [...filtered];
@@ -75,14 +74,11 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
       return a.percentage - b.percentage;
     });
     return copy;
-  }, [rawChartData, searchDistrict, quickFilter, sortOrder]);
+  }, [rawChartData, searchDistrict, quickFilter, sortOrder, stateVal]);
 
-  // Refined Color mapper
+  // Bar color based on actual State Average
   const getBarColor = (item: typeof chartData[0]) => {
-    if (item.status === 'good') return '#059669'; // Emerald
-    if (item.status === 'warning') return '#D97706'; // Amber
-    if (item.status === 'danger') return '#E11D48'; // Rose
-    return '#64748B';
+    return item.percentage >= stateVal ? '#2563eb' : '#64748b';
   };
 
   const primaryIndicators = INDICATOR_DICTIONARY.filter(i => 
@@ -141,7 +137,7 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
           {/* Quick Filter Segmented Pills */}
           <div
             role="group"
-            aria-label="Filter districts by performance status"
+            aria-label="Filter districts by performance compared to State Average"
             className="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs font-medium"
           >
             <button
@@ -158,27 +154,27 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
             </button>
             <button
               type="button"
-              onClick={() => setQuickFilter('watchlist')}
-              aria-pressed={quickFilter === 'watchlist'}
+              onClick={() => setQuickFilter('above')}
+              aria-pressed={quickFilter === 'above'}
               className={`px-2.5 py-1 rounded-md transition-colors ${
-                quickFilter === 'watchlist'
-                  ? 'bg-white text-rose-700 font-bold shadow-xs'
+                quickFilter === 'above'
+                  ? 'bg-white text-blue-700 font-bold shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Needs Support ({rawChartData.filter(d => d.status === 'danger' || d.status === 'warning').length})
+              Above State Avg ({rawChartData.filter(d => d.percentage >= stateVal).length})
             </button>
             <button
               type="button"
-              onClick={() => setQuickFilter('top')}
-              aria-pressed={quickFilter === 'top'}
+              onClick={() => setQuickFilter('below')}
+              aria-pressed={quickFilter === 'below'}
               className={`px-2.5 py-1 rounded-md transition-colors ${
-                quickFilter === 'top'
-                  ? 'bg-white text-emerald-700 font-bold shadow-xs'
+                quickFilter === 'below'
+                  ? 'bg-white text-slate-800 font-bold shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Target Met ({rawChartData.filter(d => d.status === 'good').length})
+              Below State Avg ({rawChartData.filter(d => d.percentage < stateVal).length})
             </button>
           </div>
 
@@ -308,19 +304,11 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
                     );
                   }}
                 />
-                {targetVal > 0 && (
-                  <ReferenceLine
-                    x={targetVal}
-                    stroke="#059669"
-                    strokeWidth={1.5}
-                    strokeDasharray="3 3"
-                  />
-                )}
                 <ReferenceLine
                   x={stateVal}
-                  stroke="#D97706"
+                  stroke="#2563eb"
                   strokeWidth={1.5}
-                  strokeDasharray="2 2"
+                  strokeDasharray="3 3"
                 />
                 <Bar
                   dataKey="percentage"
@@ -343,27 +331,18 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
           <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1 font-medium">
-                <span className="w-2.5 h-2.5 rounded-sm bg-emerald-600" />
-                Target Met
+                <span className="w-2.5 h-2.5 rounded-sm bg-blue-600" />
+                ≥ State Average
               </span>
               <span className="flex items-center gap-1 font-medium">
-                <span className="w-2.5 h-2.5 rounded-sm bg-amber-500" />
-                Watchlist
-              </span>
-              <span className="flex items-center gap-1 font-medium">
-                <span className="w-2.5 h-2.5 rounded-sm bg-rose-600" />
-                Needs Attention
+                <span className="w-2.5 h-2.5 rounded-sm bg-slate-500" />
+                &lt; State Average
               </span>
             </div>
 
             <div className="flex items-center gap-3 text-xs">
-              {targetVal > 0 && (
-                <span className="flex items-center gap-1 text-slate-700 font-medium">
-                  <span className="w-3 h-0.5 bg-emerald-600 inline-block" /> Target ({targetVal}%)
-                </span>
-              )}
               <span className="flex items-center gap-1 text-slate-700 font-medium">
-                <span className="w-3 h-0.5 bg-amber-500 inline-block" /> State Avg ({stateVal.toFixed(1)}%)
+                <span className="w-3.5 h-0.5 bg-blue-600 inline-block border-b border-dashed border-blue-600" /> State Avg ({stateVal.toFixed(1)}%)
               </span>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, BookOpen, Target, CheckCircle2, Info, ArrowRight } from 'lucide-react';
+import { Search, BookOpen, CheckCircle2, Info, ArrowRight } from 'lucide-react';
 import { CATEGORIES, INDICATOR_DICTIONARY } from '../../data/indicatorDictionary';
 
 interface IndicatorExplorerProps {
@@ -34,7 +34,7 @@ export const IndicatorExplorer: React.FC<IndicatorExplorerProps> = ({ onSelectIn
               Indicator Dictionary & Reference
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Canonical metrics, validated formulas, benchmark targets, and spreadsheet column mappings.
+              Canonical metrics, validated formulas, and spreadsheet column mappings.
             </p>
           </div>
 
@@ -123,9 +123,9 @@ export const IndicatorExplorer: React.FC<IndicatorExplorerProps> = ({ onSelectIn
 
             <div>
               <div className="flex items-center justify-between text-xs py-2 border-t border-slate-100 font-medium">
-                <span className="text-slate-500">Benchmark Target:</span>
-                <span className="font-bold text-slate-900">
-                  {ind.target ? `${ind.target}%` : 'Standard'}
+                <span className="text-slate-500">Excel Column:</span>
+                <span className="font-mono font-bold text-mda-800 bg-mda-50 px-2 py-0.5 rounded border border-mda-200">
+                  Column {ind.code}
                 </span>
               </div>
 

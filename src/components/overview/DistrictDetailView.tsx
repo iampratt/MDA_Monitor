@@ -16,7 +16,6 @@ import { DistrictAggregate, GrandAggregate } from '../../types/indicator';
 import { MonitoringRow } from '../../types/dataset';
 import { INDICATOR_DICTIONARY, getIndicatorById } from '../../data/indicatorDictionary';
 import { calculateRowIndicator } from '../../services/indicatorCalculator';
-import { StatusBadge } from '../common/StatusBadge';
 import { PlanningUnitModal } from './PlanningUnitModal';
 
 interface DistrictDetailViewProps {
@@ -53,7 +52,6 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
   const currentIndicator = getIndicatorById(selectedIndicatorId) || INDICATOR_DICTIONARY[0];
   const districtVal = districtAggregate.indicatorValues[selectedIndicatorId]?.percentage ?? null;
   const stateVal = grandAggregate.indicatorValues[selectedIndicatorId]?.percentage ?? null;
-  const targetVal = currentIndicator.target ?? 90;
 
   // Key District Core Indicators
   const visitedAreaVal = districtAggregate.indicatorValues['teams_visited_area']?.formattedPercentage || 'N/A';
@@ -90,11 +88,11 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
     return puData.filter(p => p.planningUnit.toLowerCase().includes(q));
   }, [puData, puSearch]);
 
-  const getBarColor = (status: string) => {
-    if (status === 'good') return '#059669';
-    if (status === 'warning') return '#D97706';
-    if (status === 'danger') return '#E11D48';
-    return '#64748B';
+  const getBarColor = (percentage: number | null) => {
+    if (percentage !== null && districtVal !== null) {
+      return percentage >= districtVal ? '#2563eb' : '#64748b';
+    }
+    return '#64748b';
   };
 
   const primaryIndicators = INDICATOR_DICTIONARY.filter(i =>
@@ -240,15 +238,9 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
             </h3>
           </div>
           <div className="flex items-center gap-3 text-xs text-slate-500">
-            {targetVal > 0 && (
-              <span className="flex items-center gap-1 font-medium text-slate-700">
-                <span className="w-3 h-0.5 bg-emerald-600 inline-block" />
-                Target: {targetVal}%
-              </span>
-            )}
             {districtVal !== null && (
-              <span className="flex items-center gap-1 font-medium text-slate-700">
-                <span className="w-3 h-0.5 bg-amber-500 inline-block" />
+              <span className="flex items-center gap-1.5 font-medium text-slate-700">
+                <span className="w-3.5 h-0.5 bg-blue-600 inline-block border-b border-dashed border-blue-600" />
                 District Avg: {districtVal.toFixed(1)}%
               </span>
             )}
@@ -291,19 +283,11 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
                   );
                 }}
               />
-              {targetVal > 0 && (
-                <ReferenceLine
-                  y={targetVal}
-                  stroke="#059669"
-                  strokeDasharray="3 3"
-                  strokeWidth={1.5}
-                />
-              )}
               {districtVal !== null && (
                 <ReferenceLine
                   y={districtVal}
-                  stroke="#D97706"
-                  strokeDasharray="2 2"
+                  stroke="#2563eb"
+                  strokeDasharray="3 3"
                   strokeWidth={1.5}
                 />
               )}
@@ -317,7 +301,7 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
                 cursor="pointer"
               >
                 {puData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={getBarColor(entry.status)} />
+                  <Cell key={`cell-${index}`} fill={getBarColor(entry.percentage)} />
                 ))}
               </Bar>
             </BarChart>
@@ -361,7 +345,7 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
                 <th className="py-2.5 px-3 text-right">Numerator</th>
                 <th className="py-2.5 px-3 text-right">Denominator</th>
                 <th className="py-2.5 px-4 text-right">Calculated %</th>
-                <th className="py-2.5 px-4 text-center">Status</th>
+                <th className="py-2.5 px-4 text-right">vs District Avg</th>
                 <th className="py-2.5 px-4 text-right">Action</th>
               </tr>
             </thead>
@@ -398,8 +382,14 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
                   <td className="py-3 px-4 text-right whitespace-nowrap font-mono font-bold text-slate-900 text-sm">
                     {item.formattedPercentage}
                   </td>
-                  <td className="py-3 px-4 text-center whitespace-nowrap">
-                    <StatusBadge status={item.status} size="sm" />
+                  <td className="py-3 px-4 text-right whitespace-nowrap font-mono text-xs">
+                    {item.percentage !== null && districtVal !== null ? (
+                      <span className={`font-semibold ${item.percentage >= districtVal ? 'text-blue-700' : 'text-slate-600'}`}>
+                        {item.percentage >= districtVal ? `+${(item.percentage - districtVal).toFixed(1)}%` : `${(item.percentage - districtVal).toFixed(1)}%`}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400">N/A</span>
+                    )}
                   </td>
                   <td className="py-3 px-4 text-right whitespace-nowrap">
                     <button

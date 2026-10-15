@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { DistrictAggregate, GrandAggregate } from '../../types/indicator';
 import { getIndicatorById } from '../../data/indicatorDictionary';
 import { ArrowUpDown, ArrowUp, ArrowDown, ChevronRight, Search, X } from 'lucide-react';
-import { StatusBadge } from '../common/StatusBadge';
 
 interface DistrictTableViewProps {
   districtAggregates: DistrictAggregate[];
@@ -174,7 +173,7 @@ export const DistrictTableView: React.FC<DistrictTableViewProps> = ({
                   {renderSortIcon('percentage')}
                 </div>
               </th>
-              <th className="py-2.5 px-4 text-center">Status</th>
+              <th className="py-2.5 px-4 text-right">vs State Avg</th>
               <th className="py-2.5 px-4 text-right">Action</th>
             </tr>
           </thead>
@@ -230,8 +229,14 @@ export const DistrictTableView: React.FC<DistrictTableViewProps> = ({
                   <td className="py-3 px-4 text-right whitespace-nowrap font-mono font-bold text-slate-900 text-sm">
                     {item.formattedPercentage}
                   </td>
-                  <td className="py-3 px-4 text-center whitespace-nowrap">
-                    <StatusBadge status={item.status} size="sm" />
+                  <td className="py-3 px-4 text-right whitespace-nowrap font-mono text-xs">
+                    {item.percentage !== null && stateVal !== null ? (
+                      <span className={`font-semibold ${item.percentage >= stateVal ? 'text-blue-700' : 'text-slate-600'}`}>
+                        {item.percentage >= stateVal ? `+${(item.percentage - stateVal).toFixed(1)}%` : `${(item.percentage - stateVal).toFixed(1)}%`}
+                      </span>
+                    ) : (
+                      <span className="text-slate-400">N/A</span>
+                    )}
                   </td>
                   <td className="py-3 px-4 text-right whitespace-nowrap">
                     <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-mda-700 group-hover:text-mda-900">

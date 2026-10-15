@@ -10,7 +10,6 @@ import {
 import { MonitoringRow } from '../../types/dataset';
 import { IndicatorDefinition } from '../../types/indicator';
 import { calculateRowIndicator } from '../../services/indicatorCalculator';
-import { StatusBadge } from '../common/StatusBadge';
 
 interface AnalystTableProps {
   rows: MonitoringRow[];
@@ -37,10 +36,6 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
 
   const tableData = rows.map(r => {
     const calc = calculateRowIndicator(r, indicator);
-    const target = indicator.target;
-    const delta = (calc.percentage !== null && target !== null && target !== undefined)
-      ? Math.round((calc.percentage - target) * 10) / 10
-      : null;
 
     return {
       row: r,
@@ -53,8 +48,7 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
       denominator: calc.denominator,
       percentage: calc.percentage,
       formattedPercentage: calc.formattedPercentage,
-      status: calc.status,
-      delta
+      status: calc.status
     };
   });
 
@@ -107,12 +101,6 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
             <span>Formula: <strong>100 × ({indicator.numeratorLabel}) / ({indicator.denominatorLabel})</strong></span>
           </p>
         </div>
-
-        {indicator.target && (
-          <div className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200/60 shrink-0">
-            Target: {indicator.target}%
-          </div>
-        )}
       </div>
 
       {/* Table Wrapper */}
@@ -178,7 +166,7 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
                   {renderSortIcon('percentage')}
                 </div>
               </th>
-              <th className="py-2.5 px-4 text-center whitespace-nowrap">Status</th>
+              <th className="py-2.5 px-4 text-center whitespace-nowrap">Metric Code</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -227,24 +215,17 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
                       {isZeroDen ? (
                         <span className="text-slate-400 font-normal italic">N/A</span>
                       ) : (
-                        <div className="flex items-center justify-end gap-1.5">
+                        <div className="flex items-center justify-end">
                           <span className="font-bold text-slate-900 text-sm">
                             {item.formattedPercentage}
                           </span>
-                          {item.delta !== null && (
-                            <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
-                              item.delta >= 0
-                                ? 'bg-emerald-50 text-emerald-700'
-                                : 'bg-rose-50 text-rose-700'
-                            }`}>
-                              {item.delta >= 0 ? `+${item.delta}%` : `${item.delta}%`}
-                            </span>
-                          )}
                         </div>
                       )}
                     </td>
                     <td className="py-2.5 px-4 text-center whitespace-nowrap">
-                      <StatusBadge status={item.status} size="sm" />
+                      <span className="font-mono text-[10px] text-slate-500 font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
+                        {indicator.code}
+                      </span>
                     </td>
                   </tr>
                 );

@@ -3,7 +3,6 @@ import { X, CheckCircle2, AlertTriangle, AlertCircle, Building2, MapPin, Layers,
 import { MonitoringRow } from '../../types/dataset';
 import { INDICATOR_DICTIONARY, CATEGORIES } from '../../data/indicatorDictionary';
 import { calculateRowIndicator } from '../../services/indicatorCalculator';
-import { StatusBadge } from '../common/StatusBadge';
 import { ProgressBar } from '../common/ProgressBar';
 
 interface PlanningUnitModalProps {
@@ -139,7 +138,9 @@ export const PlanningUnitModal: React.FC<PlanningUnitModalProps> = ({
                           <span className="text-xs font-semibold text-slate-800 leading-tight">
                             {indicator.shortName}
                           </span>
-                          <StatusBadge status={calc.status} size="sm" />
+                          <span className="font-mono text-[10px] text-slate-400 font-bold bg-white px-1.5 py-0.5 rounded border border-slate-200">
+                            {indicator.code}
+                          </span>
                         </div>
 
                         <div className="flex items-baseline justify-between mt-2">

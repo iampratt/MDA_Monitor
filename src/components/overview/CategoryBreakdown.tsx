@@ -71,9 +71,9 @@ export const CategoryBreakdown: React.FC<CategoryBreakdownProps> = ({
                       {pct !== null ? `${pct.toFixed(1)}%` : 'N/A'}
                     </p>
                   </div>
-                  {primaryInd.target && (
-                    <span className="text-[10px] font-medium text-slate-400 shrink-0">
-                      Target: {primaryInd.target}%
+                  {calcVal && calcVal.denominator > 0 && (
+                    <span className="text-[10px] font-mono text-slate-400 shrink-0">
+                      {calcVal.numerator.toLocaleString()} / {calcVal.denominator.toLocaleString()}
                     </span>
                   )}
                 </div>

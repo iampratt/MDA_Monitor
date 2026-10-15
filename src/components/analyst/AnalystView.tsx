@@ -136,16 +136,16 @@ export const AnalystView: React.FC<AnalystViewProps> = ({
           </p>
         </div>
 
-        {/* Target Benchmark */}
+        {/* State Average */}
         <div className="card-subtle rounded-xl p-3.5 bg-white">
           <span className="text-[10px] uppercase font-semibold text-slate-400 block">
-            Benchmark Target
+            State Average
           </span>
           <p className="text-xl font-bold text-slate-900 metric-number mt-0.5">
-            {currentIndicator.target ? `${currentIndicator.target}%` : 'Standard'}
+            {grandAggregate.indicatorValues[currentIndicator.id]?.formattedPercentage ?? 'N/A'}
           </p>
           <p className="text-[11px] text-slate-500 font-medium">
-            {currentIndicator.direction === 'high_is_good' ? 'Higher is better' : 'Lower is better'}
+            Overall weighted state aggregate
           </p>
         </div>
       </div>

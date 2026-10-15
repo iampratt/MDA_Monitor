@@ -97,9 +97,7 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
       id: 'teams_visited_area',
       title: 'Visited Assigned Area',
       value: visitedArea?.formattedPercentage || 'N/A',
-      target: 95,
-      delta: visitedArea?.percentage !== null && visitedArea?.percentage !== undefined ? Math.round((visitedArea.percentage - 95) * 10) / 10 : null,
-      status: visitedArea?.status,
+      subtitle: visitedArea ? `${visitedArea.numerator.toLocaleString()} of ${visitedArea.denominator.toLocaleString()} teams` : '',
       icon: <MapPin className="w-4 h-4" />,
       isInteractiveIndicator: true
     },
@@ -107,9 +105,7 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
       id: 'working_as_per_mp',
       title: 'Microplan Adherence',
       value: workingMp?.formattedPercentage || 'N/A',
-      target: 90,
-      delta: workingMp?.percentage !== null && workingMp?.percentage !== undefined ? Math.round((workingMp.percentage - 90) * 10) / 10 : null,
-      status: workingMp?.status,
+      subtitle: workingMp ? `${workingMp.numerator.toLocaleString()} of ${workingMp.denominator.toLocaleString()} teams` : '',
       icon: <ClipboardList className="w-4 h-4" />,
       isInteractiveIndicator: true
     },
@@ -117,9 +113,7 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
       id: 'both_da_trained',
       title: 'DA Teams Trained',
       value: bothTrained?.formattedPercentage || 'N/A',
-      target: 90,
-      delta: bothTrained?.percentage !== null && bothTrained?.percentage !== undefined ? Math.round((bothTrained.percentage - 90) * 10) / 10 : null,
-      status: bothTrained?.status,
+      subtitle: bothTrained ? `${bothTrained.numerator.toLocaleString()} of ${bothTrained.denominator.toLocaleString()} teams` : '',
       icon: <GraduationCap className="w-4 h-4" />,
       isInteractiveIndicator: true
     },
@@ -127,9 +121,7 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
       id: 'persons_administered',
       title: 'Observed Consumption',
       value: administered?.formattedPercentage || 'N/A',
-      target: 80,
-      delta: administered?.percentage !== null && administered?.percentage !== undefined ? Math.round((administered.percentage - 80) * 10) / 10 : null,
-      status: administered?.status,
+      subtitle: administered ? `${administered.numerator.toLocaleString()} of ${administered.denominator.toLocaleString()} persons` : '',
       icon: <Pill className="w-4 h-4" />,
       isInteractiveIndicator: true
     },
@@ -137,9 +129,7 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
       id: 'supervisor_ever_visited',
       title: 'Checked by Supervisor',
       value: supervisorVisited?.formattedPercentage || 'N/A',
-      target: 90,
-      delta: supervisorVisited?.percentage !== null && supervisorVisited?.percentage !== undefined ? Math.round((supervisorVisited.percentage - 90) * 10) / 10 : null,
-      status: supervisorVisited?.status,
+      subtitle: supervisorVisited ? `${supervisorVisited.numerator.toLocaleString()} of ${supervisorVisited.denominator.toLocaleString()} teams` : '',
       icon: <UserCheck className="w-4 h-4" />,
       isInteractiveIndicator: true
     }
@@ -266,28 +256,12 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
                   </span>
                 </div>
 
-                <div className="flex items-baseline justify-between mt-1">
+                <div className="mt-1">
                   <span className="text-xl font-bold tracking-tight text-slate-900 metric-number">
                     {metric.value}
                   </span>
-                  {metric.delta !== undefined && metric.delta !== null && (
-                    <span
-                      className={`text-[10px] font-bold px-1.5 py-0.2 rounded ${
-                        metric.delta >= 0
-                          ? 'bg-emerald-50 text-emerald-700'
-                          : 'bg-rose-50 text-rose-700'
-                      }`}
-                    >
-                      {metric.delta >= 0 ? `+${metric.delta}%` : `${metric.delta}%`}
-                    </span>
-                  )}
                 </div>
 
-                {metric.target && (
-                  <p className="text-[10px] text-slate-400 mt-1">
-                    Target: <strong className="text-slate-600 font-semibold">{metric.target}%</strong>
-                  </p>
-                )}
                 {metric.subtitle && (
                   <p className="text-[10px] text-slate-400 mt-1 truncate" title={metric.subtitle}>
                     {metric.subtitle}

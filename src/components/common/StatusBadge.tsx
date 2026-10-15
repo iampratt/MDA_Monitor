@@ -16,7 +16,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, text, size = '
       return (
         <span className={`inline-flex items-center gap-1.5 rounded-full font-semibold bg-emerald-50 text-emerald-800 ring-1 ring-inset ring-emerald-600/20 ${padding}`}>
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
-          <span>{text || 'Target Met'}</span>
+          <span>{text || 'High'}</span>
         </span>
       );
     case 'warning':
@@ -30,7 +30,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, text, size = '
       return (
         <span className={`inline-flex items-center gap-1.5 rounded-full font-semibold bg-rose-50 text-rose-800 ring-1 ring-inset ring-rose-600/25 ${padding}`}>
           <span className="w-1.5 h-1.5 rounded-full bg-rose-600 shrink-0" />
-          <span>{text || 'Needs Attention'}</span>
+          <span>{text || 'Attention'}</span>
         </span>
       );
     case 'no_data':
@@ -42,9 +42,10 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, text, size = '
       );
     case 'neutral':
     default:
+      if (!text) return null;
       return (
         <span className={`inline-flex items-center gap-1.5 rounded-full font-medium bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200 ${padding}`}>
-          <span>{text || 'Benchmark'}</span>
+          <span>{text}</span>
         </span>
       );
   }

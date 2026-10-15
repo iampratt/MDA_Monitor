@@ -45,7 +45,7 @@ export const TopBottomDistricts: React.FC<TopBottomDistrictsProps> = ({
             </div>
             <div>
               <h3 className="text-sm font-bold text-slate-900 tracking-tight">Highest Performing Districts</h3>
-              <p className="text-xs text-slate-500">Above state benchmark on {currentIndicator?.shortName}</p>
+              <p className="text-xs text-slate-500">Above State Average ({stateVal.toFixed(1)}%) on {currentIndicator?.shortName}</p>
             </div>
           </div>
           <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full">
@@ -106,8 +106,8 @@ export const TopBottomDistricts: React.FC<TopBottomDistrictsProps> = ({
               <AlertCircle className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-900 tracking-tight">Districts Needing Support</h3>
-              <p className="text-xs text-slate-500">Priority for supervisory follow-up</p>
+              <h3 className="text-sm font-bold text-slate-900 tracking-tight">Lowest Performing Districts</h3>
+              <p className="text-xs text-slate-500">Below State Average ({stateVal.toFixed(1)}%) on {currentIndicator?.shortName}</p>
             </div>
           </div>
           <span className="text-[11px] font-bold text-rose-800 bg-rose-50 border border-rose-200/60 px-2 py-0.5 rounded-full">

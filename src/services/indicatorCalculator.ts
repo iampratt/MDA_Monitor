@@ -69,27 +69,29 @@ export function evaluateIndicatorRatio(
   let status: 'good' | 'warning' | 'danger' | 'neutral' = 'neutral';
   let meetsTarget: boolean | null = null;
 
-  if (indicator.direction === 'high_is_good') {
-    const target = indicator.target ?? 90;
-    const warn = indicator.warningThreshold ?? 75;
-    meetsTarget = rawPercent >= target;
-    if (rawPercent >= target) {
-      status = 'good';
-    } else if (rawPercent >= warn) {
-      status = 'warning';
-    } else {
-      status = 'danger';
-    }
-  } else if (indicator.direction === 'low_is_good') {
-    const target = indicator.target ?? 5;
-    const warn = indicator.warningThreshold ?? 15;
-    meetsTarget = rawPercent <= target;
-    if (rawPercent <= target) {
-      status = 'good';
-    } else if (rawPercent <= warn) {
-      status = 'warning';
-    } else {
-      status = 'danger';
+  if (indicator.target !== null && indicator.target !== undefined) {
+    if (indicator.direction === 'high_is_good') {
+      const target = indicator.target;
+      const warn = indicator.warningThreshold ?? target;
+      meetsTarget = rawPercent >= target;
+      if (rawPercent >= target) {
+        status = 'good';
+      } else if (rawPercent >= warn) {
+        status = 'warning';
+      } else {
+        status = 'danger';
+      }
+    } else if (indicator.direction === 'low_is_good') {
+      const target = indicator.target;
+      const warn = indicator.warningThreshold ?? target;
+      meetsTarget = rawPercent <= target;
+      if (rawPercent <= target) {
+        status = 'good';
+      } else if (rawPercent <= warn) {
+        status = 'warning';
+      } else {
+        status = 'danger';
+      }
     }
   }
 
