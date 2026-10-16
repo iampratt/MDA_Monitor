@@ -266,16 +266,16 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-6 animate-fadeIn">
       {/* Top Banner */}
-      <div className="card-subtle rounded-xl p-5 bg-white flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bento-card rounded-xl p-5 bg-white border border-[#EAEAEA] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-bold text-slate-900 tracking-tight">
+            <h2 className="text-xl font-serif font-normal text-[#111111] tracking-tight">
               Dataset Administration & Publishing Portal
             </h2>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-[#787774] mt-0.5 font-normal">
             Upload updated Excel (.xlsx, .xls) or CSV files. The platform auto-detects header rows, normalizes column names, excludes double-counted subtotals, and updates the codebase dataset.
           </p>
         </div>
@@ -283,17 +283,17 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         <div className="flex items-center gap-2">
           <button
             onClick={() => setGithubConfigOpen(true)}
-            className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold rounded-lg transition-colors border border-slate-200"
+            className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 bg-[#F7F6F3] hover:bg-[#EAEAEA] text-[#111111] font-medium rounded-md transition-colors border border-[#EAEAEA]"
           >
-            <GitBranch className="w-3.5 h-3.5" />
-            <span>GitHub Sync Settings</span>
+            <GitBranch className="w-3.5 h-3.5 text-[#787774]" />
+            <span>GitHub Sync</span>
           </button>
 
           <button
             onClick={handleDownloadActiveJson}
-            className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-800 font-semibold rounded-lg transition-colors border border-slate-200"
+            className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 bg-white hover:bg-[#F7F6F3] text-[#111111] font-medium rounded-md transition-colors border border-[#EAEAEA]"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-3.5 h-3.5 text-[#787774]" />
             <span>Download JSON</span>
           </button>
         </div>
@@ -301,27 +301,27 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
       {/* Alert Messages */}
       {errorMsg && (
-        <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-start gap-2 shadow-xs">
-          <XCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+        <div className="p-3.5 rounded-lg bg-[#FDEBEC] border border-[#F6CFCF] text-xs text-[#9F2F2D] flex items-start gap-2.5">
+          <XCircle className="w-4 h-4 text-[#9F2F2D] shrink-0 mt-0.5" />
           <div>
-            <p className="font-bold">Upload or Validation Error</p>
-            <p className="mt-0.5">{errorMsg}</p>
+            <p className="font-medium">Upload or Validation Error</p>
+            <p className="mt-0.5 text-[11.5px] opacity-90">{errorMsg}</p>
           </div>
         </div>
       )}
 
       {successMsg && (
-        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-start gap-2 shadow-xs">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+        <div className="p-3.5 rounded-lg bg-[#EDF3EC] border border-[#D4E5D2] text-xs text-[#346538] flex items-start gap-2.5">
+          <CheckCircle2 className="w-4 h-4 text-[#346538] shrink-0 mt-0.5" />
           <div>
-            <p className="font-bold">Action Completed</p>
-            <p className="mt-0.5">{successMsg}</p>
+            <p className="font-medium">Action Completed</p>
+            <p className="mt-0.5 text-[11.5px] opacity-90">{successMsg}</p>
           </div>
         </div>
       )}
 
       {/* Upload Zone */}
-      <div className="card-subtle rounded-xl p-6 bg-white border-2 border-dashed border-slate-200 hover:border-slate-400 transition-colors text-center">
+      <div className="bento-card rounded-xl p-8 bg-[#FBFBFA] border border-dashed border-[#CCCCCC] hover:border-[#111111] transition-colors text-center">
         <input
           ref={fileInputRef}
           type="file"
@@ -331,13 +331,13 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         />
 
         <div className="max-w-md mx-auto">
-          <div className="w-12 h-12 rounded-xl bg-slate-100 text-mda-700 flex items-center justify-center mx-auto mb-2">
-            <FileSpreadsheet className="w-6 h-6" />
+          <div className="w-10 h-10 rounded-md bg-[#F1F1EF] text-[#2F3437] flex items-center justify-center mx-auto mb-2.5 border border-[#EAEAEA]">
+            <FileSpreadsheet className="w-5 h-5 text-[#2F3437]" />
           </div>
-          <h3 className="text-sm font-bold text-slate-800">
+          <h3 className="text-sm font-medium text-[#111111]">
             {file ? file.name : 'Upload New Monitoring Dataset'}
           </h3>
-          <p className="text-xs text-slate-500 mt-1 mb-4">
+          <p className="text-xs text-[#787774] mt-1 mb-4">
             Drag and drop your Excel (.xlsx, .xls) or CSV file here, or click to browse. Max upload size: 20MB.
           </p>
 
@@ -345,12 +345,12 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={isProcessing}
-              className="px-4 py-2 text-xs font-bold rounded-lg bg-slate-900 hover:bg-slate-800 text-white transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 text-xs font-medium rounded-md bg-[#111111] hover:bg-[#333333] text-white transition-colors disabled:opacity-50"
             >
               {isProcessing ? 'Analyzing Workbook...' : 'Select File'}
             </button>
             {file && (
-              <span className="text-xs font-mono text-slate-500">
+              <span className="text-xs font-mono text-[#787774]">
                 {(file.size / 1024).toFixed(1)} KB
               </span>
             )}

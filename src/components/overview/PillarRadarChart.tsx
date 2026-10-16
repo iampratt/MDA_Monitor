@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import { GrandAggregate } from '../../types/indicator';
 import { CATEGORIES, INDICATOR_DICTIONARY } from '../../data/indicatorDictionary';
+import { getCategoryTheme } from '../../data/categoryThemes';
 
 interface PillarRadarChartProps {
   grandAggregate: GrandAggregate;
@@ -114,20 +115,27 @@ export const PillarRadarChart: React.FC<PillarRadarChartProps> = ({
       </div>
 
       <div className="mt-3 pt-3 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-5 gap-2 text-[11px]">
-        {radarData.map(item => (
-          <div
-            key={item.category}
-            onClick={() => item.primaryIndicatorId && onSelectIndicator?.(item.primaryIndicatorId)}
-            className="p-1.5 rounded bg-slate-50 border border-slate-100 cursor-pointer hover:bg-slate-100 transition-colors"
-          >
-            <p className="text-[10px] text-slate-500 truncate" title={item.fullCategory}>
-              {item.category}
-            </p>
-            <p className="font-bold text-slate-900 metric-number">
-              {item.percentage}%
-            </p>
-          </div>
-        ))}
+        {radarData.map(item => {
+          const theme = getCategoryTheme(item.category);
+          return (
+            <div
+              key={item.category}
+              onClick={() => item.primaryIndicatorId && onSelectIndicator?.(item.primaryIndicatorId)}
+              className="p-2 rounded-lg bg-white border border-slate-200 cursor-pointer hover:border-slate-300 hover:shadow-xs transition-all relative overflow-hidden group"
+            >
+              <div
+                className="absolute top-0 left-0 right-0 h-0.5"
+                style={{ backgroundColor: theme.accentColor }}
+              />
+              <p className="text-[10px] text-slate-500 font-medium truncate group-hover:text-slate-900 transition-colors" title={item.fullCategory}>
+                {item.category}
+              </p>
+              <p className="font-bold text-slate-900 metric-number text-xs mt-0.5">
+                {item.percentage}%
+              </p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

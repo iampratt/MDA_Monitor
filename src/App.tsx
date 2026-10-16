@@ -123,7 +123,7 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-surface-bg flex flex-col font-sans antialiased text-surface-dark selection:bg-mda-100 selection:text-mda-900">
+    <div className="min-h-screen bg-[#FBFBFA] flex flex-col font-sans antialiased text-[#111111] selection:bg-[#E1F3FE] selection:text-[#1F6C9F]">
       {/* Top Header */}
       <Header
         dataset={activeDataset}

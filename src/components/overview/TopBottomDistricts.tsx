@@ -36,137 +36,127 @@ export const TopBottomDistricts: React.FC<TopBottomDistrictsProps> = ({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* Top 5 */}
-      <div className="p-[3px] rounded-2xl bg-gradient-to-b from-slate-100/90 to-slate-200/50 border border-slate-200/70 shadow-xs">
-        <div className="rounded-[13px] p-4 sm:p-5 bg-white border border-slate-100/80 shadow-xs">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/50 flex items-center justify-center">
-                <TrendingUp className="w-4 h-4" />
+      {/* Top 5 Highest Performing */}
+      <div className="bento-card p-5 bg-white border border-[#EAEAEA] rounded-xl">
+        <div className="flex items-center justify-between pb-3.5 border-b border-[#F1F5F9] mb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-md bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0] flex items-center justify-center">
+              <TrendingUp className="w-3.5 h-3.5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-serif font-normal text-[#0F172A]">Highest Performing Districts</h3>
+              <p className="text-[11px] text-[#64748B]">Above State Benchmark ({stateVal.toFixed(1)}%) • {currentIndicator?.shortName}</p>
+            </div>
+          </div>
+          <span className="text-[10px] font-medium uppercase tracking-[0.05em] text-[#065F46] bg-[#ECFDF5] border border-[#A7F3D0] px-2.5 py-0.5 rounded-full">
+            Top 5
+          </span>
+        </div>
+
+        <div className="space-y-1" role="list" aria-label="Top 5 highest performing districts">
+          {top5.map((item, idx) => (
+            <div
+              key={item.district}
+              role="button"
+              tabIndex={0}
+              onClick={() => onSelectDistrict(item.district)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onSelectDistrict(item.district);
+                }
+              }}
+              aria-label={`Inspect ${item.district} (${item.val.toFixed(1)}%)`}
+              className="group flex items-center justify-between p-2 rounded-lg hover:bg-[#F0FDF4]/50 cursor-pointer transition-colors border border-transparent hover:border-[#BBF7D0] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#059669]"
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="w-5 h-5 rounded bg-[#ECFDF5] text-[#065F46] text-[10.5px] font-mono font-medium flex items-center justify-center border border-[#A7F3D0]">
+                  {idx + 1}
+                </span>
+                <div>
+                  <h4 className="text-xs font-medium text-[#1E293B] group-hover:text-[#065F46] transition-colors">
+                    {item.district}
+                  </h4>
+                  <p className="text-[10px] text-[#64748B]">
+                    {item.planningUnits} Planning Units
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-sm font-bold text-slate-900 tracking-tight">Highest Performing Districts</h3>
-                <p className="text-xs text-slate-500">Above State Average ({stateVal.toFixed(1)}%) on {currentIndicator?.shortName}</p>
+
+              <div className="text-right flex items-center gap-2">
+                <span className="text-xs font-serif font-medium text-[#0F172A] metric-number">
+                  {item.val.toFixed(1)}%
+                </span>
+                <span className="inline-flex items-center text-[10px] font-medium text-[#065F46] bg-[#ECFDF5] px-1.5 py-0.5 rounded border border-[#A7F3D0]">
+                  <ArrowUpRight className="w-3 h-3 mr-0.5" />
+                  +{Math.abs(item.delta).toFixed(1)}%
+                </span>
+                <ChevronRight className="w-3.5 h-3.5 text-[#CBD5E1] group-hover:text-[#059669] transition-colors ml-1" />
               </div>
             </div>
-            <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200/60 px-2.5 py-0.5 rounded-full shadow-2xs">
-              Top 5
-            </span>
-          </div>
-
-          <div className="space-y-1.5" role="list" aria-label="Top 5 highest performing districts">
-            {top5.map((item, idx) => (
-              <div
-                key={item.district}
-                role="button"
-                tabIndex={0}
-                onClick={() => onSelectDistrict(item.district)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    onSelectDistrict(item.district);
-                  }
-                }}
-                aria-label={`Drill down into ${item.district} (${item.val.toFixed(1)}%)`}
-                className="group flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/50 cursor-pointer transition-all border border-transparent hover:border-emerald-200/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="w-5 h-5 rounded-md bg-slate-100 text-slate-600 text-[11px] font-black flex items-center justify-center font-mono group-hover:bg-emerald-100 group-hover:text-emerald-800 transition-colors">
-                    {idx + 1}
-                  </span>
-                  <div>
-                    <h4 className="text-xs font-bold text-slate-800 group-hover:text-emerald-950 transition-colors">
-                      {item.district}
-                    </h4>
-                    <p className="text-[10px] text-slate-400 font-medium">
-                      {item.planningUnits} Planning Units
-                    </p>
-                  </div>
-                </div>
-
-                <div className="text-right flex items-center gap-2.5">
-                  <span className="text-xs font-black text-slate-900 metric-number">
-                    {item.val.toFixed(1)}%
-                  </span>
-                  <span className="inline-flex items-center text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/50">
-                    <ArrowUpRight className="w-3 h-3 mr-0.5" />
-                    +{Math.abs(item.delta).toFixed(1)}%
-                  </span>
-                  {/* Button-in-Button nested icon container */}
-                  <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-emerald-600 group-hover:text-white transition-all transform group-hover:translate-x-0.5 shadow-2xs">
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Bottom 5 */}
-      <div className="p-[3px] rounded-2xl bg-gradient-to-b from-slate-100/90 to-slate-200/50 border border-slate-200/70 shadow-xs">
-        <div className="rounded-[13px] p-4 sm:p-5 bg-white border border-slate-100/80 shadow-xs">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-700 border border-rose-200/50 flex items-center justify-center">
-                <AlertCircle className="w-4 h-4" />
+      {/* Bottom 5 Need Supervisory Focus */}
+      <div className="bento-card p-5 bg-white border border-[#EAEAEA] rounded-xl">
+        <div className="flex items-center justify-between pb-3.5 border-b border-[#F1F5F9] mb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-md bg-[#FFF1F2] text-[#E11D48] border border-[#FECDD3] flex items-center justify-center">
+              <AlertCircle className="w-3.5 h-3.5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-serif font-normal text-[#0F172A]">Priority Supervisory Focus</h3>
+              <p className="text-[11px] text-[#64748B]">Below State Benchmark ({stateVal.toFixed(1)}%) • {currentIndicator?.shortName}</p>
+            </div>
+          </div>
+          <span className="text-[10px] font-medium uppercase tracking-[0.05em] text-[#9F1239] bg-[#FFF1F2] border border-[#FECDD3] px-2.5 py-0.5 rounded-full">
+            Bottom 5
+          </span>
+        </div>
+
+        <div className="space-y-1" role="list" aria-label="Bottom 5 lowest performing districts">
+          {bottom5.map((item, idx) => (
+            <div
+              key={item.district}
+              role="button"
+              tabIndex={0}
+              onClick={() => onSelectDistrict(item.district)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onSelectDistrict(item.district);
+                }
+              }}
+              aria-label={`Inspect ${item.district} (${item.val.toFixed(1)}%)`}
+              className="group flex items-center justify-between p-2 rounded-lg hover:bg-[#FFF1F2]/50 cursor-pointer transition-colors border border-transparent hover:border-[#FECDD3] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E11D48]"
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="w-5 h-5 rounded bg-[#FFF1F2] text-[#9F1239] text-[10.5px] font-mono font-medium flex items-center justify-center border border-[#FECDD3]">
+                  {idx + 1}
+                </span>
+                <div>
+                  <h4 className="text-xs font-medium text-[#1E293B] group-hover:text-[#9F1239] transition-colors">
+                    {item.district}
+                  </h4>
+                  <p className="text-[10px] text-[#64748B]">
+                    {item.planningUnits} Planning Units
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-sm font-bold text-slate-900 tracking-tight">Lowest Performing Districts</h3>
-                <p className="text-xs text-slate-500">Below State Average ({stateVal.toFixed(1)}%) on {currentIndicator?.shortName}</p>
+
+              <div className="text-right flex items-center gap-2">
+                <span className="text-xs font-serif font-medium text-[#0F172A] metric-number">
+                  {item.val.toFixed(1)}%
+                </span>
+                <span className="inline-flex items-center text-[10px] font-medium text-[#9F1239] bg-[#FFF1F2] px-1.5 py-0.5 rounded border border-[#FECDD3]">
+                  <ArrowDownRight className="w-3 h-3 mr-0.5" />
+                  -{Math.abs(item.delta).toFixed(1)}%
+                </span>
+                <ChevronRight className="w-3.5 h-3.5 text-[#CBD5E1] group-hover:text-[#E11D48] transition-colors ml-1" />
               </div>
             </div>
-            <span className="text-[11px] font-bold text-rose-800 bg-rose-50 border border-rose-200/60 px-2.5 py-0.5 rounded-full shadow-2xs">
-              Bottom 5
-            </span>
-          </div>
-
-          <div className="space-y-1.5" role="list" aria-label="Bottom 5 districts needing priority support">
-            {bottom5.map((item, idx) => (
-              <div
-                key={item.district}
-                role="button"
-                tabIndex={0}
-                onClick={() => onSelectDistrict(item.district)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    onSelectDistrict(item.district);
-                  }
-                }}
-                aria-label={`Drill down into ${item.district} (${item.val.toFixed(1)}%)`}
-                className="group flex items-center justify-between p-2.5 rounded-xl hover:bg-rose-50/50 cursor-pointer transition-all border border-transparent hover:border-rose-200/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-600"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="w-5 h-5 rounded-md bg-slate-100 text-slate-600 text-[11px] font-black flex items-center justify-center font-mono group-hover:bg-rose-100 group-hover:text-rose-800 transition-colors">
-                    {idx + 1}
-                  </span>
-                  <div>
-                    <h4 className="text-xs font-bold text-slate-800 group-hover:text-rose-950 transition-colors">
-                      {item.district}
-                    </h4>
-                    <p className="text-[10px] text-slate-400 font-medium">
-                      {item.planningUnits} Planning Units
-                    </p>
-                  </div>
-                </div>
-
-                <div className="text-right flex items-center gap-2.5">
-                  <span className="text-xs font-black text-slate-900 metric-number">
-                    {item.val.toFixed(1)}%
-                  </span>
-                  <span className="inline-flex items-center text-[10px] font-bold text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200/50">
-                    <ArrowDownRight className="w-3 h-3 mr-0.5" />
-                    {item.delta.toFixed(1)}%
-                  </span>
-                  {/* Button-in-Button nested icon container */}
-                  <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-rose-600 group-hover:text-white transition-all transform group-hover:translate-x-0.5 shadow-2xs">
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </div>

@@ -70,15 +70,15 @@ export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
   const totalAdministered = grandAggregate.rawSums['AK'] || 0;
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col selection:bg-mda-100 selection:text-mda-900">
-      {/* Fixed Minimalist Top Toolbar - Strictly PDF Actions Only (No Dashboard Access) */}
-      <header className="no-print sticky top-0 z-50 h-12 bg-slate-950/95 backdrop-blur-md border-b border-slate-800 px-4 sm:px-6 flex items-center justify-between text-white shrink-0 select-none shadow-md">
+    <div className="min-h-screen bg-[#1C1917] flex flex-col selection:bg-[#E1F3FE] selection:text-[#1F6C9F]">
+      {/* Fixed Minimalist Top Toolbar */}
+      <header className="no-print sticky top-0 z-50 h-12 bg-[#111111] border-b border-[#292524] px-4 sm:px-6 flex items-center justify-between text-white shrink-0 select-none">
         <div className="flex items-center gap-2.5">
-          <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
-          <span className="text-xs font-bold text-slate-200 tracking-tight">
+          <FileText className="w-4 h-4 text-white/80 shrink-0" />
+          <span className="text-xs font-medium text-white tracking-tight">
             MDA Concurrent Monitoring Summary PDF
           </span>
-          <span className="text-[10px] text-slate-500 hidden md:inline font-mono">
+          <span className="text-[10px] text-[#A8A29E] hidden md:inline font-mono">
             • Read-Only Document
           </span>
         </div>
@@ -88,17 +88,17 @@ export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
           <button
             type="button"
             onClick={handleCopyLink}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all border border-slate-700 shadow-xs active:scale-[0.98]"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-normal bg-[#292524] hover:bg-[#44403C] text-white transition-all border border-[#44403C] active:scale-[0.98]"
             title="Copy shareable link to this PDF document"
           >
             {copiedLink ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-emerald-300 font-bold">Link Copied!</span>
+                <Check className="w-3.5 h-3.5 text-[#EDF3EC]" />
+                <span className="text-[#EDF3EC] font-medium">Link Copied!</span>
               </>
             ) : (
               <>
-                <Share2 className="w-3.5 h-3.5 text-slate-400" />
+                <Share2 className="w-3.5 h-3.5 text-[#A8A29E]" />
                 <span>Copy PDF Link</span>
               </>
             )}
@@ -108,10 +108,10 @@ export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
           <button
             type="button"
             onClick={handlePrint}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all border border-slate-700 shadow-xs hidden sm:inline-flex active:scale-[0.98]"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-normal bg-[#292524] hover:bg-[#44403C] text-white transition-all border border-[#44403C] hidden sm:inline-flex active:scale-[0.98]"
             title="Print or Save via browser"
           >
-            <Printer className="w-3.5 h-3.5 text-slate-400" />
+            <Printer className="w-3.5 h-3.5 text-[#A8A29E]" />
             <span>Print</span>
           </button>
 
@@ -120,10 +120,10 @@ export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
             type="button"
             onClick={handleDownloadPdf}
             disabled={isDownloading}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-sm active:scale-[0.98] disabled:opacity-60"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-medium bg-white hover:bg-[#F7F6F3] text-[#111111] transition-all active:scale-[0.98] disabled:opacity-60"
             title="Download PDF to device"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-3.5 h-3.5 text-[#111111]" />
             <span>{isDownloading ? 'Generating PDF...' : 'Download PDF'}</span>
           </button>
         </div>
@@ -134,10 +134,10 @@ export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
         <div
           ref={documentRef}
           id="executive-report-document"
-          className="w-full max-w-5xl bg-white text-slate-900 rounded-2xl shadow-2xl p-6 sm:p-10 border border-slate-200 print:shadow-none print:border-none print:p-0 print:m-0 space-y-8"
+          className="w-full max-w-5xl bg-white text-[#111111] rounded-xl p-6 sm:p-10 border border-[#EAEAEA] print:shadow-none print:border-none print:p-0 print:m-0 space-y-8"
         >
           {/* Document Header */}
-          <div className="border-b border-slate-200 pb-5">
+          <div className="border-b border-[#EAEAEA] pb-5">
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 mb-1.5">

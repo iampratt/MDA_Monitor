@@ -8,12 +8,31 @@
   }
 
   body {
-    background-color: #F8FAF9;
-    color: #0F172A;
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #FBFBFA;
+    color: #111111;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: 'Newsreader', 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+
+  kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #EAEAEA;
+    border-radius: 4px;
+    background-color: #F7F6F3;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.1rem 0.35rem;
+    color: #2F3437;
   }
 }
 
@@ -28,41 +47,26 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #EAEAEA;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #D4D4D4;
 }
 
-/* Minimalist Card Utilities with Calibrated Shadows */
-.card-subtle {
+/* Bento Box Feature Grid & Flat Minimalist Card */
+.bento-card, .card-subtle {
   background-color: #FFFFFF;
-  border: 1px solid #E2E8E4;
-  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.03), 0 1px 3px 0 rgba(20, 108, 80, 0.02);
+  border: 1px solid #EAEAEA;
+  border-radius: 12px;
+  box-shadow: none;
   transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.card-subtle:hover {
-  border-color: #CBD7CE;
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 4px 10px -2px rgba(20, 108, 80, 0.03);
-}
-
-/* Double-Bezel (Doppelrand) Architecture */
-.double-bezel {
-  background-color: rgba(241, 245, 249, 0.85);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  border-radius: 1.25rem;
-  padding: 0.25rem;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.02);
-}
-
-.double-bezel-inner {
-  background-color: #FFFFFF;
-  border-radius: calc(1.25rem - 0.25rem);
-  border: 1px solid rgba(226, 232, 240, 0.6);
-  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px 0 rgba(15, 23, 42, 0.02);
+.bento-card:hover, .card-subtle:hover {
+  border-color: #D4D4D4;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.04);
 }
 
 .card-interactive {
@@ -78,23 +82,35 @@
 /* Numeric Typography with Strict Tabular Figures */
 .metric-number {
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
-/* Accessible & Crisp Focus Styles */
+/* Accessible & Crisp Minimalist Focus Styles */
 button:focus-visible, select:focus-visible, input:focus-visible {
-  outline: 2px solid #146C50;
+  outline: 2px solid #111111;
   outline-offset: 2px;
 }
 
-/* Recharts Tooltip - Premium Minimalist Floating Card */
+/* Recharts Tooltip - Clean Flat Minimalist Card */
 .recharts-default-tooltip {
-  border-radius: 12px !important;
-  border: 1px solid #E2E8E4 !important;
-  background-color: rgba(255, 255, 255, 0.98) !important;
-  box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.09), 0 4px 12px -2px rgba(15, 23, 42, 0.04) !important;
-  padding: 10px 14px !important;
-  backdrop-filter: blur(12px) !important;
+  border-radius: 8px !important;
+  border: 1px solid #EAEAEA !important;
+  background-color: #FFFFFF !important;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05) !important;
+  padding: 8px 12px !important;
+}
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
 }
 
 /* Print Optimization for PDF Export */
@@ -106,7 +122,7 @@ button:focus-visible, select:focus-visible, input:focus-visible {
 
   body {
     background-color: #FFFFFF !important;
-    color: #0F172A !important;
+    color: #111111 !important;
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
@@ -127,9 +143,8 @@ button:focus-visible, select:focus-visible, input:focus-visible {
     page-break-inside: avoid;
   }
 
-  .card-subtle {
+  .card-subtle, .bento-card {
     box-shadow: none !important;
-    border: 1px solid #E2E8F0 !important;
+    border: 1px solid #EAEAEA !important;
   }
 }
-

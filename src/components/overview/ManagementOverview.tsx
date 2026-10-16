@@ -86,77 +86,89 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
     );
   }
 
-  // Define 6 core programmatic KPIs
+  // Define 6 core programmatic KPIs with domain colorways
   const coreMetrics = [
     {
       id: 'sample_size',
       title: 'Teams Monitored',
       value: totalTeamsMonitored.toLocaleString(),
       subtitle: `${grandAggregate.totalPlanningUnits} Planning Units in ${grandAggregate.totalDistricts} Districts`,
-      icon: <Users className="w-4 h-4" />,
-      isInteractiveIndicator: false
+      icon: <Users className="w-3.5 h-3.5" />,
+      isInteractiveIndicator: false,
+      iconBox: 'bg-[#EFF6FF] text-[#2563EB] border-[#DBEAFE]',
+      selectedRing: 'border-[#2563EB] ring-1 ring-[#2563EB]/40 bg-[#EFF6FF]/20'
     },
     {
       id: 'teams_visited_area',
       title: 'Visited Assigned Area',
       value: visitedArea?.formattedPercentage || 'N/A',
       subtitle: visitedArea ? `${visitedArea.numerator.toLocaleString()} of ${visitedArea.denominator.toLocaleString()} teams` : '',
-      icon: <MapPin className="w-4 h-4" />,
-      isInteractiveIndicator: true
+      icon: <MapPin className="w-3.5 h-3.5" />,
+      isInteractiveIndicator: true,
+      iconBox: 'bg-[#ECFDF5] text-[#059669] border-[#A7F3D0]',
+      selectedRing: 'border-[#059669] ring-1 ring-[#059669]/40 bg-[#ECFDF5]/20'
     },
     {
       id: 'working_as_per_mp',
       title: 'Microplan Adherence',
       value: workingMp?.formattedPercentage || 'N/A',
       subtitle: workingMp ? `${workingMp.numerator.toLocaleString()} of ${workingMp.denominator.toLocaleString()} teams` : '',
-      icon: <ClipboardList className="w-4 h-4" />,
-      isInteractiveIndicator: true
+      icon: <ClipboardList className="w-3.5 h-3.5" />,
+      isInteractiveIndicator: true,
+      iconBox: 'bg-[#FFFBEB] text-[#D97706] border-[#FDE68A]',
+      selectedRing: 'border-[#D97706] ring-1 ring-[#D97706]/40 bg-[#FFFBEB]/20'
     },
     {
       id: 'both_da_trained',
       title: 'DA Teams Trained',
       value: bothTrained?.formattedPercentage || 'N/A',
       subtitle: bothTrained ? `${bothTrained.numerator.toLocaleString()} of ${bothTrained.denominator.toLocaleString()} teams` : '',
-      icon: <GraduationCap className="w-4 h-4" />,
-      isInteractiveIndicator: true
+      icon: <GraduationCap className="w-3.5 h-3.5" />,
+      isInteractiveIndicator: true,
+      iconBox: 'bg-[#F5F3FF] text-[#7C3AED] border-[#DDD6FE]',
+      selectedRing: 'border-[#7C3AED] ring-1 ring-[#7C3AED]/40 bg-[#F5F3FF]/20'
     },
     {
       id: 'persons_administered',
       title: 'Observed Consumption',
       value: administered?.formattedPercentage || 'N/A',
       subtitle: administered ? `${administered.numerator.toLocaleString()} of ${administered.denominator.toLocaleString()} persons` : '',
-      icon: <Pill className="w-4 h-4" />,
-      isInteractiveIndicator: true
+      icon: <Pill className="w-3.5 h-3.5" />,
+      isInteractiveIndicator: true,
+      iconBox: 'bg-[#FFF1F2] text-[#E11D48] border-[#FECDD3]',
+      selectedRing: 'border-[#E11D48] ring-1 ring-[#E11D48]/40 bg-[#FFF1F2]/20'
     },
     {
       id: 'supervisor_ever_visited',
       title: 'Checked by Supervisor',
       value: supervisorVisited?.formattedPercentage || 'N/A',
       subtitle: supervisorVisited ? `${supervisorVisited.numerator.toLocaleString()} of ${supervisorVisited.denominator.toLocaleString()} teams` : '',
-      icon: <UserCheck className="w-4 h-4" />,
-      isInteractiveIndicator: true
+      icon: <UserCheck className="w-3.5 h-3.5" />,
+      isInteractiveIndicator: true,
+      iconBox: 'bg-[#F0FDFA] text-[#0D9488] border-[#99F6E4]',
+      selectedRing: 'border-[#0D9488] ring-1 ring-[#0D9488]/40 bg-[#F0FDFA]/20'
     }
   ];
 
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Clean Minimalist Executive Header Strip */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#EAEAEA]">
         <div>
-          <h2 className="text-lg font-bold text-slate-900 tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-normal text-[#111111] tracking-tight">
             State Concurrent Monitoring Overview
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-[#787774] mt-0.5 font-normal">
             Operational field evaluation across {grandAggregate.totalPlanningUnits} planning units in {grandAggregate.totalDistricts} districts.
           </p>
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="text-xs text-slate-500 font-medium">View:</span>
+          <span className="text-xs text-[#787774]">View:</span>
           <div
             role="tablist"
             aria-label="Overview perspective views"
-            className="inline-flex bg-slate-100/90 p-1 rounded-xl text-xs font-semibold border border-slate-200/80 shadow-xs backdrop-blur-xs"
+            className="inline-flex bg-[#F1F5F9] p-0.5 rounded-md text-xs border border-[#E2E8F0]"
           >
             <button
               type="button"
@@ -164,10 +176,10 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
               aria-selected={activeView === 'ranking'}
               aria-controls="overview-ranking-panel"
               onClick={() => setActiveView('ranking')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#14532D] ${
                 activeView === 'ranking'
-                  ? 'bg-slate-900 text-white shadow-xs font-bold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                  ? 'bg-[#14532D] text-white font-medium shadow-xs'
+                  : 'text-[#64748B] hover:text-[#0F172A]'
               }`}
             >
               <BarChart3 className="w-3.5 h-3.5" />
@@ -179,10 +191,10 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
               aria-selected={activeView === 'multi'}
               aria-controls="overview-multi-panel"
               onClick={() => setActiveView('multi')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#14532D] ${
                 activeView === 'multi'
-                  ? 'bg-slate-900 text-white shadow-xs font-bold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                  ? 'bg-[#14532D] text-white font-medium shadow-xs'
+                  : 'text-[#64748B] hover:text-[#0F172A]'
               }`}
             >
               <Activity className="w-3.5 h-3.5" />
@@ -194,10 +206,10 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
               aria-selected={activeView === 'table'}
               aria-controls="overview-table-panel"
               onClick={() => setActiveView('table')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#14532D] ${
                 activeView === 'table'
-                  ? 'bg-slate-900 text-white shadow-xs font-bold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                  ? 'bg-[#14532D] text-white font-medium shadow-xs'
+                  : 'text-[#64748B] hover:text-[#0F172A]'
               }`}
             >
               <TableIcon className="w-3.5 h-3.5" />
@@ -209,10 +221,10 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
               aria-selected={activeView === 'thematic'}
               aria-controls="overview-thematic-panel"
               onClick={() => setActiveView('thematic')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#14532D] ${
                 activeView === 'thematic'
-                  ? 'bg-slate-900 text-white shadow-xs font-bold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                  ? 'bg-[#14532D] text-white font-medium shadow-xs'
+                  : 'text-[#64748B] hover:text-[#0F172A]'
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
@@ -222,14 +234,14 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
         </div>
       </div>
 
-      {/* Programmatic Key Indicators Ribbon (Clickable Tiles with Doppelrand Architecture) */}
+      {/* Programmatic Key Indicators Ribbon (Clickable Bento Tiles) */}
       <div>
         <div className="flex items-center justify-between mb-2.5">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span className="text-[10.5px] font-medium uppercase tracking-[0.05em] text-[#64748B] flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]"></span>
             Core Programmatic Performance Indicators
           </span>
-          <span className="text-[11px] text-slate-400 font-medium">
+          <span className="text-[11px] text-[#64748B] font-normal">
             Click metric to focus ranking below
           </span>
         </div>
@@ -256,46 +268,38 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
                     setSelectedIndicatorId(metric.id);
                   }
                 }}
-                className={`p-[3px] rounded-2xl border transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 ${
+                className={`bento-card p-4 rounded-xl border transition-all duration-150 flex flex-col justify-between h-full bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#14532D] ${
                   metric.isInteractiveIndicator
                     ? 'cursor-pointer active:scale-[0.985] group'
                     : ''
                 } ${
                   isSelected
-                    ? 'bg-emerald-100/70 border-emerald-500/60 shadow-xs ring-2 ring-emerald-500/20'
-                    : 'bg-gradient-to-b from-slate-100/90 to-slate-200/50 border-slate-200/70 hover:border-slate-300'
+                    ? metric.selectedRing
+                    : 'border-[#EAEAEA] hover:border-[#CBD5E1]'
                 }`}
               >
-                <div className={`p-3.5 sm:p-4 rounded-[13px] border transition-all h-full flex flex-col justify-between ${
-                  isSelected
-                    ? 'bg-white border-emerald-300/80 shadow-xs'
-                    : 'bg-white border-slate-100 shadow-xs group-hover:bg-slate-50/50'
-                }`}>
-                  <div className="flex items-center justify-between text-slate-500 mb-2">
-                    <span className="text-[11px] font-bold text-slate-700 truncate mr-1" title={metric.title}>
+                <div>
+                  <div className="flex items-center justify-between text-[#64748B] mb-2.5">
+                    <span className="text-[11px] font-medium text-[#1E293B] truncate mr-1" title={metric.title}>
                       {metric.title}
                     </span>
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all ${
-                      isSelected
-                        ? 'bg-emerald-700 text-white shadow-xs'
-                        : 'bg-slate-100 text-slate-600 border border-slate-200/50 group-hover:bg-emerald-50 group-hover:text-emerald-700'
-                    }`}>
+                    <div className={`w-6 h-6 rounded flex items-center justify-center border transition-transform duration-200 group-hover:scale-105 ${metric.iconBox}`}>
                       {metric.icon}
                     </div>
                   </div>
 
                   <div className="mt-1">
-                    <span className="text-2xl font-black tracking-tight text-slate-900 metric-number">
+                    <span className="text-2xl font-serif font-normal tracking-tight text-[#0F172A] metric-number">
                       {metric.value}
                     </span>
                   </div>
-
-                  {metric.subtitle && (
-                    <p className="text-[10px] text-slate-500 font-medium mt-1 truncate" title={metric.subtitle}>
-                      {metric.subtitle}
-                    </p>
-                  )}
                 </div>
+
+                {metric.subtitle && (
+                  <p className="text-[10.5px] text-[#64748B] mt-2 font-normal truncate" title={metric.subtitle}>
+                    {metric.subtitle}
+                  </p>
+                )}
               </div>
             );
           })}

@@ -42,20 +42,48 @@ export const PuComparisonChart: React.FC<PuComparisonChartProps> = ({
     };
   });
 
-  const getBarColor = () => '#2563eb';
+  const getBarColor = (entry: typeof chartData[0]) => {
+    if (indicator.target !== null && indicator.target !== undefined) {
+      if (entry.val >= indicator.target) return '#059669';
+      if (indicator.warningThreshold && entry.val < indicator.warningThreshold) return '#E11D48';
+      return '#D97706';
+    }
+    if (entry.status === 'good') return '#059669';
+    if (entry.status === 'danger') return '#E11D48';
+    if (entry.status === 'warning') return '#D97706';
+    return '#059669';
+  };
 
   return (
-    <div className="card-subtle rounded-xl p-5 bg-white">
+    <div className="card-subtle rounded-xl p-5 bg-white border border-slate-200">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 mb-4 gap-2">
         <div>
-          <h3 className="text-sm font-bold text-slate-900 tracking-tight">
-            Planning Unit Comparison • {indicator.shortName}
-          </h3>
+          <div className="flex items-center gap-2">
+            <BarChart2 className="w-4 h-4 text-emerald-700" />
+            <h3 className="text-sm font-bold text-slate-900 tracking-tight">
+              Planning Unit Comparison • {indicator.shortName}
+            </h3>
+          </div>
           <p className="text-xs text-slate-500 mt-0.5">
             {districtFilter === 'all'
               ? `Displaying first ${displayRows.length} planning units (select a district above to filter)`
               : `All ${rows.length} planning units in ${districtFilter}`}
           </p>
+        </div>
+
+        <div className="flex items-center gap-3 text-xs">
+          <span className="flex items-center gap-1.5 text-slate-700 font-medium">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block" />
+            Met Target
+          </span>
+          <span className="flex items-center gap-1.5 text-slate-700 font-medium">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block" />
+            Moderate
+          </span>
+          <span className="flex items-center gap-1.5 text-slate-700 font-medium">
+            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" />
+            Gap / Critical
+          </span>
         </div>
       </div>
 
@@ -106,13 +134,27 @@ export const PuComparisonChart: React.FC<PuComparisonChartProps> = ({
                 );
               }}
             />
+            {indicator.target !== null && indicator.target !== undefined && (
+              <ReferenceLine
+                y={indicator.target}
+                stroke="#E11D48"
+                strokeDasharray="4 4"
+                label={{
+                  value: `Target ${indicator.target}%`,
+                  position: 'top',
+                  fill: '#E11D48',
+                  fontSize: 10,
+                  fontWeight: 600
+                }}
+              />
+            )}
             <Bar
               dataKey="val"
               barSize={Math.max(10, Math.min(22, Math.floor(600 / chartData.length)))}
               radius={[3, 3, 0, 0]}
             >
-              {chartData.map((_entry, index) => (
-                <Cell key={`cell-${index}`} fill="#2563eb" />
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={getBarColor(entry)} />
               ))}
             </Bar>
           </BarChart>

@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import { DistrictAggregate, GrandAggregate } from '../../types/indicator';
 import { INDICATOR_DICTIONARY, getIndicatorById } from '../../data/indicatorDictionary';
-import { ArrowUpDown, Search, BarChart3, ChevronRight, X, RotateCcw, AlertCircle } from 'lucide-react';
+import { ArrowUpDown, Search, RotateCcw, X } from 'lucide-react';
 
 interface DistrictRankingChartProps {
   districtAggregates: DistrictAggregate[];
@@ -76,9 +76,9 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
     return copy;
   }, [rawChartData, searchDistrict, quickFilter, sortOrder, stateVal]);
 
-  // Bar color based on actual State Average - Unified Emerald & Slate Palette
+  // Strategic color coding for data bars
   const getBarColor = (item: typeof chartData[0]) => {
-    return item.percentage >= stateVal ? '#059669' : '#64748B';
+    return item.percentage >= stateVal ? '#059669' : '#94A3B8';
   };
 
   const primaryIndicators = INDICATOR_DICTIONARY.filter(i => 
@@ -93,27 +93,27 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
   };
 
   return (
-    <div className="card-subtle rounded-xl p-5 bg-white border border-surface-border">
+    <div className="bento-card rounded-xl p-5 bg-white border border-[#EAEAEA]">
       {/* Header & Controls */}
-      <div className="flex flex-col gap-3 pb-4 border-b border-slate-100 mb-4">
+      <div className="flex flex-col gap-3 pb-4 border-b border-[#EAEAEA] mb-4">
         {/* Tier 1: Title & Indicator Selector */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-slate-900 tracking-tight">
+              <h3 className="text-sm font-serif font-normal text-[#111111]">
                 District Comparative Ranking
               </h3>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#F1F5F9] text-[#475569] border border-[#E2E8F0]">
                 {chartData.length} of {districtAggregates.length} districts
               </span>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Click any bar or district to drill down into planning units.
+            <p className="text-xs text-[#64748B] mt-0.5">
+              Click any bar or district name to inspect planning unit distribution.
             </p>
           </div>
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
-            <label htmlFor="ranking-indicator-select" className="text-xs font-medium text-slate-500">
+            <label htmlFor="ranking-indicator-select" className="text-xs text-[#64748B]">
               Metric:
             </label>
             <select
@@ -121,7 +121,7 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
               value={selectedIndicatorId}
               onChange={e => onSelectIndicator(e.target.value)}
               aria-label="Select monitoring indicator for district comparison"
-              className="text-xs bg-white border border-slate-200 text-slate-800 font-semibold rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-mda-700 shadow-xs max-w-[240px] truncate"
+              className="text-xs bg-white border border-[#CBD5E1] text-[#0F172A] font-medium rounded-md px-2.5 py-1.5 focus:outline-none focus:border-[#14532D] max-w-[240px] truncate"
             >
               {primaryIndicators.map(ind => (
                 <option key={ind.id} value={ind.id}>
@@ -132,22 +132,22 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
           </div>
         </div>
 
-        {/* Tier 2: Filter Toolbar (Pill Segmented Control + Search + Sort) */}
-        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100">
-          {/* Quick Filter Segmented Pills */}
+        {/* Tier 2: Filter Toolbar */}
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#F1F5F9]">
+          {/* Quick Filter Segmented Buttons with Semantic Tints */}
           <div
             role="group"
             aria-label="Filter districts by performance compared to State Average"
-            className="flex items-center bg-slate-100 p-0.5 rounded-lg text-xs font-medium"
+            className="flex items-center bg-[#F1F5F9] p-0.5 rounded-md text-xs border border-[#E2E8F0]"
           >
             <button
               type="button"
               onClick={() => setQuickFilter('all')}
               aria-pressed={quickFilter === 'all'}
-              className={`px-2.5 py-1 rounded-md transition-all active:scale-[0.98] ${
+              className={`px-2.5 py-1 rounded transition-all active:scale-[0.98] ${
                 quickFilter === 'all'
-                  ? 'bg-white text-slate-900 font-bold shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#0F172A] text-white font-medium shadow-xs'
+                  : 'text-[#64748B] hover:text-[#0F172A]'
               }`}
             >
               All ({rawChartData.length})
@@ -156,61 +156,61 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
               type="button"
               onClick={() => setQuickFilter('above')}
               aria-pressed={quickFilter === 'above'}
-              className={`px-2.5 py-1 rounded-md transition-all active:scale-[0.98] ${
+              className={`px-2.5 py-1 rounded transition-all active:scale-[0.98] ${
                 quickFilter === 'above'
-                  ? 'bg-white text-emerald-800 font-bold shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0] font-medium shadow-xs'
+                  : 'text-[#059669] hover:bg-[#ECFDF5]/60'
               }`}
             >
-              Above State Avg ({rawChartData.filter(d => d.percentage >= stateVal).length})
+              ≥ State Avg ({rawChartData.filter(d => d.percentage >= stateVal).length})
             </button>
             <button
               type="button"
               onClick={() => setQuickFilter('below')}
               aria-pressed={quickFilter === 'below'}
-              className={`px-2.5 py-1 rounded-md transition-all active:scale-[0.98] ${
+              className={`px-2.5 py-1 rounded transition-all active:scale-[0.98] ${
                 quickFilter === 'below'
-                  ? 'bg-white text-slate-800 font-bold shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#FFF1F2] text-[#9F1239] border border-[#FECDD3] font-medium shadow-xs'
+                  : 'text-[#E11D48] hover:bg-[#FFF1F2]/60'
               }`}
             >
-              Below State Avg ({rawChartData.filter(d => d.percentage < stateVal).length})
+              &lt; State Avg ({rawChartData.filter(d => d.percentage < stateVal).length})
             </button>
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Quick Search with Clear */}
+            {/* Quick Search */}
             <div className="relative">
-              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2 pointer-events-none" />
+              <Search className="w-3.5 h-3.5 text-[#64748B] absolute left-2.5 top-2 pointer-events-none" />
               <input
                 type="text"
                 placeholder="Search district..."
                 value={searchDistrict}
                 onChange={e => setSearchDistrict(e.target.value)}
                 aria-label="Search districts by name"
-                className="pl-8 pr-7 py-1 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-mda-700 w-32 sm:w-44 font-medium"
+                className="pl-8 pr-7 py-1 text-xs bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:border-[#14532D] w-32 sm:w-44 font-normal"
               />
               {searchDistrict && (
                 <button
                   type="button"
                   onClick={() => setSearchDistrict('')}
                   aria-label="Clear district search"
-                  className="absolute right-2 top-1.5 p-0.5 text-slate-400 hover:text-slate-600 rounded"
+                  className="absolute right-2 top-1.5 p-0.5 text-[#94A3B8] hover:text-[#0F172A] rounded"
                 >
                   <X className="w-3 h-3" />
                 </button>
               )}
             </div>
 
-            {/* Sort Toggle */}
+            {/* Sort Direction Toggle */}
             <button
               type="button"
               onClick={() => setSortOrder(prev => prev === 'desc' ? 'asc' : 'desc')}
               aria-label={`Toggle sort order: currently ${sortOrder === 'desc' ? 'High to Low' : 'Low to High'}`}
-              className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-medium transition-colors shadow-xs"
+              className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md border border-[#CBD5E1] bg-white hover:bg-[#F8FAFC] text-[#334155] font-normal transition-colors"
               title="Toggle sort direction"
             >
-              <ArrowUpDown className="w-3 h-3 text-slate-400" />
+              <ArrowUpDown className="w-3 h-3 text-[#64748B]" />
               <span>{sortOrder === 'desc' ? 'High to Low' : 'Low to High'}</span>
             </button>
           </div>
@@ -219,12 +219,12 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
 
       {/* Empty State when no districts match */}
       {chartData.length === 0 ? (
-        <div className="py-14 px-4 text-center flex flex-col items-center justify-center border border-dashed border-slate-200 rounded-xl my-3 bg-slate-50/50">
-          <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-2.5">
-            <Search className="w-5 h-5 text-slate-400" />
+        <div className="py-12 px-4 text-center flex flex-col items-center justify-center border border-dashed border-[#E2E8F0] rounded-xl my-3 bg-[#F8FAFC]">
+          <div className="w-9 h-9 rounded-md bg-[#F1F5F9] flex items-center justify-center text-[#64748B] mb-2.5">
+            <Search className="w-4 h-4 text-[#64748B]" />
           </div>
-          <h4 className="text-sm font-bold text-slate-800 mb-1">No matching districts found</h4>
-          <p className="text-xs text-slate-500 max-w-sm mb-4">
+          <h4 className="text-xs font-medium text-[#0F172A] mb-1">No matching districts found</h4>
+          <p className="text-xs text-[#64748B] max-w-sm mb-4">
             {searchDistrict
               ? `No districts match the search "${searchDistrict}" in the current filter.`
               : 'No districts match the selected performance filter status.'}
@@ -232,9 +232,9 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
           <button
             type="button"
             onClick={handleResetFilters}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-white border border-[#CBD5E1] text-[#0F172A] hover:bg-[#F8FAFC] transition-colors"
           >
-            <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
+            <RotateCcw className="w-3.5 h-3.5 text-[#64748B]" />
             <span>Reset filters</span>
           </button>
         </div>
@@ -259,7 +259,7 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
                 <YAxis
                   type="category"
                   dataKey="district"
-                  tick={{ fontSize: 11, fill: '#1E293B', fontWeight: 600, cursor: 'pointer' }}
+                  tick={{ fontSize: 11, fill: '#1E293B', fontWeight: 500, cursor: 'pointer' }}
                   width={110}
                   axisLine={{ stroke: '#E2E8F0' }}
                   tickLine={false}
@@ -268,37 +268,41 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
                   }}
                 />
                 <Tooltip
-                  cursor={{ fill: 'rgba(20, 108, 80, 0.04)' }}
+                  cursor={{ fill: 'rgba(5, 150, 105, 0.04)' }}
                   content={({ active, payload }) => {
                     if (!active || !payload || !payload.length) return null;
                     const d = payload[0].payload;
                     const variance = Math.round((d.percentage - stateVal) * 10) / 10;
                     return (
-                      <div className="bg-white border border-slate-200 rounded-lg p-3 text-xs shadow-md min-w-[180px]">
-                        <div className="flex items-center justify-between border-b border-slate-100 pb-1.5 mb-1.5">
-                          <span className="font-bold text-slate-900">{d.district}</span>
-                          <span className="text-[10px] text-slate-500">{d.totalPUs} PUs</span>
+                      <div className="bg-white border border-[#E2E8F0] rounded-md p-3 text-xs shadow-md min-w-[190px]">
+                        <div className="flex items-center justify-between border-b border-[#F1F5F9] pb-1.5 mb-1.5">
+                          <span className="font-semibold text-[#0F172A]">{d.district}</span>
+                          <span className="text-[10px] text-[#64748B] font-mono">{d.totalPUs} PUs</span>
                         </div>
                         <div className="space-y-1">
                           <div className="flex items-center justify-between">
-                            <span className="text-slate-500">{currentIndicator.shortName}:</span>
-                            <span className="font-bold text-slate-900">{d.percentage.toFixed(1)}%</span>
+                            <span className="text-[#64748B]">{currentIndicator.shortName}:</span>
+                            <span className="font-serif text-[#0F172A] font-medium">{d.percentage.toFixed(1)}%</span>
                           </div>
-                          <div className="flex items-center justify-between text-[11px] text-slate-500">
+                          <div className="flex items-center justify-between text-[11px] text-[#64748B]">
                             <span>Counts:</span>
-                            <span className="font-mono text-slate-700">
+                            <span className="font-mono text-[#334155]">
                               {d.numerator} / {d.denominator}
                             </span>
                           </div>
-                          <div className="flex items-center justify-between text-[11px] pt-1 border-t border-slate-100 mt-1">
-                            <span className="text-slate-500">vs State:</span>
-                            <span className={`font-semibold ${variance >= 0 ? 'text-emerald-700' : 'text-rose-600'}`}>
+                          <div className="flex items-center justify-between text-[11px] pt-1 border-t border-[#F1F5F9] mt-1">
+                            <span className="text-[#64748B]">vs State Avg:</span>
+                            <span className={`font-medium px-1.5 py-0.2 rounded-full text-[10px] border ${
+                              variance >= 0
+                                ? 'bg-[#ECFDF5] text-[#065F46] border-[#A7F3D0]'
+                                : 'bg-[#FFF1F2] text-[#9F1239] border-[#FECDD3]'
+                            }`}>
                               {variance >= 0 ? `+${variance}%` : `${variance}%`}
                             </span>
                           </div>
                         </div>
-                        <p className="text-[10px] text-mda-700 font-semibold mt-2 text-center">
-                          Click to drill down into planning units →
+                        <p className="text-[10px] text-[#059669] font-medium mt-2 text-center border-t border-[#F1F5F9] pt-1.5">
+                          Click to inspect planning units →
                         </p>
                       </div>
                     );
@@ -306,14 +310,14 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
                 />
                 <ReferenceLine
                   x={stateVal}
-                  stroke="#047857"
+                  stroke="#E11D48"
                   strokeWidth={1.5}
                   strokeDasharray="3 3"
                 />
                 <Bar
                   dataKey="percentage"
                   barSize={16}
-                  radius={[0, 4, 4, 0]}
+                  radius={[0, 3, 3, 0]}
                   onClick={(entry: any) => {
                     if (entry && entry.district) onSelectDistrict(entry.district);
                   }}
@@ -327,23 +331,23 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
             </ResponsiveContainer>
           </div>
 
-          {/* Clean Bottom Legend */}
-          <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
-            <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1.5 font-medium">
-                <span className="w-2.5 h-2.5 rounded-xs bg-emerald-600" />
-                <span>≥ State Average</span>
+          {/* Clean Bottom Legend with Color Indicators */}
+          <div className="mt-3 pt-3 border-t border-[#EAEAEA] flex flex-wrap items-center justify-between gap-3 text-xs text-[#64748B]">
+            <div className="flex items-center gap-4">
+              <span className="flex items-center gap-1.5 font-normal">
+                <span className="w-2.5 h-2.5 rounded-xs bg-[#059669]" />
+                <span className="text-[#334155]">≥ State Benchmark</span>
               </span>
-              <span className="flex items-center gap-1.5 font-medium">
-                <span className="w-2.5 h-2.5 rounded-xs bg-slate-500" />
-                <span>&lt; State Average</span>
+              <span className="flex items-center gap-1.5 font-normal">
+                <span className="w-2.5 h-2.5 rounded-xs bg-[#94A3B8]" />
+                <span className="text-[#334155]">&lt; State Benchmark</span>
               </span>
             </div>
 
             <div className="flex items-center gap-3 text-xs">
-              <span className="flex items-center gap-1.5 text-slate-700 font-medium">
-                <span className="w-3.5 h-0.5 bg-emerald-700 inline-block border-b border-dashed border-emerald-700" />
-                <span>State Avg ({stateVal.toFixed(1)}%)</span>
+              <span className="flex items-center gap-1.5 text-[#E11D48] font-medium">
+                <span className="w-3.5 h-0.5 bg-[#E11D48] inline-block border-b border-dashed border-[#E11D48]" />
+                <span>State Average ({stateVal.toFixed(1)}%)</span>
               </span>
             </div>
           </div>

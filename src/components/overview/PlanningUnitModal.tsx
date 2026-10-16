@@ -2,6 +2,7 @@ import React from 'react';
 import { X, CheckCircle2, AlertTriangle, AlertCircle, Building2, MapPin, Layers, Users, Pill, GraduationCap, ShieldCheck, ClipboardCheck } from 'lucide-react';
 import { MonitoringRow } from '../../types/dataset';
 import { INDICATOR_DICTIONARY, CATEGORIES } from '../../data/indicatorDictionary';
+import { getCategoryTheme } from '../../data/categoryThemes';
 import { calculateRowIndicator } from '../../services/indicatorCalculator';
 import { ProgressBar } from '../common/ProgressBar';
 
@@ -51,11 +52,15 @@ export const PlanningUnitModal: React.FC<PlanningUnitModalProps> = ({
           {/* Header */}
           <div className="px-6 py-5 border-b border-slate-100 flex items-start justify-between gap-4 bg-slate-50/50">
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xs font-semibold px-2 py-0.5 rounded bg-mda-50 text-mda-800 border border-mda-200/50">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
                   Planning Unit Scorecard
                 </span>
-                <span className="text-xs font-medium text-slate-500">
+                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${
+                  row.regime === 'IDA'
+                    ? 'bg-blue-50 text-blue-800 border-blue-200'
+                    : 'bg-amber-50 text-amber-800 border-amber-200'
+                }`}>
                   {row.regime || 'IDA'} Regime
                 </span>
               </div>
@@ -115,33 +120,38 @@ export const PlanningUnitModal: React.FC<PlanningUnitModalProps> = ({
 
           {/* Indicators by Category Body */}
           <div className="p-6 max-h-[65vh] overflow-y-auto space-y-6">
-            {categoryGroups.map(group => (
-              <div key={group.category} className="space-y-2.5">
-                <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
-                    {group.category}
-                  </h4>
-                  <span className="text-[11px] text-slate-400 font-medium">
-                    {group.indicatorResults.length} metrics
-                  </span>
-                </div>
+            {categoryGroups.map(group => {
+              const theme = getCategoryTheme(group.category);
+              return (
+                <div key={group.category} className="space-y-2.5">
+                  <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: theme.accentColor }} />
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                        {group.category}
+                      </h4>
+                    </div>
+                    <span className="text-[11px] text-slate-400 font-medium">
+                      {group.indicatorResults.length} metrics
+                    </span>
+                  </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {group.indicatorResults.map(({ indicator, calc }) => {
-                    const isNa = calc.percentage === null;
-                    return (
-                      <div
-                        key={indicator.id}
-                        className="p-3 rounded-xl border border-slate-100 bg-slate-50/40 hover:bg-white hover:border-slate-200 transition-colors"
-                      >
-                        <div className="flex items-start justify-between gap-2 mb-1">
-                          <span className="text-xs font-semibold text-slate-800 leading-tight">
-                            {indicator.shortName}
-                          </span>
-                          <span className="font-mono text-[10px] text-slate-400 font-bold bg-white px-1.5 py-0.5 rounded border border-slate-200">
-                            {indicator.code}
-                          </span>
-                        </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {group.indicatorResults.map(({ indicator, calc }) => {
+                      const isNa = calc.percentage === null;
+                      return (
+                        <div
+                          key={indicator.id}
+                          className="p-3 rounded-xl border border-slate-100 bg-slate-50/40 hover:bg-white hover:border-slate-200 transition-colors"
+                        >
+                          <div className="flex items-start justify-between gap-2 mb-1">
+                            <span className="text-xs font-semibold text-slate-800 leading-tight">
+                              {indicator.shortName}
+                            </span>
+                            <span className="font-mono text-[10px] text-slate-400 font-bold bg-white px-1.5 py-0.5 rounded border border-slate-200">
+                              {indicator.code}
+                            </span>
+                          </div>
 
                         <div className="flex items-baseline justify-between mt-2">
                           <span className="text-base font-bold text-slate-900 metric-number">
@@ -168,8 +178,9 @@ export const PlanningUnitModal: React.FC<PlanningUnitModalProps> = ({
                   })}
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
           {/* Footer */}
           <div className="px-6 py-3.5 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between text-xs text-slate-500">

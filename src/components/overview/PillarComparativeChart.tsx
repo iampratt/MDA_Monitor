@@ -67,15 +67,15 @@ export const PillarComparativeChart: React.FC<PillarComparativeChartProps> = ({
   chartData.sort((a, b) => b.percentage - a.percentage);
 
   return (
-    <div className="card-subtle rounded-xl p-5 bg-white border border-slate-200 mb-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 mb-4 gap-2">
+    <div className="bento-card rounded-xl p-5 bg-white border border-[#EAEAEA] mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#F1F5F9] mb-4 gap-2">
         <div className="flex items-center gap-2">
-          <BarChart3 className="w-4 h-4 text-mda-700" />
-          <h3 className="text-sm font-bold text-slate-900 tracking-tight">
+          <BarChart3 className="w-4 h-4 text-[#059669]" />
+          <h3 className="text-sm font-serif font-normal text-[#0F172A]">
             Thematic Pillars Performance Overview
           </h3>
         </div>
-        <span className="text-xs text-slate-500 font-medium">
+        <span className="text-xs text-[#64748B]">
           Statewide aggregates across core thematic indicators • Click any bar to inspect
         </span>
       </div>

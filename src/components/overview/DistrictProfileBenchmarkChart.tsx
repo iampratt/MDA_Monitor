@@ -57,14 +57,14 @@ export const DistrictProfileBenchmarkChart: React.FC<DistrictProfileBenchmarkCha
     <div className="card-subtle rounded-xl p-5 bg-white border border-slate-200">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 mb-4 gap-2">
         <div className="flex items-center gap-2">
-          <Activity className="w-4 h-4 text-mda-700" />
+          <Activity className="w-4 h-4 text-emerald-700" />
           <h3 className="text-sm font-bold text-slate-900 tracking-tight">
             {districtName} vs. State Average Profile
           </h3>
         </div>
         <div className="flex items-center gap-4 text-xs font-medium">
           <span className="flex items-center gap-1.5 text-slate-800 font-semibold">
-            <span className="w-3 h-3 rounded-xs bg-blue-600 inline-block" />
+            <span className="w-3 h-3 rounded-xs bg-emerald-600 inline-block" />
             {districtName} %
           </span>
           <span className="flex items-center gap-1.5 text-slate-500">
@@ -106,7 +106,7 @@ export const DistrictProfileBenchmarkChart: React.FC<DistrictProfileBenchmarkCha
                     </p>
                     <div className="space-y-1.5 text-[11px]">
                       <div className="flex justify-between items-center">
-                        <span className="font-semibold text-blue-700">{districtName}:</span>
+                        <span className="font-semibold text-emerald-800">{districtName}:</span>
                         <div className="text-right">
                           <span className="font-bold text-slate-900">{d.districtPct.toFixed(1)}%</span>
                           <span className="text-[10px] text-slate-400 font-mono block">({d.districtRaw})</span>
@@ -121,7 +121,7 @@ export const DistrictProfileBenchmarkChart: React.FC<DistrictProfileBenchmarkCha
                       </div>
                       <div className="flex justify-between items-center pt-1 border-t border-slate-100">
                         <span className="text-slate-500">Variance:</span>
-                        <span className={`font-bold ${d.variance >= 0 ? 'text-blue-700' : 'text-slate-600'}`}>
+                        <span className={`font-bold px-1.5 py-0.2 rounded ${d.variance >= 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}>
                           {d.variance >= 0 ? `+${d.variance}%` : `${d.variance}%`}
                         </span>
                       </div>
@@ -133,7 +133,7 @@ export const DistrictProfileBenchmarkChart: React.FC<DistrictProfileBenchmarkCha
             <Bar
               dataKey="districtPct"
               name={`${districtName} %`}
-              fill="#2563eb"
+              fill="#059669"
               barSize={18}
               radius={[3, 3, 0, 0]}
               onClick={(entry: any) => {

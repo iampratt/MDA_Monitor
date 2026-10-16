@@ -3,13 +3,8 @@ import {
   ArrowLeft,
   MapPin,
   ChevronRight,
-  TrendingUp,
-  AlertCircle,
   BarChart3,
-  Search,
-  Filter,
-  Eye,
-  CheckCircle2
+  Search
 } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, ReferenceLine, Cell } from 'recharts';
 import { DistrictAggregate, GrandAggregate } from '../../types/indicator';
@@ -91,9 +86,9 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
 
   const getBarColor = (percentage: number | null) => {
     if (percentage !== null && districtVal !== null) {
-      return percentage >= districtVal ? '#059669' : '#64748B';
+      return percentage >= districtVal ? '#059669' : '#94A3B8';
     }
-    return '#64748B';
+    return '#94A3B8';
   };
 
   const primaryIndicators = INDICATOR_DICTIONARY.filter(i =>
@@ -103,29 +98,29 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* Top Breadcrumb & District Switcher Navigation */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#EAEAEA]">
         <div className="flex items-center gap-2">
           <button
             onClick={onBackToState}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 text-xs font-normal px-2.5 py-1.5 rounded-md bg-white border border-[#EAEAEA] text-[#111111] hover:bg-[#F7F6F3] transition-colors"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
+            <ArrowLeft className="w-3.5 h-3.5 text-[#787774]" />
             <span>State Overview</span>
           </button>
-          <span className="text-slate-300">/</span>
-          <span className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-mda-700" />
+          <span className="text-[#CCCCCC]">/</span>
+          <span className="text-sm font-medium text-[#111111] flex items-center gap-1.5">
+            <MapPin className="w-3.5 h-3.5 text-[#787774]" />
             {districtName} District
           </span>
         </div>
 
         {/* District Switcher */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-500 font-medium">Switch District:</span>
+          <span className="text-xs text-[#787774]">Switch District:</span>
           <select
             value={districtName}
             onChange={e => onSelectDistrict(e.target.value)}
-            className="text-xs font-semibold bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-slate-800 focus:outline-none focus:ring-1 focus:ring-mda-700 shadow-xs"
+            className="text-xs font-medium bg-white border border-[#EAEAEA] rounded-md px-2.5 py-1.5 text-[#111111] focus:outline-none focus:border-[#111111]"
           >
             {allDistricts.map(d => (
               <option key={d.district} value={d.district}>
@@ -137,28 +132,28 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
       </div>
 
       {/* District Header Card */}
-      <div className="card-subtle rounded-xl p-5 bg-white">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+      <div className="bento-card rounded-xl p-5 bg-white border border-[#EAEAEA]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#EAEAEA]">
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-serif font-normal text-[#111111] tracking-tight">
                 {districtName} District
               </h2>
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#F1F1EF] text-[#5A5A58] border border-[#E3E3E0]">
                 {districtRows.length} Planning Units
               </span>
             </div>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-[#787774] mt-1 font-normal">
               Field operational evaluation across {districtRows.length} planning units • {totalTeams} teams monitored ({totalMetDA} met DA teams).
             </p>
           </div>
 
           <div className="flex items-center gap-2 self-start md:self-auto">
-            <span className="text-xs text-slate-500 font-medium">Active Indicator:</span>
+            <span className="text-xs text-[#787774]">Active Indicator:</span>
             <select
               value={selectedIndicatorId}
               onChange={e => onSelectIndicator(e.target.value)}
-              className="text-xs font-semibold bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-slate-900 focus:outline-none focus:ring-1 focus:ring-mda-700"
+              className="text-xs font-medium bg-white border border-[#EAEAEA] rounded-md px-3 py-1.5 text-[#111111] focus:outline-none focus:border-[#111111]"
             >
               {primaryIndicators.map(i => (
                 <option key={i.id} value={i.id}>
@@ -172,57 +167,57 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
         {/* District Metrics Strip */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
           <div>
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+            <span className="text-[10.5px] font-medium text-[#787774] uppercase tracking-[0.05em] block">
               Teams Visited Area
             </span>
             <div className="flex items-baseline gap-2 mt-0.5">
-              <span className="text-2xl font-bold text-slate-900 metric-number">
+              <span className="text-2xl font-serif font-normal text-[#111111] metric-number">
                 {visitedAreaVal}
               </span>
             </div>
-            <span className="text-[11px] text-slate-400">
+            <span className="text-[11px] text-[#787774]">
               State Avg: {grandAggregate.indicatorValues['teams_visited_area']?.formattedPercentage || 'N/A'}
             </span>
           </div>
 
           <div>
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+            <span className="text-[10.5px] font-medium text-[#787774] uppercase tracking-[0.05em] block">
               Microplan Adherence
             </span>
             <div className="flex items-baseline gap-2 mt-0.5">
-              <span className="text-2xl font-bold text-slate-900 metric-number">
+              <span className="text-2xl font-serif font-normal text-[#111111] metric-number">
                 {microplanVal}
               </span>
             </div>
-            <span className="text-[11px] text-slate-400">
+            <span className="text-[11px] text-[#787774]">
               State Avg: {grandAggregate.indicatorValues['working_as_per_mp']?.formattedPercentage || 'N/A'}
             </span>
           </div>
 
           <div>
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+            <span className="text-[10.5px] font-medium text-[#787774] uppercase tracking-[0.05em] block">
               Observed Consumption
             </span>
             <div className="flex items-baseline gap-2 mt-0.5">
-              <span className="text-2xl font-bold text-slate-900 metric-number">
+              <span className="text-2xl font-serif font-normal text-[#111111] metric-number">
                 {consumptionVal}
               </span>
             </div>
-            <span className="text-[11px] text-slate-400">
+            <span className="text-[11px] text-[#787774]">
               State Avg: {grandAggregate.indicatorValues['persons_administered']?.formattedPercentage || 'N/A'}
             </span>
           </div>
 
           <div>
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+            <span className="text-[10.5px] font-medium text-[#787774] uppercase tracking-[0.05em] block">
               Supervisor Visited
             </span>
             <div className="flex items-baseline gap-2 mt-0.5">
-              <span className="text-2xl font-bold text-slate-900 metric-number">
+              <span className="text-2xl font-serif font-normal text-[#111111] metric-number">
                 {supervisorVal}
               </span>
             </div>
-            <span className="text-[11px] text-slate-400">
+            <span className="text-[11px] text-[#787774]">
               State Avg: {grandAggregate.indicatorValues['supervisor_ever_visited']?.formattedPercentage || 'N/A'}
             </span>
           </div>
@@ -238,18 +233,18 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
       />
 
       {/* Planning Unit Breakdown Chart */}
-      <div className="card-subtle rounded-xl p-5 bg-white">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 mb-4">
+      <div className="bento-card rounded-xl p-5 bg-white border border-[#EAEAEA]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#EAEAEA] mb-4">
           <div className="flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-mda-700" />
-            <h3 className="text-sm font-bold text-slate-900">
+            <BarChart3 className="w-4 h-4 text-[#111111]" />
+            <h3 className="text-sm font-serif font-normal text-[#111111]">
               Planning Units Comparison: {currentIndicator.shortName}
             </h3>
           </div>
-          <div className="flex items-center gap-3 text-xs text-slate-500">
+          <div className="flex items-center gap-3 text-xs text-[#787774]">
             {districtVal !== null && (
-              <span className="flex items-center gap-1.5 font-medium text-slate-700">
-                <span className="w-3.5 h-0.5 bg-emerald-700 inline-block border-b border-dashed border-emerald-700" />
+              <span className="flex items-center gap-1.5 text-[#2F3437]">
+                <span className="w-3.5 h-0.5 bg-[#111111] inline-block border-b border-dashed border-[#111111]" />
                 District Avg: {districtVal.toFixed(1)}%
               </span>
             )}
@@ -262,30 +257,30 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
               <XAxis
                 dataKey="planningUnit"
                 interval={0}
-                tick={{ fontSize: 11, fill: '#334155', fontWeight: 600 }}
-                axisLine={{ stroke: '#E2E8F0' }}
+                tick={{ fontSize: 10, fill: '#787774' }}
+                axisLine={{ stroke: '#EAEAEA' }}
                 tickLine={false}
               />
               <YAxis
                 domain={[0, 100]}
                 tickFormatter={v => `${v}%`}
-                tick={{ fontSize: 11, fill: '#64748B' }}
-                width={40}
-                axisLine={{ stroke: '#E2E8F0' }}
+                tick={{ fontSize: 10, fill: '#787774' }}
+                width={36}
+                axisLine={{ stroke: '#EAEAEA' }}
                 tickLine={false}
               />
               <Tooltip
-                cursor={{ fill: 'rgba(20, 108, 80, 0.04)' }}
+                cursor={{ fill: 'rgba(0, 0, 0, 0.02)' }}
                 content={({ active, payload }) => {
                   if (!active || !payload || !payload.length) return null;
                   const item = payload[0].payload;
                   return (
-                    <div className="bg-white border border-slate-200 rounded-lg p-2.5 text-xs shadow-md">
-                      <p className="font-bold text-slate-900">{item.planningUnit}</p>
-                      <p className="text-mda-700 font-bold mt-1">
+                    <div className="bg-white border border-[#EAEAEA] rounded-md p-2.5 text-xs shadow-none">
+                      <p className="font-medium text-[#111111]">{item.planningUnit}</p>
+                      <p className="font-serif text-[#111111] text-sm mt-1">
                         {item.percentage !== null ? `${item.percentage.toFixed(1)}%` : 'N/A'}
                       </p>
-                      <p className="text-slate-500 text-[11px] font-mono mt-0.5">
+                      <p className="text-[#787774] text-[11px] font-mono mt-0.5">
                         {item.numerator} / {item.denominator}
                       </p>
                     </div>
@@ -295,15 +290,15 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
               {districtVal !== null && (
                 <ReferenceLine
                   y={districtVal}
-                  stroke="#047857"
+                  stroke="#059669"
                   strokeDasharray="3 3"
                   strokeWidth={1.5}
                 />
               )}
               <Bar
                 dataKey="percentage"
-                barSize={32}
-                radius={[4, 4, 0, 0]}
+                barSize={24}
+                radius={[2, 2, 0, 0]}
                 onClick={(entry: any) => {
                   if (entry && entry.row) setSelectedPuRow(entry.row);
                 }}
@@ -319,25 +314,25 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
       </div>
 
       {/* Planning Units Table */}
-      <div className="card-subtle rounded-xl bg-white overflow-hidden">
-        <div className="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="bento-card rounded-xl bg-white border border-[#EAEAEA] overflow-hidden">
+        <div className="p-4 border-b border-[#EAEAEA] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h3 className="text-sm font-bold text-slate-900">
+            <h3 className="text-sm font-serif font-normal text-[#111111]">
               Planning Units in {districtName}
             </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Click any planning unit or "View Scorecard" to inspect its 360° thematic indicators.
+            <p className="text-xs text-[#787774] mt-0.5">
+              Click any planning unit row or Scorecard to view 360° indicator breakdown.
             </p>
           </div>
 
           <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-[#787774] absolute left-2.5 top-2.5" />
             <input
               type="text"
               placeholder="Filter planning unit..."
               value={puSearch}
               onChange={e => setPuSearch(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-mda-700"
+              className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] placeholder-[#787774] focus:outline-none focus:border-[#111111]"
             />
           </div>
         </div>
@@ -345,7 +340,7 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-slate-50/70 border-b border-slate-100 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <tr className="bg-[#F7F6F3] border-b border-[#EAEAEA] text-[10px] font-medium uppercase tracking-[0.05em] text-[#787774]">
                 <th className="py-2.5 px-4 w-10 text-center">#</th>
                 <th className="py-2.5 px-4">Planning Unit</th>
                 <th className="py-2.5 px-3 text-center">Regime</th>
@@ -358,46 +353,48 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
                 <th className="py-2.5 px-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 text-slate-700">
+            <tbody className="divide-y divide-[#EAEAEA] text-[#2F3437]">
               {filteredPuData.map((item, idx) => (
                 <tr
                   key={item.planningUnit}
-                  className="hover:bg-slate-50/60 transition-colors cursor-pointer"
+                  className="hover:bg-[#FBFBFA] transition-colors cursor-pointer"
                   onClick={() => setSelectedPuRow(item.row)}
                 >
-                  <td className="py-3 px-4 text-center text-slate-400 font-mono text-[11px]">
+                  <td className="py-3 px-4 text-center text-[#787774] font-mono text-[11px]">
                     {idx + 1}
                   </td>
-                  <td className="py-3 px-4 font-bold text-slate-900 whitespace-nowrap">
+                  <td className="py-3 px-4 font-medium text-[#111111] whitespace-nowrap">
                     {item.planningUnit}
                   </td>
                   <td className="py-3 px-3 text-center whitespace-nowrap">
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600">
+                    <span className="text-[9.5px] font-mono px-1.5 py-0.5 rounded bg-[#F1F1EF] text-[#5A5A58]">
                       {item.regime}
                     </span>
                   </td>
-                  <td className="py-3 px-3 text-right font-mono text-slate-600 whitespace-nowrap">
+                  <td className="py-3 px-3 text-right font-mono text-[#787774] whitespace-nowrap">
                     {item.teamsMonitored}
                   </td>
-                  <td className="py-3 px-3 text-right font-mono text-slate-600 whitespace-nowrap">
+                  <td className="py-3 px-3 text-right font-mono text-[#787774] whitespace-nowrap">
                     {item.teamsMetDA}
                   </td>
-                  <td className="py-3 px-3 text-right font-mono text-slate-800 font-medium whitespace-nowrap">
+                  <td className="py-3 px-3 text-right font-mono text-[#111111] font-medium whitespace-nowrap">
                     {item.numerator}
                   </td>
-                  <td className="py-3 px-3 text-right font-mono text-slate-600 whitespace-nowrap">
+                  <td className="py-3 px-3 text-right font-mono text-[#787774] whitespace-nowrap">
                     {item.denominator}
                   </td>
-                  <td className="py-3 px-4 text-right whitespace-nowrap font-mono font-bold text-slate-900 text-sm">
+                  <td className="py-3 px-4 text-right whitespace-nowrap font-serif font-medium text-[#111111] text-sm">
                     {item.formattedPercentage}
                   </td>
-                  <td className="py-3 px-4 text-right whitespace-nowrap font-mono text-xs">
+                  <td className="py-3 px-4 text-right whitespace-nowrap text-xs">
                     {item.percentage !== null && districtVal !== null ? (
-                      <span className={`font-semibold ${item.percentage >= districtVal ? 'text-emerald-700' : 'text-slate-600'}`}>
+                      <span className={`inline-flex px-1.5 py-0.2 rounded-full font-medium text-[10px] ${
+                        item.percentage >= districtVal ? 'bg-[#EDF3EC] text-[#346538]' : 'bg-[#FDEBEC] text-[#9F2F2D]'
+                      }`}>
                         {item.percentage >= districtVal ? `+${(item.percentage - districtVal).toFixed(1)}%` : `${(item.percentage - districtVal).toFixed(1)}%`}
                       </span>
                     ) : (
-                      <span className="text-slate-400">N/A</span>
+                      <span className="text-[#787774]">N/A</span>
                     )}
                   </td>
                   <td className="py-3 px-4 text-right whitespace-nowrap">
@@ -406,10 +403,10 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
                         e.stopPropagation();
                         setSelectedPuRow(item.row);
                       }}
-                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-mda-700 hover:text-mda-900 hover:underline"
+                      className="inline-flex items-center gap-1 text-[11px] font-medium text-[#111111] hover:underline"
                     >
                       <span>Scorecard</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
+                      <ChevronRight className="w-3.5 h-3.5 text-[#787774]" />
                     </button>
                   </td>
                 </tr>

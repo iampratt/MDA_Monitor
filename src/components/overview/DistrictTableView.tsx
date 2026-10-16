@@ -208,10 +208,18 @@ export const DistrictTableView: React.FC<DistrictTableViewProps> = ({
                   aria-label={`Drill down into ${item.district}`}
                   className="hover:bg-slate-50/70 cursor-pointer transition-colors group focus:outline-none focus-visible:bg-slate-100/80"
                 >
-                  <td className="py-3 px-4 text-center text-slate-400 font-mono text-[11px]">
-                    {idx + 1}
+                  <td className="py-3 px-4 text-center">
+                    {idx === 0 ? (
+                      <span className="inline-block w-5 h-5 leading-5 text-[10px] font-bold rounded-full bg-amber-100 text-amber-900 border border-amber-200">1</span>
+                    ) : idx === 1 ? (
+                      <span className="inline-block w-5 h-5 leading-5 text-[10px] font-bold rounded-full bg-slate-100 text-slate-800 border border-slate-200">2</span>
+                    ) : idx === 2 ? (
+                      <span className="inline-block w-5 h-5 leading-5 text-[10px] font-bold rounded-full bg-orange-100 text-orange-900 border border-orange-200">3</span>
+                    ) : (
+                      <span className="text-slate-400 font-mono text-[11px]">{idx + 1}</span>
+                    )}
                   </td>
-                  <td className="py-3 px-4 font-bold text-slate-900 whitespace-nowrap group-hover:text-mda-800 transition-colors">
+                  <td className="py-3 px-4 font-bold text-slate-900 whitespace-nowrap group-hover:text-emerald-800 transition-colors">
                     {item.district}
                   </td>
                   <td className="py-3 px-3 text-center font-medium text-slate-600 whitespace-nowrap">
@@ -231,7 +239,11 @@ export const DistrictTableView: React.FC<DistrictTableViewProps> = ({
                   </td>
                   <td className="py-3 px-4 text-right whitespace-nowrap font-mono text-xs">
                     {item.percentage !== null && stateVal !== null ? (
-                      <span className={`font-semibold ${item.percentage >= stateVal ? 'text-emerald-700' : 'text-slate-600'}`}>
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold ${
+                        item.percentage >= stateVal
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                          : 'bg-rose-50 text-rose-800 border border-rose-200'
+                      }`}>
                         {item.percentage >= stateVal ? `+${(item.percentage - stateVal).toFixed(1)}%` : `${(item.percentage - stateVal).toFixed(1)}%`}
                       </span>
                     ) : (
@@ -239,7 +251,7 @@ export const DistrictTableView: React.FC<DistrictTableViewProps> = ({
                     )}
                   </td>
                   <td className="py-3 px-4 text-right whitespace-nowrap">
-                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-mda-700 group-hover:text-mda-900">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 bg-emerald-50/70 border border-emerald-200/60 px-2 py-1 rounded-md group-hover:bg-emerald-100/80 transition-colors">
                       <span>Drill down</span>
                       <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                     </span>
