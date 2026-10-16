@@ -156,7 +156,7 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
           <div
             role="tablist"
             aria-label="Overview perspective views"
-            className="inline-flex bg-slate-100 p-1 rounded-xl text-xs font-semibold border border-slate-200/60"
+            className="inline-flex bg-slate-100/90 p-1 rounded-xl text-xs font-semibold border border-slate-200/80 shadow-xs backdrop-blur-xs"
           >
             <button
               type="button"
@@ -222,13 +222,14 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
         </div>
       </div>
 
-      {/* Programmatic Key Indicators Ribbon (Clickable Tiles) */}
+      {/* Programmatic Key Indicators Ribbon (Clickable Tiles with Doppelrand Architecture) */}
       <div>
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+        <div className="flex items-center justify-between mb-2.5">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             Core Programmatic Performance Indicators
           </span>
-          <span className="text-[11px] text-slate-400">
+          <span className="text-[11px] text-slate-400 font-medium">
             Click metric to focus ranking below
           </span>
         </div>
@@ -255,38 +256,46 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
                     setSelectedIndicatorId(metric.id);
                   }
                 }}
-                className={`p-3.5 sm:p-4 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+                className={`p-[3px] rounded-2xl border transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 ${
                   metric.isInteractiveIndicator
-                    ? 'cursor-pointer hover:border-slate-300 active:scale-[0.98]'
-                    : 'bg-white border-surface-border'
+                    ? 'cursor-pointer active:scale-[0.985] group'
+                    : ''
                 } ${
                   isSelected
-                    ? 'bg-mda-50/25 border-mda-600 ring-2 ring-mda-600/30 shadow-xs'
-                    : 'bg-white border-surface-border shadow-xs'
+                    ? 'bg-emerald-100/70 border-emerald-500/60 shadow-xs ring-2 ring-emerald-500/20'
+                    : 'bg-gradient-to-b from-slate-100/90 to-slate-200/50 border-slate-200/70 hover:border-slate-300'
                 }`}
               >
-                <div className="flex items-center justify-between text-slate-500 mb-2">
-                  <span className="text-[11px] font-bold text-slate-700 truncate mr-1" title={metric.title}>
-                    {metric.title}
-                  </span>
-                  <div className={`p-1.5 rounded-lg transition-colors ${
-                    isSelected ? 'bg-mda-700 text-white shadow-xs' : 'bg-slate-100 text-slate-500'
-                  }`}>
-                    {metric.icon}
+                <div className={`p-3.5 sm:p-4 rounded-[13px] border transition-all h-full flex flex-col justify-between ${
+                  isSelected
+                    ? 'bg-white border-emerald-300/80 shadow-xs'
+                    : 'bg-white border-slate-100 shadow-xs group-hover:bg-slate-50/50'
+                }`}>
+                  <div className="flex items-center justify-between text-slate-500 mb-2">
+                    <span className="text-[11px] font-bold text-slate-700 truncate mr-1" title={metric.title}>
+                      {metric.title}
+                    </span>
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all ${
+                      isSelected
+                        ? 'bg-emerald-700 text-white shadow-xs'
+                        : 'bg-slate-100 text-slate-600 border border-slate-200/50 group-hover:bg-emerald-50 group-hover:text-emerald-700'
+                    }`}>
+                      {metric.icon}
+                    </div>
                   </div>
-                </div>
 
-                <div className="mt-1">
-                  <span className="text-2xl font-extrabold tracking-tight text-slate-900 metric-number">
-                    {metric.value}
-                  </span>
-                </div>
+                  <div className="mt-1">
+                    <span className="text-2xl font-black tracking-tight text-slate-900 metric-number">
+                      {metric.value}
+                    </span>
+                  </div>
 
-                {metric.subtitle && (
-                  <p className="text-[10px] text-slate-500 font-medium mt-1 truncate" title={metric.subtitle}>
-                    {metric.subtitle}
-                  </p>
-                )}
+                  {metric.subtitle && (
+                    <p className="text-[10px] text-slate-500 font-medium mt-1 truncate" title={metric.subtitle}>
+                      {metric.subtitle}
+                    </p>
+                  )}
+                </div>
               </div>
             );
           })}

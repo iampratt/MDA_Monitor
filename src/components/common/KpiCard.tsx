@@ -35,36 +35,41 @@ export const KpiCard: React.FC<KpiCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`card-subtle rounded-xl p-4 sm:p-5 flex flex-col justify-between transition-all relative overflow-hidden group ${
-        onClick ? 'cursor-pointer hover:border-mda-500 hover:shadow-card-hover active:scale-[0.985]' : ''
+      className={`p-[3px] rounded-2xl border transition-all duration-200 relative overflow-hidden group ${
+        onClick ? 'cursor-pointer active:scale-[0.985]' : ''
       } ${
         isSelected
-          ? 'ring-2 ring-mda-700 border-mda-600 bg-gradient-to-b from-mda-50/50 via-white to-white shadow-card-hover'
-          : 'bg-white'
+          ? 'bg-emerald-100/70 border-emerald-500/60 shadow-xs ring-2 ring-emerald-500/20'
+          : 'bg-gradient-to-b from-slate-100/90 to-slate-200/50 border-slate-200/70 hover:border-slate-300'
       }`}
     >
-      {/* Top Header Row */}
-      <div>
-        <div className="flex items-center justify-between gap-2 mb-2.5">
-          <div className="flex items-center gap-2">
-            {icon && (
-              <div className={`p-2 rounded-lg transition-colors ${
-                isSelected
-                  ? 'bg-mda-700 text-white shadow-xs'
-                  : 'bg-slate-100/80 text-mda-800 group-hover:bg-mda-100/70 group-hover:text-mda-900'
-              }`}>
-                {icon}
-              </div>
-            )}
-            {category && (
-              <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200/50">
-                {category}
-              </span>
-            )}
-          </div>
+      <div className={`rounded-[13px] p-4 sm:p-5 flex flex-col justify-between h-full transition-all ${
+        isSelected
+          ? 'bg-white border border-emerald-200/80 shadow-xs'
+          : 'bg-white border border-slate-100 shadow-xs group-hover:bg-slate-50/50'
+      }`}>
+        {/* Top Header Row */}
+        <div>
+          <div className="flex items-center justify-between gap-2 mb-2.5">
+            <div className="flex items-center gap-2">
+              {icon && (
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
+                  isSelected
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'bg-slate-100 text-emerald-800 border border-slate-200/50 group-hover:bg-emerald-100/70 group-hover:text-emerald-900'
+                }`}>
+                  {icon}
+                </div>
+              )}
+              {category && (
+                <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200/50">
+                  {category}
+                </span>
+              )}
+            </div>
 
-          {status && <StatusBadge status={status} size="sm" />}
-        </div>
+            {status && <StatusBadge status={status} size="sm" />}
+          </div>
 
         {/* Title */}
         <h3 className="text-sm font-bold text-slate-800 leading-snug mb-2" title={title}>
@@ -118,6 +123,7 @@ export const KpiCard: React.FC<KpiCardProps> = ({
           />
         </div>
       )}
+      </div>
     </div>
   );
 };
