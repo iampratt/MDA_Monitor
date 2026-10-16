@@ -35,29 +35,29 @@ export const KpiCard: React.FC<KpiCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`card-subtle rounded-2xl p-5 flex flex-col justify-between transition-all relative overflow-hidden group ${
-        onClick ? 'cursor-pointer hover:border-mda-500 hover:shadow-card-hover' : ''
+      className={`card-subtle rounded-xl p-4 sm:p-5 flex flex-col justify-between transition-all relative overflow-hidden group ${
+        onClick ? 'cursor-pointer hover:border-mda-500 hover:shadow-card-hover active:scale-[0.985]' : ''
       } ${
         isSelected
-          ? 'ring-2 ring-mda-700 border-mda-500 bg-gradient-to-b from-mda-50/40 to-white shadow-card-hover'
+          ? 'ring-2 ring-mda-700 border-mda-600 bg-gradient-to-b from-mda-50/50 via-white to-white shadow-card-hover'
           : 'bg-white'
       }`}
     >
       {/* Top Header Row */}
       <div>
-        <div className="flex items-center justify-between gap-2 mb-3">
-          <div className="flex items-center gap-2.5">
+        <div className="flex items-center justify-between gap-2 mb-2.5">
+          <div className="flex items-center gap-2">
             {icon && (
-              <div className={`p-2 rounded-xl transition-colors ${
+              <div className={`p-2 rounded-lg transition-colors ${
                 isSelected
                   ? 'bg-mda-700 text-white shadow-xs'
-                  : 'bg-surface-subtle text-mda-700 group-hover:bg-mda-100/80'
+                  : 'bg-slate-100/80 text-mda-800 group-hover:bg-mda-100/70 group-hover:text-mda-900'
               }`}>
                 {icon}
               </div>
             )}
             {category && (
-              <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">
+              <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200/50">
                 {category}
               </span>
             )}

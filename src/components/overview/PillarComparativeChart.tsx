@@ -104,7 +104,7 @@ export const PillarComparativeChart: React.FC<PillarComparativeChartProps> = ({
               tickLine={false}
             />
             <Tooltip
-              cursor={{ fill: 'rgba(37, 99, 235, 0.04)' }}
+              cursor={{ fill: 'rgba(20, 108, 80, 0.04)' }}
               content={({ active, payload }) => {
                 if (!active || !payload || !payload.length) return null;
                 const d = payload[0].payload;
@@ -120,7 +120,7 @@ export const PillarComparativeChart: React.FC<PillarComparativeChartProps> = ({
                     <div className="space-y-1 border-t border-slate-100 pt-1.5 text-[11px]">
                       <div className="flex justify-between">
                         <span className="text-slate-500">State Aggregate:</span>
-                        <span className="font-bold text-blue-700">{d.formatted}</span>
+                        <span className="font-bold text-emerald-700">{d.formatted}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-slate-500">Counts:</span>
@@ -147,7 +147,7 @@ export const PillarComparativeChart: React.FC<PillarComparativeChartProps> = ({
             >
               {chartData.map((entry, index) => {
                 // Subtle gradient tint based on percentage tier
-                const color = entry.percentage >= 80 ? '#2563eb' : entry.percentage >= 50 ? '#0284c7' : '#64748b';
+                const color = entry.percentage >= 80 ? '#059669' : entry.percentage >= 60 ? '#10B981' : '#64748B';
                 return <Cell key={`cell-${index}`} fill={color} />;
               })}
             </Bar>

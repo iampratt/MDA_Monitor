@@ -88,13 +88,13 @@ export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
           <button
             type="button"
             onClick={handleCopyLink}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-slate-700 shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all border border-slate-700 shadow-xs active:scale-[0.98]"
             title="Copy shareable link to this PDF document"
           >
             {copiedLink ? (
               <>
                 <Check className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-emerald-300">Link Copied!</span>
+                <span className="text-emerald-300 font-bold">Link Copied!</span>
               </>
             ) : (
               <>
@@ -108,7 +108,7 @@ export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
           <button
             type="button"
             onClick={handlePrint}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-slate-700 shadow-xs hidden sm:inline-flex"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 transition-all border border-slate-700 shadow-xs hidden sm:inline-flex active:scale-[0.98]"
             title="Print or Save via browser"
           >
             <Printer className="w-3.5 h-3.5 text-slate-400" />
@@ -120,7 +120,7 @@ export const PdfViewerPage: React.FC<PdfViewerPageProps> = ({
             type="button"
             onClick={handleDownloadPdf}
             disabled={isDownloading}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition-colors shadow-sm disabled:opacity-60"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-sm active:scale-[0.98] disabled:opacity-60"
             title="Download PDF to device"
           >
             <Download className="w-3.5 h-3.5" />

@@ -76,9 +76,9 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
     return copy;
   }, [rawChartData, searchDistrict, quickFilter, sortOrder, stateVal]);
 
-  // Bar color based on actual State Average
+  // Bar color based on actual State Average - Unified Emerald & Slate Palette
   const getBarColor = (item: typeof chartData[0]) => {
-    return item.percentage >= stateVal ? '#2563eb' : '#64748b';
+    return item.percentage >= stateVal ? '#059669' : '#64748B';
   };
 
   const primaryIndicators = INDICATOR_DICTIONARY.filter(i => 
@@ -93,7 +93,7 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
   };
 
   return (
-    <div className="card-subtle rounded-xl p-5 bg-white border border-slate-200">
+    <div className="card-subtle rounded-xl p-5 bg-white border border-surface-border">
       {/* Header & Controls */}
       <div className="flex flex-col gap-3 pb-4 border-b border-slate-100 mb-4">
         {/* Tier 1: Title & Indicator Selector */}
@@ -144,7 +144,7 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
               type="button"
               onClick={() => setQuickFilter('all')}
               aria-pressed={quickFilter === 'all'}
-              className={`px-2.5 py-1 rounded-md transition-colors ${
+              className={`px-2.5 py-1 rounded-md transition-all active:scale-[0.98] ${
                 quickFilter === 'all'
                   ? 'bg-white text-slate-900 font-bold shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
@@ -156,9 +156,9 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
               type="button"
               onClick={() => setQuickFilter('above')}
               aria-pressed={quickFilter === 'above'}
-              className={`px-2.5 py-1 rounded-md transition-colors ${
+              className={`px-2.5 py-1 rounded-md transition-all active:scale-[0.98] ${
                 quickFilter === 'above'
-                  ? 'bg-white text-blue-700 font-bold shadow-xs'
+                  ? 'bg-white text-emerald-800 font-bold shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -168,7 +168,7 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
               type="button"
               onClick={() => setQuickFilter('below')}
               aria-pressed={quickFilter === 'below'}
-              className={`px-2.5 py-1 rounded-md transition-colors ${
+              className={`px-2.5 py-1 rounded-md transition-all active:scale-[0.98] ${
                 quickFilter === 'below'
                   ? 'bg-white text-slate-800 font-bold shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
@@ -306,7 +306,7 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
                 />
                 <ReferenceLine
                   x={stateVal}
-                  stroke="#2563eb"
+                  stroke="#047857"
                   strokeWidth={1.5}
                   strokeDasharray="3 3"
                 />
@@ -330,19 +330,20 @@ export const DistrictRankingChart: React.FC<DistrictRankingChartProps> = ({
           {/* Clean Bottom Legend */}
           <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
             <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1 font-medium">
-                <span className="w-2.5 h-2.5 rounded-sm bg-blue-600" />
-                ≥ State Average
+              <span className="flex items-center gap-1.5 font-medium">
+                <span className="w-2.5 h-2.5 rounded-xs bg-emerald-600" />
+                <span>≥ State Average</span>
               </span>
-              <span className="flex items-center gap-1 font-medium">
-                <span className="w-2.5 h-2.5 rounded-sm bg-slate-500" />
-                &lt; State Average
+              <span className="flex items-center gap-1.5 font-medium">
+                <span className="w-2.5 h-2.5 rounded-xs bg-slate-500" />
+                <span>&lt; State Average</span>
               </span>
             </div>
 
             <div className="flex items-center gap-3 text-xs">
-              <span className="flex items-center gap-1 text-slate-700 font-medium">
-                <span className="w-3.5 h-0.5 bg-blue-600 inline-block border-b border-dashed border-blue-600" /> State Avg ({stateVal.toFixed(1)}%)
+              <span className="flex items-center gap-1.5 text-slate-700 font-medium">
+                <span className="w-3.5 h-0.5 bg-emerald-700 inline-block border-b border-dashed border-emerald-700" />
+                <span>State Avg ({stateVal.toFixed(1)}%)</span>
               </span>
             </div>
           </div>

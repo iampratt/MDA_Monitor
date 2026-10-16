@@ -42,7 +42,7 @@ const PRESETS: MetricPreset[] = [
   }
 ];
 
-const METRIC_COLORS = ['#2563eb', '#059669', '#d97706'];
+const METRIC_COLORS = ['#059669', '#0284C7', '#D97706'];
 
 export const MultiIndicatorComparisonChart: React.FC<MultiIndicatorComparisonChartProps> = ({
   districtAggregates,

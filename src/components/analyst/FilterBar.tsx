@@ -27,12 +27,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     : INDICATOR_DICTIONARY.filter(i => i.category === filterState.category);
 
   return (
-    <div className="card-subtle rounded-xl p-4 bg-white space-y-3">
+    <div className="card-subtle rounded-xl p-4 sm:p-5 bg-white border border-surface-border space-y-4">
       {/* Primary Filters Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {/* District Selector */}
         <div>
-          <label className="block text-[11px] font-semibold text-slate-500 mb-1">
+          <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
             District
           </label>
           <select
@@ -43,7 +43,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 planningUnit: 'all'
               });
             }}
-            className="w-full text-xs bg-slate-50 border border-slate-200 text-slate-900 font-semibold rounded-lg px-2.5 py-1.5 focus:ring-1 focus:ring-mda-700 focus:outline-none"
+            className="w-full text-xs bg-slate-50/80 border border-slate-200 text-slate-900 font-semibold rounded-lg px-2.5 py-2 focus:ring-2 focus:ring-mda-600/30 focus:border-mda-600 focus:outline-none transition-all"
           >
             <option value="all">Entire State ({availableDistricts.length} Districts)</option>
             {availableDistricts.map(d => (
@@ -56,13 +56,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Planning Unit Selector */}
         <div>
-          <label className="block text-[11px] font-semibold text-slate-500 mb-1">
+          <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
             Planning Unit
           </label>
           <select
             value={filterState.planningUnit}
             onChange={e => onFilterChange({ planningUnit: e.target.value })}
-            className="w-full text-xs bg-slate-50 border border-slate-200 text-slate-900 font-semibold rounded-lg px-2.5 py-1.5 focus:ring-1 focus:ring-mda-700 focus:outline-none"
+            className="w-full text-xs bg-slate-50/80 border border-slate-200 text-slate-900 font-semibold rounded-lg px-2.5 py-2 focus:ring-2 focus:ring-mda-600/30 focus:border-mda-600 focus:outline-none transition-all"
           >
             <option value="all">
               {filterState.district === 'all'
@@ -79,7 +79,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Thematic Category */}
         <div>
-          <label className="block text-[11px] font-semibold text-slate-500 mb-1">
+          <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
             Category
           </label>
           <select
@@ -94,7 +94,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 selectedIndicatorId: matchingInds[0]?.id || filterState.selectedIndicatorId
               });
             }}
-            className="w-full text-xs bg-slate-50 border border-slate-200 text-slate-900 font-semibold rounded-lg px-2.5 py-1.5 focus:ring-1 focus:ring-mda-700 focus:outline-none"
+            className="w-full text-xs bg-slate-50/80 border border-slate-200 text-slate-900 font-semibold rounded-lg px-2.5 py-2 focus:ring-2 focus:ring-mda-600/30 focus:border-mda-600 focus:outline-none transition-all"
           >
             <option value="All">All Categories ({CATEGORIES.length})</option>
             {CATEGORIES.map(c => (
@@ -107,13 +107,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Indicator Selector */}
         <div>
-          <label className="block text-[11px] font-semibold text-slate-500 mb-1">
+          <label className="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1">
             Indicator
           </label>
           <select
             value={filterState.selectedIndicatorId}
             onChange={e => onFilterChange({ selectedIndicatorId: e.target.value })}
-            className="w-full text-xs bg-slate-50 border border-slate-200 text-slate-900 font-semibold rounded-lg px-2.5 py-1.5 focus:ring-1 focus:ring-mda-700 focus:outline-none"
+            className="w-full text-xs bg-slate-50/80 border border-slate-200 text-slate-900 font-semibold rounded-lg px-2.5 py-2 focus:ring-2 focus:ring-mda-600/30 focus:border-mda-600 focus:outline-none transition-all"
           >
             {indicatorsInCurrentCategory.map(ind => (
               <option key={ind.id} value={ind.id}>
@@ -125,15 +125,15 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       </div>
 
       {/* Search & Actions Bar */}
-      <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+      <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div className="relative flex-1 max-w-sm">
-          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" />
+          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
           <input
             type="text"
             placeholder="Search planning unit or district..."
             value={filterState.searchQuery}
             onChange={e => onFilterChange({ searchQuery: e.target.value })}
-            className="w-full pl-8 pr-2.5 py-1 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-mda-700 font-medium"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50/80 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-mda-600/30 focus:border-mda-600 font-medium transition-all"
           />
         </div>
 
@@ -144,7 +144,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
           <button
             onClick={onResetFilters}
-            className="inline-flex items-center gap-1 text-xs px-2.5 py-1 text-slate-700 hover:text-slate-900 border border-slate-200 rounded-lg hover:bg-slate-50 font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1.5 text-slate-700 hover:text-slate-900 border border-slate-200 rounded-lg hover:bg-slate-50 font-semibold transition-all active:scale-[0.98]"
             title="Reset filters"
           >
             <RotateCcw className="w-3 h-3 text-slate-400" />
@@ -153,9 +153,9 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
           <button
             onClick={onExportCsv}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 bg-mda-700 text-white hover:bg-mda-800 rounded-lg transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 bg-mda-700 text-white hover:bg-mda-800 rounded-lg transition-all shadow-xs active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600"
           >
-            <Download className="w-3 h-3" />
+            <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
           </button>
         </div>

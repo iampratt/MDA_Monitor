@@ -93,7 +93,7 @@ export const ExecutiveReportView: React.FC<ExecutiveReportViewProps> = ({
   return (
     <div className="space-y-6">
       {/* Action Bar (Hidden in Print & PDF) */}
-      <div className="no-print bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="no-print bg-white p-4 rounded-xl border border-surface-border shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 className="text-base font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <FileText className="w-4 h-4 text-mda-700" />
@@ -109,13 +109,13 @@ export const ExecutiveReportView: React.FC<ExecutiveReportViewProps> = ({
           <button
             type="button"
             onClick={handleCopyLink}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-all shadow-xs active:scale-[0.98]"
             title="Copy shareable link to this report page"
           >
             {copiedLink ? (
               <>
                 <Check className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="text-emerald-700">Link Copied!</span>
+                <span className="text-emerald-700 font-bold">Link Copied!</span>
               </>
             ) : (
               <>
@@ -129,7 +129,7 @@ export const ExecutiveReportView: React.FC<ExecutiveReportViewProps> = ({
           <button
             type="button"
             onClick={handlePrint}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 transition-all shadow-xs active:scale-[0.98]"
             title="Open browser print dialog to print or save as PDF"
           >
             <Printer className="w-3.5 h-3.5 text-slate-500" />
@@ -141,7 +141,7 @@ export const ExecutiveReportView: React.FC<ExecutiveReportViewProps> = ({
             type="button"
             onClick={handleDownloadPdf}
             disabled={isGeneratingPdf}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-mda-700 text-white text-xs font-semibold hover:bg-mda-800 transition-colors shadow-xs disabled:opacity-60"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-mda-700 text-white text-xs font-bold hover:bg-mda-800 transition-all shadow-xs active:scale-[0.98] disabled:opacity-60"
           >
             <Download className="w-3.5 h-3.5" />
             <span>{isGeneratingPdf ? 'Generating PDF...' : 'Download PDF'}</span>
@@ -153,7 +153,7 @@ export const ExecutiveReportView: React.FC<ExecutiveReportViewProps> = ({
       <div
         ref={reportRef}
         id="executive-report-document"
-        className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 print:border-none print:p-0 print:shadow-none space-y-8"
+        className="bg-white p-6 sm:p-10 rounded-2xl border border-surface-border shadow-xs print:border-none print:p-0 print:shadow-none space-y-8"
       >
         {/* Document Header */}
         <div className="border-b border-slate-200 pb-5">

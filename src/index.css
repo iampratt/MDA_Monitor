@@ -8,18 +8,19 @@
   }
 
   body {
-    background-color: #F8FAFC;
+    background-color: #F8FAF9;
     color: #0F172A;
-    font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 }
 
 /* Custom Scrollbar - Quiet & minimal */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -27,55 +28,57 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E2E8F0;
+  background: #CBD5E1;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #CBD5E1;
+  background: #94A3B8;
 }
 
-/* Minimalist Card Utilities */
+/* Minimalist Card Utilities with Calibrated Shadows */
 .card-subtle {
   background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.03);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  border: 1px solid #E2E8E4;
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.03), 0 1px 3px 0 rgba(20, 108, 80, 0.02);
+  transition: border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1), transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-subtle:hover {
-  border-color: #CBD5E1;
-  box-shadow: 0 4px 12px 0 rgba(15, 23, 42, 0.05);
+  border-color: #CBD7CE;
+  box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(20, 108, 80, 0.03);
 }
 
 .card-interactive {
   cursor: pointer;
   user-select: none;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-interactive:active {
-  transform: scale(0.995);
+  transform: scale(0.985);
 }
 
-/* Numeric Typography */
+/* Numeric Typography with Strict Tabular Figures */
 .metric-number {
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
 }
 
-/* Focus styles */
+/* Accessible & Crisp Focus Styles */
 button:focus-visible, select:focus-visible, input:focus-visible {
   outline: 2px solid #146C50;
-  outline-offset: 1px;
+  outline-offset: 2px;
 }
 
-/* Recharts Tooltip - High-end Minimalist Styling */
+/* Recharts Tooltip - Premium Minimalist Floating Card */
 .recharts-default-tooltip {
-  border-radius: 8px !important;
-  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  border: 1px solid #E2E8E4 !important;
   background-color: #FFFFFF !important;
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1) !important;
-  padding: 8px 12px !important;
+  box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04) !important;
+  padding: 10px 14px !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 /* Print Optimization for PDF Export */

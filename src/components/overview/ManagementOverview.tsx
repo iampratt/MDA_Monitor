@@ -156,7 +156,7 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
           <div
             role="tablist"
             aria-label="Overview perspective views"
-            className="inline-flex bg-slate-100 p-0.5 rounded-lg text-xs font-semibold"
+            className="inline-flex bg-slate-100 p-1 rounded-xl text-xs font-semibold border border-slate-200/60"
           >
             <button
               type="button"
@@ -164,10 +164,10 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
               aria-selected={activeView === 'ranking'}
               aria-controls="overview-ranking-panel"
               onClick={() => setActiveView('ranking')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
                 activeView === 'ranking'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-slate-900 text-white shadow-xs font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
               }`}
             >
               <BarChart3 className="w-3.5 h-3.5" />
@@ -179,10 +179,10 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
               aria-selected={activeView === 'multi'}
               aria-controls="overview-multi-panel"
               onClick={() => setActiveView('multi')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
                 activeView === 'multi'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-slate-900 text-white shadow-xs font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
               }`}
             >
               <Activity className="w-3.5 h-3.5" />
@@ -194,10 +194,10 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
               aria-selected={activeView === 'table'}
               aria-controls="overview-table-panel"
               onClick={() => setActiveView('table')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
                 activeView === 'table'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-slate-900 text-white shadow-xs font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
               }`}
             >
               <TableIcon className="w-3.5 h-3.5" />
@@ -209,10 +209,10 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
               aria-selected={activeView === 'thematic'}
               aria-controls="overview-thematic-panel"
               onClick={() => setActiveView('thematic')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
                 activeView === 'thematic'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-slate-900 text-white shadow-xs font-bold'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
@@ -255,33 +255,35 @@ export const ManagementOverview: React.FC<ManagementOverviewProps> = ({
                     setSelectedIndicatorId(metric.id);
                   }
                 }}
-                className={`p-3.5 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
+                className={`p-3.5 sm:p-4 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-mda-600 ${
                   metric.isInteractiveIndicator
-                    ? 'cursor-pointer hover:border-slate-300'
-                    : 'bg-white border-slate-200'
+                    ? 'cursor-pointer hover:border-slate-300 active:scale-[0.98]'
+                    : 'bg-white border-surface-border'
                 } ${
                   isSelected
-                    ? 'bg-mda-50/15 border-mda-600 ring-2 ring-mda-600/30 shadow-xs'
-                    : 'bg-white border-slate-200 shadow-xs'
+                    ? 'bg-mda-50/25 border-mda-600 ring-2 ring-mda-600/30 shadow-xs'
+                    : 'bg-white border-surface-border shadow-xs'
                 }`}
               >
-                <div className="flex items-center justify-between text-slate-500 mb-1.5">
-                  <span className="text-[11px] font-semibold text-slate-600 truncate mr-1" title={metric.title}>
+                <div className="flex items-center justify-between text-slate-500 mb-2">
+                  <span className="text-[11px] font-bold text-slate-700 truncate mr-1" title={metric.title}>
                     {metric.title}
                   </span>
-                  <span className={isSelected ? 'text-mda-700' : 'text-slate-400'}>
+                  <div className={`p-1.5 rounded-lg transition-colors ${
+                    isSelected ? 'bg-mda-700 text-white shadow-xs' : 'bg-slate-100 text-slate-500'
+                  }`}>
                     {metric.icon}
-                  </span>
+                  </div>
                 </div>
 
                 <div className="mt-1">
-                  <span className="text-xl font-bold tracking-tight text-slate-900 metric-number">
+                  <span className="text-2xl font-extrabold tracking-tight text-slate-900 metric-number">
                     {metric.value}
                   </span>
                 </div>
 
                 {metric.subtitle && (
-                  <p className="text-[10px] text-slate-400 mt-1 truncate" title={metric.subtitle}>
+                  <p className="text-[10px] text-slate-500 font-medium mt-1 truncate" title={metric.subtitle}>
                     {metric.subtitle}
                   </p>
                 )}

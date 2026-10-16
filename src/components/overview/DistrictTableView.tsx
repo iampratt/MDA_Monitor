@@ -231,7 +231,7 @@ export const DistrictTableView: React.FC<DistrictTableViewProps> = ({
                   </td>
                   <td className="py-3 px-4 text-right whitespace-nowrap font-mono text-xs">
                     {item.percentage !== null && stateVal !== null ? (
-                      <span className={`font-semibold ${item.percentage >= stateVal ? 'text-blue-700' : 'text-slate-600'}`}>
+                      <span className={`font-semibold ${item.percentage >= stateVal ? 'text-emerald-700' : 'text-slate-600'}`}>
                         {item.percentage >= stateVal ? `+${(item.percentage - stateVal).toFixed(1)}%` : `${(item.percentage - stateVal).toFixed(1)}%`}
                       </span>
                     ) : (

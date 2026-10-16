@@ -91,9 +91,9 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
 
   const getBarColor = (percentage: number | null) => {
     if (percentage !== null && districtVal !== null) {
-      return percentage >= districtVal ? '#2563eb' : '#64748b';
+      return percentage >= districtVal ? '#059669' : '#64748B';
     }
-    return '#64748b';
+    return '#64748B';
   };
 
   const primaryIndicators = INDICATOR_DICTIONARY.filter(i =>
@@ -249,7 +249,7 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
           <div className="flex items-center gap-3 text-xs text-slate-500">
             {districtVal !== null && (
               <span className="flex items-center gap-1.5 font-medium text-slate-700">
-                <span className="w-3.5 h-0.5 bg-blue-600 inline-block border-b border-dashed border-blue-600" />
+                <span className="w-3.5 h-0.5 bg-emerald-700 inline-block border-b border-dashed border-emerald-700" />
                 District Avg: {districtVal.toFixed(1)}%
               </span>
             )}
@@ -295,7 +295,7 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
               {districtVal !== null && (
                 <ReferenceLine
                   y={districtVal}
-                  stroke="#2563eb"
+                  stroke="#047857"
                   strokeDasharray="3 3"
                   strokeWidth={1.5}
                 />
@@ -393,7 +393,7 @@ export const DistrictDetailView: React.FC<DistrictDetailViewProps> = ({
                   </td>
                   <td className="py-3 px-4 text-right whitespace-nowrap font-mono text-xs">
                     {item.percentage !== null && districtVal !== null ? (
-                      <span className={`font-semibold ${item.percentage >= districtVal ? 'text-blue-700' : 'text-slate-600'}`}>
+                      <span className={`font-semibold ${item.percentage >= districtVal ? 'text-emerald-700' : 'text-slate-600'}`}>
                         {item.percentage >= districtVal ? `+${(item.percentage - districtVal).toFixed(1)}%` : `${(item.percentage - districtVal).toFixed(1)}%`}
                       </span>
                     ) : (

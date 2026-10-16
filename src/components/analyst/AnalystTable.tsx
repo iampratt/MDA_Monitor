@@ -84,7 +84,7 @@ export const AnalystTable: React.FC<AnalystTableProps> = ({ rows, indicator }) =
   };
 
   return (
-    <div className="card-subtle rounded-xl bg-white overflow-hidden">
+    <div className="card-subtle rounded-xl bg-white border border-surface-border overflow-hidden">
       {/* Table Header Banner with Formula Details */}
       <div className="p-4 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
